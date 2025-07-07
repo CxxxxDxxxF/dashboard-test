@@ -263,7 +263,7 @@
                     <div class="chart-container">
                         <!-- Chart would be rendered here with a library like Chart.js -->
                         <div class="bg-gray-100 rounded-lg h-full flex items-center justify-center text-gray-400">
-                            [Engagement Chart]
+                            <canvas id="engagementChart" width="600" height="250"></canvas>
                         </div>
                     </div>
                 </div>
@@ -484,6 +484,7 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Toggle sidebar collapse
         const sidebar = document.getElementById('sidebar');
@@ -548,6 +549,38 @@
         
         window.addEventListener('resize', handleResize);
         handleResize(); // Run on initial load
+
+        // Engagement Chart Sample Data
+        const ctx = document.getElementById('engagementChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Engagement',
+                    data: [120, 150, 180, 170, 200, 220, 210],
+                    borderColor: '#CC0033',
+                    backgroundColor: 'rgba(204,0,51,0.1)',
+                    tension: 0.4,
+                    pointBackgroundColor: '#CC0033',
+                    pointBorderColor: '#fff',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     </script>
 <p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=cjruizz99/dashboard-test" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
 </html>
