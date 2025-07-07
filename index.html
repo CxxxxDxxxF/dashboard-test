@@ -590,6 +590,17 @@
                     }
                 },
                 scales: {
+                    x: {
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                // Only show every 5th label for 30-day range
+                                if (engagementChart.data.labels.length === 30) {
+                                    return index % 5 === 0 ? this.getLabelForValue(value) : '';
+                                }
+                                return this.getLabelForValue(value);
+                            }
+                        }
+                    },
                     y: {
                         beginAtZero: true
                     }
