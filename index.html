@@ -486,133 +486,135 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Toggle sidebar collapse
-        const sidebar = document.getElementById('sidebar');
-        const contentArea = document.getElementById('contentArea');
-        const collapseBtn = document.getElementById('collapseBtn');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const themeToggle = document.getElementById('themeToggle');
-        
-        let isCollapsed = false;
-        let isDarkMode = false;
-        
-        // Toggle sidebar collapse
-        collapseBtn.addEventListener('click', () => {
-            isCollapsed = !isCollapsed;
-            sidebar.classList.toggle('collapsed');
-            contentArea.classList.toggle('expanded');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle sidebar collapse
+            const sidebar = document.getElementById('sidebar');
+            const contentArea = document.getElementById('contentArea');
+            const collapseBtn = document.getElementById('collapseBtn');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const themeToggle = document.getElementById('themeToggle');
             
-            // Change icon
-            if (isCollapsed) {
-                collapseBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-            } else {
-                collapseBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-            }
-        });
-        
-        // Toggle mobile menu
-        mobileMenuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-        });
-        
-        // Toggle dark mode
-        themeToggle.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
+            let isCollapsed = false;
+            let isDarkMode = false;
             
-            if (isDarkMode) {
-                document.body.classList.add('bg-gray-900');
-                document.body.classList.remove('bg-gray-50');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            } else {
-                document.body.classList.remove('bg-gray-900');
-                document.body.classList.add('bg-gray-50');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            }
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!sidebar.contains(e.target) && e.target !== mobileMenuBtn) {
-                sidebar.classList.remove('open');
-            }
-        });
-        
-        // Responsive adjustments
-        function handleResize() {
-            if (window.innerWidth < 768) {
-                sidebar.classList.remove('collapsed');
-                contentArea.classList.remove('expanded');
-                collapseBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-                isCollapsed = false;
-            }
-        }
-        
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Run on initial load
-
-        // Engagement Chart Sample Data
-        const engagementData = {
-            7: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                data: [120, 150, 180, 170, 200, 220, 210]
-            },
-            14: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                data: [110, 130, 140, 160, 170, 180, 175, 160, 150, 170, 190, 210, 220, 210]
-            },
-            30: {
-                labels: Array.from({length: 30}, (_, i) => `Day ${i+1}`),
-                data: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 230, 220, 210, 200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 120, 130]
-            }
-        };
-
-        const ctx = document.getElementById('engagementChart').getContext('2d');
-        let engagementChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: engagementData[7].labels,
-                datasets: [{
-                    label: 'Engagement',
-                    data: engagementData[7].data,
-                    borderColor: '#CC0033',
-                    backgroundColor: 'rgba(204,0,51,0.1)',
-                    tension: 0.4,
-                    pointBackgroundColor: '#CC0033',
-                    pointBorderColor: '#fff',
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        ticks: {
-                            callback: function(value, index, ticks) {
-                                // Only show every 5th label for 30-day range
-                                if (engagementChart.data.labels.length === 30) {
-                                    return index % 5 === 0 ? this.getLabelForValue(value) : '';
-                                }
-                                return this.getLabelForValue(value);
-                            }
-                        }
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
+            // Toggle sidebar collapse
+            collapseBtn.addEventListener('click', () => {
+                isCollapsed = !isCollapsed;
+                sidebar.classList.toggle('collapsed');
+                contentArea.classList.toggle('expanded');
+                
+                // Change icon
+                if (isCollapsed) {
+                    collapseBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                } else {
+                    collapseBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                }
+            });
+            
+            // Toggle mobile menu
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+            });
+            
+            // Toggle dark mode
+            themeToggle.addEventListener('click', () => {
+                isDarkMode = !isDarkMode;
+                
+                if (isDarkMode) {
+                    document.body.classList.add('bg-gray-900');
+                    document.body.classList.remove('bg-gray-50');
+                    themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                } else {
+                    document.body.classList.remove('bg-gray-900');
+                    document.body.classList.add('bg-gray-50');
+                    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                }
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!sidebar.contains(e.target) && e.target !== mobileMenuBtn) {
+                    sidebar.classList.remove('open');
+                }
+            });
+            
+            // Responsive adjustments
+            function handleResize() {
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('collapsed');
+                    contentArea.classList.remove('expanded');
+                    collapseBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                    isCollapsed = false;
                 }
             }
-        });
+            
+            window.addEventListener('resize', handleResize);
+            handleResize(); // Run on initial load
 
-        document.getElementById('engagementRange').addEventListener('change', function() {
-            const range = this.value;
-            engagementChart.data.labels = engagementData[range].labels;
-            engagementChart.data.datasets[0].data = engagementData[range].data;
-            engagementChart.update();
+            // Engagement Chart Sample Data
+            const engagementData = {
+                7: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    data: [120, 150, 180, 170, 200, 220, 210]
+                },
+                14: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    data: [110, 130, 140, 160, 170, 180, 175, 160, 150, 170, 190, 210, 220, 210]
+                },
+                30: {
+                    labels: Array.from({length: 30}, (_, i) => `Day ${i+1}`),
+                    data: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 230, 220, 210, 200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 120, 130]
+                }
+            };
+
+            const ctx = document.getElementById('engagementChart').getContext('2d');
+            let engagementChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: engagementData[7].labels,
+                    datasets: [{
+                        label: 'Engagement',
+                        data: engagementData[7].data,
+                        borderColor: '#CC0033',
+                        backgroundColor: 'rgba(204,0,51,0.1)',
+                        tension: 0.4,
+                        pointBackgroundColor: '#CC0033',
+                        pointBorderColor: '#fff',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                callback: function(value, index, ticks) {
+                                    // Only show every 5th label for 30-day range
+                                    if (engagementChart.data.labels.length === 30) {
+                                        return index % 5 === 0 ? this.getLabelForValue(value) : '';
+                                    }
+                                    return this.getLabelForValue(value);
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('engagementRange').addEventListener('change', function() {
+                const range = this.value;
+                engagementChart.data.labels = engagementData[range].labels;
+                engagementChart.data.datasets[0].data = engagementData[range].data;
+                engagementChart.update();
+            });
         });
     </script>
 <p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=cjruizz99/dashboard-test" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
