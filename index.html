@@ -593,10 +593,15 @@
                     scales: {
                         x: {
                             ticks: {
+                                minRotation: 0,
+                                maxRotation: 0,
                                 callback: function(value, index, ticks) {
-                                    // Only show every 5th label for 30-day range
+                                    // Show every 5th label and always the last label for 30-day range
                                     if (ticks.length === 30) {
-                                        return index % 5 === 0 ? this.getLabelForValue(value) : '';
+                                        if (index % 5 === 0 || index === ticks.length - 1) {
+                                            return this.getLabelForValue(value);
+                                        }
+                                        return '';
                                     }
                                     return this.getLabelForValue(value);
                                 }
