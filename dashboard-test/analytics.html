@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Rutgers University Social Media Analytics Dashboard">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://m.stripe.network; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="Permissions-Policy" content="fullscreen=(self)">
+    <title>Analytics - Rutgers University Social Media Manager</title>
+    <link rel="stylesheet" href="dist/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
+        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-menu text-red-700" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Menu"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar fixed h-full bg-white shadow-lg w-64 flex flex-col animate-fade-in">
+        <!-- Logo -->
+        <div class="p-4 flex items-center justify-between border-b border-gray-200 animate-fade-in">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNDQzAwMzMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UlU8L3RleHQ+Cjwvc3ZnPgo=" alt="Rutgers Logo" class="w-10 h-10 rounded-full transition-transform duration-300 hover:scale-110">
+                <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
+            </div>
+            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-chevron-left" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Collapse sidebar"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul>
+                <li>
+                    <a href="index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-home" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Dashboard"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span class="nav-text ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html" class="flex items-center px-6 py-3 text-red-700 bg-red-50 border-l-4 border-red-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-line-chart" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Analytics"><path d="M3 3v18h18"/><polyline points="9 17 13 13 17 17 21 13"/></svg>
+                        <span class="nav-text ml-3">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calendar.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-calendar" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Calendar"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <span class="nav-text ml-3">Calendar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="post-composer.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-pen" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Post Composer"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg>
+                        <span class="nav-text ml-3">Post Composer</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="media-library.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-image" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Media Library"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+                        <span class="nav-text ml-3">Media Library</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="settings.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-settings" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Settings"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09A1.65 1.65 0 0 0 12 3.09V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09c.2.63.2 1.3 0 1.93z"/></svg>
+                        <span class="nav-text ml-3">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- User Profile -->
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlNWU3ZWYiLz4KPHN2ZyB4PSIxMCIgeT0iMTAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5Y2EzYWYiIHN0cm9rZS13aWR0aD0iMiI+CjxwYXRoIGQ9Ik0yMCAyMS4xMlYxOWE0IDQgMCAwIDAtNC00SDhhNCA0IDAgMCAwLTQgNHYyIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCIvPgo8L3N2Zz4K" alt="User Profile" class="w-10 h-10 rounded-full">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">John Smith</p>
+                    <p class="text-xs text-gray-500">Marketing Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="contentArea" class="content-area min-h-screen ml-64 animate-fade-in">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm py-4 px-6 flex justify-between items-center animate-fade-in">
+            <h1 class="text-2xl font-bold text-red-800">Analytics</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-bell" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Notifications"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-moon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Toggle dark mode"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="p-6 animate-fade-in">
+            <!-- Analytics Overview Banner -->
+            <div class="gradient-bg rounded-xl p-6 text-white mb-6 animate-fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Analytics Overview</h2>
+                        <p class="opacity-90">Track your social media performance across all platforms.</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex space-x-3">
+                        <select class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium border-0" title="Select time period" aria-label="Select analytics time period">
+                            <option value="7">Last 7 days</option>
+                            <option value="30">Last 30 days</option>
+                            <option value="90">Last 90 days</option>
+                            <option value="365">Last year</option>
+                        </select>
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
+                            Export Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Metrics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 animate-fade-in">
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Total Reach</p>
+                            <h3 class="text-2xl font-bold mt-1">124,582</h3>
+                            <p class="text-sm text-red-600 mt-1 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-arrow-up mr-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Up"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg> 18% from last period
+                            </p>
+                        </div>
+                        <div class="bg-red-100 p-3 rounded-lg transition-transform duration-300 hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-eye text-red-600 text-xl" width="20" height="20" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Eye"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Total Engagement</p>
+                            <h3 class="text-2xl font-bold mt-1">8,947</h3>
+                            <p class="text-sm text-red-600 mt-1 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-arrow-up mr-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Up"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg> 12% from last period
+                            </p>
+                        </div>
+                        <div class="bg-blue-100 p-3 rounded-lg transition-transform duration-300 hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-heart text-blue-600 text-xl" width="20" height="20" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Click-Through Rate</p>
+                            <h3 class="text-2xl font-bold mt-1">4.2%</h3>
+                            <p class="text-sm text-red-600 mt-1 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-arrow-up mr-1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Up"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg> 0.8% from last period
+                            </p>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-lg transition-transform duration-300 hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-mouse-pointer text-purple-600 text-xl" width="20" height="20" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Mouse Pointer"><path d="M3 3l7.89 18.26a1 1 0 0 0 1.85-.32l2.1-7.36 7.36-2.1a1 1 0 0 0 .32-1.85L3 3z"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm text-gray-500">Conversion Rate</p>
+                            <h3 class="text-2xl font-bold mt-1">2.1%</h3>
+                            <p class="text-sm text-gray-500 mt-1">Based on 1,247 clicks</p>
+                        </div>
+                        <div class="bg-yellow-100 p-3 rounded-lg transition-transform duration-300 hover:scale-110">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-line-chart text-yellow-600 text-xl" width="20" height="20" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Line Chart"><path d="M3 3v18h18"/><polyline points="9 17 13 13 17 17 21 13"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 animate-fade-in">
+                <!-- Engagement Overview Chart -->
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                    <div class="flex justify-between items-center mb-4">
+                        <!-- Removed: <h3 class="text-lg font-semibold">Engagement Overview</h3> -->
+                        <div class="flex space-x-2">
+                            <select id="engagementRange" class="bg-gray-100 border-0 text-sm rounded-lg px-3 py-1" title="Select time range" aria-label="Select engagement time range">
+                                <option value="7">Last 7 days</option>
+                                <option value="14">Last 14 days</option>
+                                <option value="30">Last 30 days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="bg-gray-100 rounded-lg h-full flex items-center justify-center text-gray-400">
+                            <canvas id="engagementChart" width="600" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Platform Performance -->
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Platform Performance</h3>
+                        <button class="text-sm text-red-600 hover:underline" type="button">View Details</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-instagram text-pink-600 text-xl mr-3" width="20" height="20" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect x="2" y="2" width="16" height="16" rx="4"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><circle cx="17" cy="7" r="1.5"/></svg>
+                                <div>
+                                    <p class="font-medium">Instagram</p>
+                                    <p class="text-sm text-gray-500">5,248 followers</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-green-600">+12%</p>
+                                <p class="text-xs text-gray-500">vs last month</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-facebook text-blue-600 text-xl mr-3" width="20" height="20" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Facebook"><path d="M18 2h-3a4 4 0 0 0-4 4v3H7v4h4v8h4v-8h3l1-4h-4V6a1 1 0 0 1 1-1h3z"/></svg>
+                                <div>
+                                    <p class="font-medium">Facebook</p>
+                                    <p class="text-sm text-gray-500">3,782 followers</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-green-600">+5%</p>
+                                <p class="text-xs text-gray-500">vs last month</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-twitter text-blue-400 text-xl mr-3" width="20" height="20" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9.09 9.09 0 0 1-2.88 1.1A4.52 4.52 0 0 0 16.5 0c-2.5 0-4.5 2.01-4.5 4.5 0 .35.04.7.11 1.03C7.69 5.36 4.07 3.6 1.64.96c-.38.65-.6 1.4-.6 2.2 0 1.52.77 2.86 1.94 3.65A4.48 4.48 0 0 1 .96 6v.06c0 2.13 1.52 3.91 3.54 4.31-.37.1-.76.16-1.16.16-.28 0-.55-.03-.81-.08.55 1.72 2.16 2.97 4.07 3A9.05 9.05 0 0 1 0 19.54a12.8 12.8 0 0 0 6.92 2.03c8.3 0 12.85-6.88 12.85-12.85 0-.2 0-.39-.01-.58A9.22 9.22 0 0 0 24 4.59a9.1 9.1 0 0 1-2.6.71z"/></svg>
+                                <div>
+                                    <p class="font-medium">Twitter</p>
+                                    <p class="text-sm text-gray-500">2,156 followers</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-red-600">-2%</p>
+                                <p class="text-xs text-gray-500">vs last month</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Top Performing Content -->
+            <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Top Performing Content</h3>
+                    <button class="text-sm text-red-600 hover:underline" type="button">View All</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                        <div class="bg-gray-100 rounded-lg h-32 mb-3 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-image text-gray-400 text-2xl" width="28" height="28" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Image"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+                        </div>
+                        <h4 class="font-medium text-sm mb-1">Sunset at Rutgers Golf Course</h4>
+                        <p class="text-xs text-gray-500 mb-2">Posted 2 days ago</p>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-red-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-heart mr-1" width="16" height="16" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>1,247</span>
+                            <span class="text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-message-circle mr-1" width="16" height="16" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Comment"><circle cx="12" cy="12" r="10"/><path d="M21 15a8.38 8.38 0 0 1-1.9 5.4A8.5 8.5 0 0 1 3.6 17L2 21l4-1.6A8.38 8.38 0 0 0 12 19.5a8.5 8.5 0 1 0-8.5-8.5"/></svg>89</span>
+                            <span class="text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-share-2 mr-1" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>156</span>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                        <div class="bg-gray-100 rounded-lg h-32 mb-3 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-image text-gray-400 text-2xl" width="28" height="28" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Image"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+                        </div>
+                        <h4 class="font-medium text-sm mb-1">Student Success Story</h4>
+                        <p class="text-xs text-gray-500 mb-2">Posted 5 days ago</p>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-red-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-heart mr-1" width="16" height="16" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>892</span>
+                            <span class="text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-message-circle mr-1" width="16" height="16" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Comment"><circle cx="12" cy="12" r="10"/><path d="M21 15a8.38 8.38 0 0 1-1.9 5.4A8.5 8.5 0 0 1 3.6 17L2 21l4-1.6A8.38 8.38 0 0 0 12 19.5a8.5 8.5 0 1 0-8.5-8.5"/></svg>67</span>
+                            <span class="text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-share-2 mr-1" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>123</span>
+                        </div>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
+                        <div class="bg-gray-100 rounded-lg h-32 mb-3 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-image text-gray-400 text-2xl" width="28" height="28" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Image"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+                        </div>
+                        <h4 class="font-medium text-sm mb-1">Campus Life Highlights</h4>
+                        <p class="text-xs text-gray-500 mb-2">Posted 1 week ago</p>
+                        <div class="flex justify-between text-xs">
+                            <span class="text-red-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-heart mr-1" width="16" height="16" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>756</span>
+                            <span class="text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-message-circle mr-1" width="16" height="16" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Comment"><circle cx="12" cy="12" r="10"/><path d="M21 15a8.38 8.38 0 0 1-1.9 5.4A8.5 8.5 0 0 1 3.6 17L2 21l4-1.6A8.38 8.38 0 0 0 12 19.5a8.5 8.5 0 1 0-8.5-8.5"/></svg>45</span>
+                            <span class="text-green-600"><svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-share-2 mr-1" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>98</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html> 

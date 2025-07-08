@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Rutgers University Social Media Settings">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://m.stripe.network; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="Permissions-Policy" content="fullscreen=(self)">
+    <title>Settings - Rutgers University Social Media Manager</title>
+    <link rel="stylesheet" href="dist/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
+        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu">
+            <i class="fas fa-bars text-red-700"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar fixed h-full bg-white shadow-lg w-64 flex flex-col animate-fade-in">
+        <!-- Logo -->
+        <div class="p-4 flex items-center justify-between border-b border-gray-200 animate-fade-in">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNDQzAwMzMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UlU8L3RleHQ+Cjwvc3ZnPgo=" alt="Rutgers Logo" class="w-10 h-10 rounded-full transition-transform duration-300 hover:scale-110">
+                <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
+            </div>
+            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul>
+                <li>
+                    <a href="index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-text ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="nav-text ml-3">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calendar.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="nav-text ml-3">Calendar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="post-composer.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-pen"></i>
+                        <span class="nav-text ml-3">Post Composer</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="media-library.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-image"></i>
+                        <span class="nav-text ml-3">Media Library</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="settings.html" class="flex items-center px-6 py-3 text-red-700 bg-red-50 border-l-4 border-red-600">
+                        <i class="fas fa-cog"></i>
+                        <span class="nav-text ml-3">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- User Profile -->
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlNWU3ZWYiLz4KPHN2ZyB4PSIxMCIgeT0iMTAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5Y2EzYWYiIHN0cm9rZS13aWR0aD0iMiI+CjxwYXRoIGQ9Ik0yMCAyMS4xMlYxOWE0IDQgMCAwIDAtNC00SDhhNCA0IDAgMCAwLTQgNHYyIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCIvPgo8L3N2Zz4K" alt="User Profile" class="w-10 h-10 rounded-full">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">John Smith</p>
+                    <p class="text-xs text-gray-500">Marketing Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="contentArea" class="content-area min-h-screen ml-64 animate-fade-in">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm py-4 px-6 flex justify-between items-center animate-fade-in">
+            <h1 class="text-2xl font-bold text-red-800">Settings</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="p-6 animate-fade-in">
+            <!-- Settings Header -->
+            <div class="gradient-bg rounded-xl p-6 text-white mb-6 animate-fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Account Settings</h2>
+                        <p class="opacity-90">Manage your account preferences and social media integrations.</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex space-x-3">
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <i class="fas fa-save mr-2"></i>Save Changes
+                        </button>
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <i class="fas fa-download mr-2"></i>Export Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Settings Navigation -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in">
+                <div class="flex flex-wrap gap-2">
+                    <button class="px-4 py-2 bg-red-50 text-red-700 rounded-lg font-medium">Profile</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">Social Accounts</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">Notifications</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">Security</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">Preferences</button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200">Billing</button>
+                </div>
+            </div>
+            
+            <!-- Profile Settings -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
+                <!-- Profile Information -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Personal Information -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Personal Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                <input type="text" value="John" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                <input type="text" value="Smith" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" value="john.smith@rutgers.edu" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                                <input type="tel" value="+1 (555) 123-4567" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Job Title</label>
+                                <input type="text" value="Marketing Manager" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Media Accounts -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Connected Social Media Accounts</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fab fa-instagram text-pink-600 text-xl mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Instagram</p>
+                                        <p class="text-sm text-gray-500">@rutgersuniversity</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Connected</span>
+                                    <button class="text-red-600 hover:text-red-700">
+                                        <i class="fas fa-unlink"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fab fa-facebook-f text-blue-600 text-xl mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Facebook</p>
+                                        <p class="text-sm text-gray-500">Rutgers University</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Connected</span>
+                                    <button class="text-red-600 hover:text-red-700">
+                                        <i class="fas fa-unlink"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fab fa-twitter text-blue-400 text-xl mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">Twitter</p>
+                                        <p class="text-sm text-gray-500">@RutgersU</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">Not Connected</span>
+                                    <button class="text-blue-600 hover:text-blue-700">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fab fa-linkedin text-blue-700 text-xl mr-3"></i>
+                                    <div>
+                                        <p class="font-medium">LinkedIn</p>
+                                        <p class="text-sm text-gray-500">Rutgers University</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">Not Connected</span>
+                                    <button class="text-blue-600 hover:text-blue-700">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Preferences -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Notification Preferences</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Email Notifications</p>
+                                    <p class="text-sm text-gray-500">Receive notifications via email</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Push Notifications</p>
+                                    <p class="text-sm text-gray-500">Receive push notifications in browser</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Scheduled Post Reminders</p>
+                                    <p class="text-sm text-gray-500">Get reminded about scheduled posts</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium">Analytics Reports</p>
+                                    <p class="text-sm text-gray-500">Weekly analytics summary</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Profile Picture -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Profile Picture</h3>
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <i class="fas fa-user text-gray-400 text-2xl"></i>
+                            </div>
+                            <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+                                <i class="fas fa-camera mr-2"></i>Change Photo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Account Status -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Account Status</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Account Type</span>
+                                <span class="text-sm font-medium text-green-600">Premium</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Member Since</span>
+                                <span class="text-sm font-medium">January 2024</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Last Login</span>
+                                <span class="text-sm font-medium">Today, 9:30 AM</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Status</span>
+                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <button class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                <i class="fas fa-key text-gray-600 mr-2"></i>
+                                <span class="text-sm">Change Password</span>
+                            </button>
+                            <button class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                <i class="fas fa-shield-alt text-gray-600 mr-2"></i>
+                                <span class="text-sm">Two-Factor Authentication</span>
+                            </button>
+                            <button class="w-full text-left p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                <i class="fas fa-download text-gray-600 mr-2"></i>
+                                <span class="text-sm">Export Data</span>
+                            </button>
+                            <button class="w-full text-left p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors duration-300">
+                                <i class="fas fa-trash text-red-600 mr-2"></i>
+                                <span class="text-sm text-red-600">Delete Account</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html> 
