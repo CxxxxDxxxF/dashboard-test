@@ -133,6 +133,13 @@ function initializeCharts() {
                         plugins: {
                             legend: {
                                 display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Engagement Overview',
+                                font: { size: 20, weight: 'bold' },
+                                align: 'start',
+                                color: '#111'
                             }
                         },
                         scales: {

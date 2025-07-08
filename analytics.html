@@ -193,19 +193,21 @@
             
             <!-- Charts Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 animate-fade-in">
-                <!-- Engagement Trend Chart -->
+                <!-- Engagement Overview Chart -->
                 <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold">Engagement Trend</h3>
+                        <!-- Removed: <h3 class="text-lg font-semibold">Engagement Overview</h3> -->
                         <div class="flex space-x-2">
-                            <button class="px-3 py-1 text-sm bg-red-50 text-red-700 rounded-lg">Instagram</button>
-                            <button class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-lg">Facebook</button>
-                            <button class="px-3 py-1 text-sm bg-gray-100 text-gray-600 rounded-lg">Twitter</button>
+                            <select id="engagementRange" class="bg-gray-100 border-0 text-sm rounded-lg px-3 py-1" title="Select time range" aria-label="Select engagement time range">
+                                <option value="7">Last 7 days</option>
+                                <option value="14">Last 14 days</option>
+                                <option value="30">Last 30 days</option>
+                            </select>
                         </div>
                     </div>
                     <div class="chart-container">
                         <div class="bg-gray-100 rounded-lg h-full flex items-center justify-center text-gray-400">
-                            <canvas id="engagementTrendChart" width="400" height="250"></canvas>
+                            <canvas id="engagementChart" width="600" height="250"></canvas>
                         </div>
                     </div>
                 </div>
