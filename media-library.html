@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Rutgers University Social Media Media Library">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://m.stripe.network; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="Permissions-Policy" content="fullscreen=(self)">
+    <title>Media Library - Rutgers University Social Media Manager</title>
+    <link rel="stylesheet" href="dist/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
+        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu">
+            <i class="fas fa-bars text-red-700"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar fixed h-full bg-white shadow-lg w-64 flex flex-col animate-fade-in">
+        <!-- Logo -->
+        <div class="p-4 flex items-center justify-between border-b border-gray-200 animate-fade-in">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNDQzAwMzMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UlU8L3RleHQ+Cjwvc3ZnPgo=" alt="Rutgers Logo" class="w-10 h-10 rounded-full transition-transform duration-300 hover:scale-110">
+                <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
+            </div>
+            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul>
+                <li>
+                    <a href="index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-text ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="nav-text ml-3">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calendar.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="nav-text ml-3">Calendar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="post-composer.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-pen"></i>
+                        <span class="nav-text ml-3">Post Composer</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="media-library.html" class="flex items-center px-6 py-3 text-red-700 bg-red-50 border-l-4 border-red-600">
+                        <i class="fas fa-image"></i>
+                        <span class="nav-text ml-3">Media Library</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="academic-events.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="nav-text ml-3">Academic Events</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-cog"></i>
+                        <span class="nav-text ml-3">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- User Profile -->
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlNWU3ZWYiLz4KPHN2ZyB4PSIxMCIgeT0iMTAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5Y2EzYWYiIHN0cm9rZS13aWR0aD0iMiI+CjxwYXRoIGQ9Ik0yMCAyMS4xMlYxOWE0IDQgMCAwIDAtNC00SDhhNCA0IDAgMCAwLTQgNHYyIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCIvPgo8L3N2Zz4K" alt="User Profile" class="w-10 h-10 rounded-full">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">John Smith</p>
+                    <p class="text-xs text-gray-500">Marketing Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="contentArea" class="content-area min-h-screen ml-64 animate-fade-in">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm py-4 px-6 flex justify-between items-center animate-fade-in">
+            <h1 class="text-2xl font-bold text-red-800">Media Library</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="p-6 animate-fade-in">
+            <!-- Media Library Header -->
+            <div class="gradient-bg rounded-xl p-6 text-white mb-6 animate-fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Media Library</h2>
+                        <p class="opacity-90">Organize and manage all your social media assets in one place.</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex space-x-3">
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <i class="fas fa-upload mr-2"></i>Upload Media
+                        </button>
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <i class="fas fa-folder-plus mr-2"></i>New Album
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <div class="relative">
+                            <input type="text" placeholder="Search media..." class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            <option>All Types</option>
+                            <option>Images</option>
+                            <option>Videos</option>
+                            <option>Documents</option>
+                        </select>
+                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            <option>All Albums</option>
+                            <option>Campus Life</option>
+                            <option>Events</option>
+                            <option>Students</option>
+                        </select>
+                        <button class="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Media Grid -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-semibold">All Media (247 items)</h3>
+                    <div class="flex items-center space-x-2">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                    <!-- Media Item 1 -->
+                    <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <div class="aspect-square bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
+                            <i class="fas fa-image text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-medium truncate">Campus Sunset</p>
+                            <p class="text-xs text-gray-500">2.4 MB • JPG</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Item 2 -->
+                    <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <div class="aspect-square bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                            <i class="fas fa-video text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-medium truncate">Student Interview</p>
+                            <p class="text-xs text-gray-500">15.2 MB • MP4</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Item 3 -->
+                    <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <div class="aspect-square bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                            <i class="fas fa-image text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-medium truncate">Graduation Ceremony</p>
+                            <p class="text-xs text-gray-500">3.1 MB • JPG</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Item 4 -->
+                    <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <div class="aspect-square bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                            <i class="fas fa-image text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-medium truncate">Library Interior</p>
+                            <p class="text-xs text-gray-500">1.8 MB • JPG</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Item 5 -->
+                    <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <div class="aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                            <i class="fas fa-video text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-medium truncate">Campus Tour</p>
+                            <p class="text-xs text-gray-500">28.7 MB • MP4</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Item 6 -->
+                    <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                        <div class="aspect-square bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+                            <i class="fas fa-image text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-sm font-medium truncate">Sports Event</p>
+                            <p class="text-xs text-gray-500">4.2 MB • JPG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Albums Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
+                <!-- Recent Albums -->
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Recent Albums</h3>
+                        <button class="text-sm text-red-600 hover:underline">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-folder text-red-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-sm">Campus Life</h4>
+                                <p class="text-xs text-gray-500">45 items • Updated 2 days ago</p>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-folder text-blue-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-sm">Events</h4>
+                                <p class="text-xs text-gray-500">23 items • Updated 1 week ago</p>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-folder text-green-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-sm">Students</h4>
+                                <p class="text-xs text-gray-500">67 items • Updated 3 days ago</p>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Storage Usage -->
+                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                    <h3 class="text-lg font-semibold mb-4">Storage Usage</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium">Total Storage</span>
+                                <span class="text-sm text-gray-500">2.4 GB / 10 GB</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-red-600 h-2 rounded-full" style="width: 24%"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center p-3 bg-red-50 rounded-lg">
+                                <i class="fas fa-image text-red-600 text-xl mb-2"></i>
+                                <p class="text-sm font-medium">Images</p>
+                                <p class="text-xs text-gray-500">1.2 GB</p>
+                            </div>
+                            <div class="text-center p-3 bg-blue-50 rounded-lg">
+                                <i class="fas fa-video text-blue-600 text-xl mb-2"></i>
+                                <p class="text-sm font-medium">Videos</p>
+                                <p class="text-xs text-gray-500">1.1 GB</p>
+                            </div>
+                        </div>
+                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+                            <i class="fas fa-upload mr-2"></i>Upload More Media
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html> 
