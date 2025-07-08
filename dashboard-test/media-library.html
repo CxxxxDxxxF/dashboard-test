@@ -14,7 +14,7 @@
 <body class="bg-gray-50">
     <!-- Mobile Menu Button -->
     <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
-        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu">
+        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu" type="button">
             <i class="fas fa-bars text-red-700"></i>
         </button>
     </div>
@@ -27,7 +27,7 @@
                 <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNDQzAwMzMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UlU8L3RleHQ+Cjwvc3ZnPgo=" alt="Rutgers Logo" class="w-10 h-10 rounded-full transition-transform duration-300 hover:scale-110">
                 <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
             </div>
-            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar">
+            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar" type="button">
                 <i class="fas fa-chevron-left"></i>
             </button>
         </div>
@@ -94,13 +94,13 @@
             <h1 class="text-2xl font-bold text-red-800">Media Library</h1>
             <div class="flex items-center space-x-4">
                 <div class="relative">
-                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications" type="button">
                         <i class="fas fa-bell"></i>
                         <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
                     </button>
                 </div>
                 <div class="relative">
-                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode">
+                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode" type="button">
                         <i class="fas fa-moon"></i>
                     </button>
                 </div>
@@ -117,10 +117,10 @@
                         <p class="opacity-90">Organize and manage all your social media assets in one place.</p>
                     </div>
                     <div class="mt-4 md:mt-0 flex space-x-3">
-                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
                             <i class="fas fa-upload mr-2"></i>Upload Media
                         </button>
-                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
                             <i class="fas fa-folder-plus mr-2"></i>New Album
                         </button>
                     </div>
@@ -137,19 +137,19 @@
                         </div>
                     </div>
                     <div class="flex space-x-2">
-                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" title="Filter by media type">
                             <option>All Types</option>
                             <option>Images</option>
                             <option>Videos</option>
                             <option>Documents</option>
                         </select>
-                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" title="Filter by album">
                             <option>All Albums</option>
                             <option>Campus Life</option>
                             <option>Events</option>
                             <option>Students</option>
                         </select>
-                        <button class="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                        <button class="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300" type="button" title="Filter">
                             <i class="fas fa-filter"></i>
                         </button>
                     </div>
@@ -161,10 +161,10 @@
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-lg font-semibold">All Media (247 items)</h3>
                     <div class="flex items-center space-x-2">
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300" type="button" title="Grid view">
                             <i class="fas fa-th-large"></i>
                         </button>
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300" type="button" title="List view">
                             <i class="fas fa-list"></i>
                         </button>
                     </div>
@@ -178,13 +178,13 @@
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="View">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Download">
                                     <i class="fas fa-download"></i>
                                 </button>
                             </div>
@@ -202,13 +202,13 @@
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="View">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Download">
                                     <i class="fas fa-download"></i>
                                 </button>
                             </div>
@@ -226,13 +226,13 @@
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="View">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Download">
                                     <i class="fas fa-download"></i>
                                 </button>
                             </div>
@@ -250,13 +250,13 @@
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="View">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Download">
                                     <i class="fas fa-download"></i>
                                 </button>
                             </div>
@@ -274,13 +274,13 @@
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="View">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Download">
                                     <i class="fas fa-download"></i>
                                 </button>
                             </div>
@@ -298,13 +298,13 @@
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="View">
                                     <i class="fas fa-eye"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" type="button" title="Download">
                                     <i class="fas fa-download"></i>
                                 </button>
                             </div>
@@ -323,7 +323,7 @@
                 <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold">Recent Albums</h3>
-                        <button class="text-sm text-red-600 hover:underline">View All</button>
+                        <button class="text-sm text-red-600 hover:underline" type="button">View All</button>
                     </div>
                     <div class="space-y-4">
                         <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
@@ -384,7 +384,7 @@
                                 <p class="text-xs text-gray-500">1.1 GB</p>
                             </div>
                         </div>
-                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
+                        <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors duration-300" type="button">
                             <i class="fas fa-upload mr-2"></i>Upload More Media
                         </button>
                     </div>

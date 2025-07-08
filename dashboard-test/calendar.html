@@ -14,7 +14,7 @@
 <body class="bg-gray-50">
     <!-- Mobile Menu Button -->
     <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
-        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu">
+        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu" type="button">
             <i class="fas fa-bars text-red-700"></i>
         </button>
     </div>
@@ -27,7 +27,7 @@
                 <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNDQzAwMzMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UlU8L3RleHQ+Cjwvc3ZnPgo=" alt="Rutgers Logo" class="w-10 h-10 rounded-full transition-transform duration-300 hover:scale-110">
                 <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
             </div>
-            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar">
+            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar" type="button">
                 <i class="fas fa-chevron-left"></i>
             </button>
         </div>
@@ -94,13 +94,13 @@
             <h1 class="text-2xl font-bold text-red-800">Calendar</h1>
             <div class="flex items-center space-x-4">
                 <div class="relative">
-                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications" type="button">
                         <i class="fas fa-bell"></i>
                         <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
                     </button>
                 </div>
                 <div class="relative">
-                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode">
+                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode" type="button">
                         <i class="fas fa-moon"></i>
                     </button>
                 </div>
@@ -117,10 +117,10 @@
                         <p class="opacity-90">Plan and schedule your social media content across all platforms.</p>
                     </div>
                     <div class="mt-4 md:mt-0 flex space-x-3">
-                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
                             <i class="fas fa-plus mr-2"></i>New Event
                         </button>
-                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
                             <i class="fas fa-download mr-2"></i>Export
                         </button>
                     </div>
@@ -131,18 +131,18 @@
             <div class="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" type="button" title="Previous month">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <h3 class="text-xl font-semibold">December 2024</h3>
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" type="button" title="Next month">
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
                     <div class="flex space-x-2">
-                        <button class="px-4 py-2 text-sm bg-red-50 text-red-700 rounded-lg font-medium">Month</button>
-                        <button class="px-4 py-2 text-sm bg-gray-100 text-gray-600 rounded-lg">Week</button>
-                        <button class="px-4 py-2 text-sm bg-gray-100 text-gray-600 rounded-lg">Day</button>
+                        <button class="px-4 py-2 text-sm bg-red-50 text-red-700 rounded-lg font-medium" type="button">Month</button>
+                        <button class="px-4 py-2 text-sm bg-gray-100 text-gray-600 rounded-lg" type="button">Week</button>
+                        <button class="px-4 py-2 text-sm bg-gray-100 text-gray-600 rounded-lg" type="button">Day</button>
                     </div>
                 </div>
             </div>
