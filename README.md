@@ -1,3 +1,19 @@
+---
+title: "Rutgers University Social Media Dashboard"
+description: "A modern, animated, accessible dashboard for managing Rutgers University social media accounts."
+emoji: "📊"
+colorFrom: "red"
+colorTo: "purple"
+creator: "cjruizz99"
+tags:
+  - dashboard
+  - tailwindcss
+  - accessibility
+  - animation
+  - university
+  - social-media
+---
+
 # Rutgers University Social Media Dashboard
 
 A modern, responsive dashboard for managing social media accounts at Rutgers University.
