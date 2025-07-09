@@ -105,3 +105,8 @@ a:focus {
   vertical-align: middle;
   transform: translateY(2px);
 }
+
+.icon-nudge-trending {
+  vertical-align: middle;
+  transform: translateY(3px);
+}
