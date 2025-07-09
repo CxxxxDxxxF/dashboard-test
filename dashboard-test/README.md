@@ -6,6 +6,7 @@ colorTo: "purple"
 sdk: static
 app_file: index.html
 pinned: false
+hf_oauth: true
 ---
 
 # Rutgers University Social Media Dashboard
