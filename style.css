@@ -96,3 +96,7 @@ a:focus {
     border-radius: 0.5rem;
     margin: 0.5rem 0;
 }
+
+.icon-nudge {
+  transform: translateY(1px);
+}
