@@ -15,7 +15,11 @@
     <!-- Mobile Menu Button -->
     <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
         <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu">
-            <i class="fas fa-bars text-red-700"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="4" y1="6" x2="20" y2="6"/>
+                <line x1="4" y1="12" x2="20" y2="12"/>
+                <line x1="4" y1="18" x2="20" y2="18"/>
+            </svg>
         </button>
     </div>
 
@@ -28,7 +32,9 @@
                 <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
             </div>
             <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar">
-                <i class="fas fa-chevron-left"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
             </button>
         </div>
         
@@ -37,38 +43,59 @@
             <ul>
                 <li>
                     <a href="index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-home"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
                         <span class="nav-text ml-3">Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="analytics.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-chart-line"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                            <polyline points="16 7 22 7 22 13"/>
+                        </svg>
                         <span class="nav-text ml-3">Analytics</span>
                     </a>
                 </li>
                 <li>
                     <a href="calendar.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-calendar-alt"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <rect width="18" height="18" x="3" y="4" rx="2"/>
+                            <path d="M8 2v4M16 2v4M3 10h18"/>
+                        </svg>
                         <span class="nav-text ml-3">Calendar</span>
                     </a>
                 </li>
                 <li>
                     <a href="post-composer.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-pen"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                            <path d="M2 2l7.586 7.586"/>
+                            <circle cx="11" cy="11" r="2"/>
+                        </svg>
                         <span class="nav-text ml-3">Post Composer</span>
                     </a>
                 </li>
                 <li>
                     <a href="media-library.html" class="flex items-center px-6 py-3 text-red-700 bg-red-50 border-l-4 border-red-600">
-                        <i class="fas fa-image"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <rect width="18" height="18" x="3" y="3" rx="2"/>
+                            <circle cx="9" cy="9" r="2"/>
+                            <path d="M21 15l-5-5L5 21"/>
+                        </svg>
                         <span class="nav-text ml-3">Media Library</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="settings.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-cog"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 16 4.6a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.14.31.22.65.22 1s-.08.69-.22 1z"/>
+                        </svg>
                         <span class="nav-text ml-3">Settings</span>
                     </a>
                 </li>
@@ -95,13 +122,18 @@
             <div class="flex items-center space-x-4">
                 <div class="relative">
                     <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications">
-                        <i class="fas fa-bell"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                            <path d="m13.73 21a2 2 0 0 1-3.46 0"/>
+                        </svg>
                         <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
                     </button>
                 </div>
                 <div class="relative">
                     <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -137,19 +169,19 @@
                         </div>
                     </div>
                     <div class="flex space-x-2">
-                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" title="Filter by media type" aria-label="Filter by media type">
                             <option>All Types</option>
                             <option>Images</option>
                             <option>Videos</option>
                             <option>Documents</option>
                         </select>
-                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                        <select class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" title="Filter by album" aria-label="Filter by album">
                             <option>All Albums</option>
                             <option>Campus Life</option>
                             <option>Events</option>
                             <option>Students</option>
                         </select>
-                        <button class="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                        <button class="px-4 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-300" title="Apply filters" aria-label="Apply filters">
                             <i class="fas fa-filter"></i>
                         </button>
                     </div>
@@ -161,10 +193,10 @@
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-lg font-semibold">All Media (247 items)</h3>
                     <div class="flex items-center space-x-2">
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300" title="Grid view" aria-label="Grid view">
                             <i class="fas fa-th-large"></i>
                         </button>
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300" title="List view" aria-label="List view">
                             <i class="fas fa-list"></i>
                         </button>
                     </div>
@@ -174,18 +206,36 @@
                     <!-- Media Item 1 -->
                     <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         <div class="aspect-square bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center">
-                            <i class="fas fa-image text-white text-2xl"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-white text-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                <circle cx="9" cy="9" r="2"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-eye"></i>
+                                <!-- Eye/View -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="View" title="View">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M22 12c-2.5 5-7.5 5-10 5s-7.5 0-10-5 7.5-5 10-5 7.5 0 10 5z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-edit"></i>
+                                <!-- Edit -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Edit" title="Edit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M15.232 5.232l3.536 3.536"/>
+                                    <path d="M9 13l6-6 3 3-6 6H9v-3z"/>
+                                    <path d="M16 3a2.828 2.828 0 1 1 4 4L7 20H3v-4L16 3z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-download"></i>
+                                <!-- Download -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Download" title="Download">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                  </svg>
                                 </button>
                             </div>
                         </div>
@@ -198,18 +248,35 @@
                     <!-- Media Item 2 -->
                     <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         <div class="aspect-square bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                            <i class="fas fa-video text-white text-2xl"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-white text-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="2" y="7" width="15" height="10" rx="2"/>
+                                <polygon points="23 7 16 12 23 17 23 7"/>
+                            </svg>
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-eye"></i>
+                                <!-- Eye/View -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="View" title="View">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M22 12c-2.5 5-7.5 5-10 5s-7.5 0-10-5 7.5-5 10-5 7.5 0 10 5z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-edit"></i>
+                                <!-- Edit -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Edit" title="Edit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M15.232 5.232l3.536 3.536"/>
+                                    <path d="M9 13l6-6 3 3-6 6H9v-3z"/>
+                                    <path d="M16 3a2.828 2.828 0 1 1 4 4L7 20H3v-4L16 3z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-download"></i>
+                                <!-- Download -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Download" title="Download">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                  </svg>
                                 </button>
                             </div>
                         </div>
@@ -222,18 +289,36 @@
                     <!-- Media Item 3 -->
                     <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         <div class="aspect-square bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-                            <i class="fas fa-image text-white text-2xl"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-white text-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                <circle cx="9" cy="9" r="2"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-eye"></i>
+                                <!-- Eye/View -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="View" title="View">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M22 12c-2.5 5-7.5 5-10 5s-7.5 0-10-5 7.5-5 10-5 7.5 0 10 5z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-edit"></i>
+                                <!-- Edit -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Edit" title="Edit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M15.232 5.232l3.536 3.536"/>
+                                    <path d="M9 13l6-6 3 3-6 6H9v-3z"/>
+                                    <path d="M16 3a2.828 2.828 0 1 1 4 4L7 20H3v-4L16 3z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-download"></i>
+                                <!-- Download -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Download" title="Download">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                  </svg>
                                 </button>
                             </div>
                         </div>
@@ -246,18 +331,36 @@
                     <!-- Media Item 4 -->
                     <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         <div class="aspect-square bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
-                            <i class="fas fa-image text-white text-2xl"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-white text-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                <circle cx="9" cy="9" r="2"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-eye"></i>
+                                <!-- Eye/View -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="View" title="View">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M22 12c-2.5 5-7.5 5-10 5s-7.5 0-10-5 7.5-5 10-5 7.5 0 10 5z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-edit"></i>
+                                <!-- Edit -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Edit" title="Edit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M15.232 5.232l3.536 3.536"/>
+                                    <path d="M9 13l6-6 3 3-6 6H9v-3z"/>
+                                    <path d="M16 3a2.828 2.828 0 1 1 4 4L7 20H3v-4L16 3z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-download"></i>
+                                <!-- Download -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Download" title="Download">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                  </svg>
                                 </button>
                             </div>
                         </div>
@@ -270,18 +373,35 @@
                     <!-- Media Item 5 -->
                     <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         <div class="aspect-square bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                            <i class="fas fa-video text-white text-2xl"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-white text-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="2" y="7" width="15" height="10" rx="2"/>
+                                <polygon points="23 7 16 12 23 17 23 7"/>
+                            </svg>
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-eye"></i>
+                                <!-- Eye/View -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="View" title="View">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M22 12c-2.5 5-7.5 5-10 5s-7.5 0-10-5 7.5-5 10-5 7.5 0 10 5z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-edit"></i>
+                                <!-- Edit -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Edit" title="Edit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M15.232 5.232l3.536 3.536"/>
+                                    <path d="M9 13l6-6 3 3-6 6H9v-3z"/>
+                                    <path d="M16 3a2.828 2.828 0 1 1 4 4L7 20H3v-4L16 3z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-download"></i>
+                                <!-- Download -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Download" title="Download">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                  </svg>
                                 </button>
                             </div>
                         </div>
@@ -294,18 +414,36 @@
                     <!-- Media Item 6 -->
                     <div class="group relative bg-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                         <div class="aspect-square bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
-                            <i class="fas fa-image text-white text-2xl"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-white text-2xl" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                <circle cx="9" cy="9" r="2"/>
+                                <path d="M21 15l-5-5L5 21"/>
+                            </svg>
                         </div>
                         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-2">
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-eye"></i>
+                                <!-- Eye/View -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="View" title="View">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="2"/>
+                                    <path d="M22 12c-2.5 5-7.5 5-10 5s-7.5 0-10-5 7.5-5 10-5 7.5 0 10 5z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-edit"></i>
+                                <!-- Edit -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Edit" title="Edit">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M15.232 5.232l3.536 3.536"/>
+                                    <path d="M9 13l6-6 3 3-6 6H9v-3z"/>
+                                    <path d="M16 3a2.828 2.828 0 1 1 4 4L7 20H3v-4L16 3z"/>
+                                  </svg>
                                 </button>
-                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600">
-                                    <i class="fas fa-download"></i>
+                                <!-- Download -->
+                                <button class="p-2 bg-white rounded-full text-gray-700 hover:text-red-600" aria-label="Download" title="Download">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                  </svg>
                                 </button>
                             </div>
                         </div>
@@ -328,13 +466,19 @@
                     <div class="space-y-4">
                         <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
                             <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-3">
-                                <i class="fas fa-folder text-red-600"></i>
+                                <!-- Folder (albums) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2z"/>
+                                </svg>
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-medium text-sm">Campus Life</h4>
                                 <p class="text-xs text-gray-500">45 items • Updated 2 days ago</p>
                             </div>
-                            <i class="fas fa-chevron-right text-gray-400"></i>
+                            <!-- Chevron Right (albums) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                              <polyline points="9 18 15 12 9 6"/>
+                            </svg>
                         </div>
                         <div class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300 cursor-pointer">
                             <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
@@ -374,18 +518,33 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="text-center p-3 bg-red-50 rounded-lg">
-                                <i class="fas fa-image text-red-600 text-xl mb-2"></i>
+                                <!-- Image (storage) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-red-600 text-xl mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                  <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                  <circle cx="9" cy="9" r="2"/>
+                                  <path d="M21 15l-5-5L5 21"/>
+                                </svg>
                                 <p class="text-sm font-medium">Images</p>
                                 <p class="text-xs text-gray-500">1.2 GB</p>
                             </div>
                             <div class="text-center p-3 bg-blue-50 rounded-lg">
-                                <i class="fas fa-video text-blue-600 text-xl mb-2"></i>
+                                <!-- Video (storage) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon text-blue-600 text-xl mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                  <rect x="2" y="7" width="15" height="10" rx="2"/>
+                                  <polygon points="23 7 16 12 23 17 23 7"/>
+                                </svg>
                                 <p class="text-sm font-medium">Videos</p>
                                 <p class="text-xs text-gray-500">1.1 GB</p>
                             </div>
                         </div>
                         <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors duration-300">
-                            <i class="fas fa-upload mr-2"></i>Upload More Media
+                            <!-- Upload (storage) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                              <polyline points="17 8 12 3 7 8"/>
+                              <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            Upload More Media
                         </button>
                     </div>
                 </div>
