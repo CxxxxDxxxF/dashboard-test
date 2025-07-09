@@ -9,13 +9,12 @@
     <meta http-equiv="Permissions-Policy" content="fullscreen=(self)">
     <title>Calendar - Rutgers University Social Media Manager</title>
     <link rel="stylesheet" href="dist/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-50">
     <!-- Mobile Menu Button -->
     <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
-        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu">
-            <i class="fas fa-bars text-red-700"></i>
+        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-menu" width="20" height="20" fill="none" stroke="#CC0033" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Menu"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
         </button>
     </div>
 
@@ -27,8 +26,8 @@
                 <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNDQzAwMzMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UlU8L3RleHQ+Cjwvc3ZnPgo=" alt="Rutgers Logo" class="w-10 h-10 rounded-full transition-transform duration-300 hover:scale-110">
                 <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
             </div>
-            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar">
-                <i class="fas fa-chevron-left"></i>
+            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-chevron-left" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Collapse sidebar"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
         </div>
         
@@ -37,38 +36,38 @@
             <ul>
                 <li>
                     <a href="index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-home"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-home" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Dashboard"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                         <span class="nav-text ml-3">Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="analytics.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-chart-line"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-trending-up" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Analytics"><polyline points="22,7 13.5,15.5 8.5,10.5 2,17"/><polyline points="16,7 22,7 22,13"/></svg>
                         <span class="nav-text ml-3">Analytics</span>
                     </a>
                 </li>
                 <li>
                     <a href="calendar.html" class="flex items-center px-6 py-3 text-red-700 bg-red-50 border-l-4 border-red-600">
-                        <i class="fas fa-calendar-alt"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-calendar" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Calendar"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                         <span class="nav-text ml-3">Calendar</span>
                     </a>
                 </li>
                 <li>
                     <a href="post-composer.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-pen"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-pen-tool" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Post Composer"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
                         <span class="nav-text ml-3">Post Composer</span>
                     </a>
                 </li>
                 <li>
                     <a href="media-library.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-image"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-image" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Media Library"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
                         <span class="nav-text ml-3">Media Library</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="settings.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
-                        <i class="fas fa-cog"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-settings" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                         <span class="nav-text ml-3">Settings</span>
                     </a>
                 </li>
@@ -94,14 +93,14 @@
             <h1 class="text-2xl font-bold text-red-800">Calendar</h1>
             <div class="flex items-center space-x-4">
                 <div class="relative">
-                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications">
-                        <i class="fas fa-bell"></i>
+                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-bell" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Notifications"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="m13.73 21a2 2 0 0 1-3.46 0"/></svg>
                         <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
                     </button>
                 </div>
                 <div class="relative">
-                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon"></i>
+                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-moon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Toggle dark mode"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
                     </button>
                 </div>
             </div>
@@ -117,11 +116,11 @@
                         <p class="opacity-90">Plan and schedule your social media content across all platforms.</p>
                     </div>
                     <div class="mt-4 md:mt-0 flex space-x-3">
-                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
-                            <i class="fas fa-plus mr-2"></i>New Event
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-plus mr-2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Plus"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Event
                         </button>
-                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
-                            <i class="fas fa-download mr-2"></i>Export
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-download mr-2" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export
                         </button>
                     </div>
                 </div>
@@ -131,12 +130,12 @@
             <div class="bg-white rounded-xl shadow-sm p-6 mb-6 animate-fade-in">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <div class="flex items-center space-x-4 mb-4 md:mb-0">
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Previous month">
-                            <i class="fas fa-chevron-left"></i>
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Previous month" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-chevron-left" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Previous month"><polyline points="15 18 9 12 15 6"/></svg>
                         </button>
                         <h3 class="text-xl font-semibold">December 2024</h3>
-                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Next month">
-                            <i class="fas fa-chevron-right"></i>
+                        <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Next month" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-chevron-right" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Next month"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                     </div>
                     <div class="flex space-x-2">
@@ -187,7 +186,7 @@
                         <div class="text-sm font-medium">1</div>
                         <div class="mt-1">
                             <div class="bg-red-100 text-red-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fas fa-instagram mr-1"></i>Holiday Post
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Holiday Post
                             </div>
                         </div>
                     </div>
@@ -200,7 +199,7 @@
                         <div class="text-sm font-medium">3</div>
                         <div class="mt-1">
                             <div class="bg-blue-100 text-blue-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fab fa-facebook-f mr-1"></i>Student Spotlight
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Student Spotlight
                             </div>
                         </div>
                     </div>
@@ -213,7 +212,7 @@
                         <div class="text-sm font-medium">5</div>
                         <div class="mt-1">
                             <div class="bg-purple-100 text-purple-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fab fa-twitter mr-1"></i>Event Reminder
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>Event Reminder
                             </div>
                         </div>
                     </div>
@@ -230,7 +229,7 @@
                         <div class="text-sm font-medium">8</div>
                         <div class="mt-1">
                             <div class="bg-green-100 text-green-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fas fa-calendar mr-1"></i>Academic Event
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Calendar"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Academic Event
                             </div>
                         </div>
                     </div>
@@ -247,7 +246,7 @@
                         <div class="text-sm font-medium">11</div>
                         <div class="mt-1">
                             <div class="bg-red-100 text-red-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fas fa-instagram mr-1"></i>Campus Tour
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Campus Tour
                             </div>
                         </div>
                     </div>
@@ -268,7 +267,7 @@
                         <div class="text-sm font-medium">15</div>
                         <div class="mt-1">
                             <div class="bg-blue-100 text-blue-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fab fa-facebook-f mr-1"></i>Alumni Event
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Alumni Event
                             </div>
                         </div>
                     </div>
@@ -293,7 +292,7 @@
                         <div class="text-sm font-medium">20</div>
                         <div class="mt-1">
                             <div class="bg-purple-100 text-purple-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fab fa-twitter mr-1"></i>Research Highlight
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>Research Highlight
                             </div>
                         </div>
                     </div>
@@ -318,7 +317,7 @@
                         <div class="text-sm font-medium">25</div>
                         <div class="mt-1">
                             <div class="bg-red-100 text-red-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fas fa-instagram mr-1"></i>Holiday Post
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Holiday Post
                             </div>
                         </div>
                     </div>
@@ -347,7 +346,7 @@
                         <div class="text-sm font-medium">31</div>
                         <div class="mt-1">
                             <div class="bg-yellow-100 text-yellow-700 text-xs p-1 rounded mb-1 truncate">
-                                <i class="fas fa-calendar mr-1"></i>New Year Post
+                                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1" width="12" height="12" fill="none" stroke="#ca8a04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Calendar"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>New Year Post
                             </div>
                         </div>
                     </div>
@@ -365,19 +364,19 @@
                     <div class="space-y-3">
                         <div class="flex items-center p-3 bg-red-50 rounded-lg">
                             <div class="bg-red-100 p-2 rounded-lg mr-3">
-                                <i class="fab fa-facebook-f text-red-600"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-medium text-sm">Alumni Event Promotion</h4>
                                 <p class="text-xs text-gray-500">Scheduled for 2:00 PM</p>
                             </div>
-                            <button class="text-red-600 hover:text-red-700" title="Edit event">
-                                <i class="fas fa-edit"></i>
+                            <button class="text-red-600 hover:text-red-700" title="Edit event" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                             </button>
                         </div>
                         <div class="flex items-center p-3 bg-gray-50 rounded-lg">
                             <div class="bg-gray-100 p-2 rounded-lg mr-3">
-                                <i class="fas fa-clock text-gray-600"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Clock"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-medium text-sm">No more events today</h4>
@@ -396,7 +395,7 @@
                     <div class="space-y-3">
                         <div class="flex items-center p-3 bg-blue-50 rounded-lg">
                             <div class="bg-blue-100 p-2 rounded-lg mr-3">
-                                <i class="fab fa-twitter text-blue-600"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-medium text-sm">Research Highlight</h4>
@@ -406,7 +405,7 @@
                         </div>
                         <div class="flex items-center p-3 bg-red-50 rounded-lg">
                             <div class="bg-red-100 p-2 rounded-lg mr-3">
-                                <i class="fas fa-instagram text-red-600"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-medium text-sm">Holiday Post</h4>
@@ -416,7 +415,7 @@
                         </div>
                         <div class="flex items-center p-3 bg-yellow-50 rounded-lg">
                             <div class="bg-yellow-100 p-2 rounded-lg mr-3">
-                                <i class="fas fa-calendar text-yellow-600"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="#ca8a04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Calendar"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-medium text-sm">New Year Post</h4>
