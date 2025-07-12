@@ -11,135 +11,196 @@ hf_oauth: true
 
 # Rutgers University Social Media Dashboard
 
-A modern, responsive dashboard for managing social media accounts at Rutgers University.
+A modern, responsive social media management dashboard built with Tailwind CSS, DaisyUI, and Chart.js. Designed specifically for Rutgers University's social media team with enhanced visual hierarchy and interactive features.
 
-## Features
+## ✨ New Features & Enhancements
 
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
-- **Real-time Analytics**: Engagement charts and statistics
-- **Post Management**: View, edit, and manage social media posts
-- **Event Calendar**: Track upcoming academic events
-- **AI Recommendations**: Smart suggestions for posting times and content
-- **Dark Mode Toggle**: Switch between light and dark themes
-- **Accessibility**: WCAG compliant with proper ARIA labels and keyboard navigation
+### 🎨 Visual Improvements
+- **Enhanced Stat Cards**: Gradient backgrounds, better typography, and improved visual hierarchy
+- **Interactive Welcome Banner**: Dynamic background patterns, status indicators, and dual action buttons
+- **Improved Chart Integration**: Multi-platform data visualization with export functionality
+- **Better Color Scheme**: Consistent Rutgers branding with enhanced contrast and accessibility
 
-## Recent Fixes Applied
+### 🚀 Interactive Elements
+- **Hover Effects**: Smooth transitions and micro-interactions throughout the interface
+- **Scroll Animations**: Intersection Observer for stat cards and content sections
+- **Enhanced Dropdowns**: Better styling and improved user experience
+- **Modal Improvements**: Rich content display with engagement metrics
 
-### 1. Accessibility Improvements
-- Added `title` and `aria-label` attributes to all interactive elements
-- Fixed missing accessible names for buttons and form controls
-- Improved keyboard navigation and focus indicators
+### 📊 Enhanced Analytics
+- **Multi-Platform Charts**: Separate Instagram and Facebook engagement tracking
+- **Export Functionality**: Download charts as PNG images
+- **Interactive Tooltips**: Rich data display on chart hover
+- **Time Range Selector**: DaisyUI-styled dropdown for different time periods
 
-### 2. Content Security Policy (CSP)
-- Added proper CSP meta tag to allow necessary resources
-- Configured to allow inline scripts, external CDNs, and data URIs
-- Prevents XSS attacks while maintaining functionality
+### 🤖 AI Recommendations
+- **Priority Badges**: Visual indicators for recommendation importance
+- **Interactive Cards**: Click animations and actionable content
+- **Hashtag Tags**: Visual display of trending hashtags
+- **Content Ideas**: Direct integration with post composer
 
-### 3. Resource Loading Issues
-- Replaced external placeholder images with embedded SVG data URIs
-- Added error handling for Chart.js loading failures
-- Improved fallback content when resources fail to load
+### 🎯 UI/UX Improvements
+- **DaisyUI Integration**: Professional component library for consistent design
+- **Alpine.js**: Lightweight JavaScript framework for reactive interactions
+- **Better Typography**: Improved font hierarchy and readability
+- **Enhanced Icons**: Consistent Lucide icon usage throughout
 
-### 4. External Link Security
-- Added `rel="noopener noreferrer"` to all external links
-- Prevents potential security vulnerabilities from external sites
+## 🛠️ Technology Stack
 
-### 5. Code Organization
-- Moved inline styles to external CSS file (`style.css`)
-- Improved maintainability and performance
-- Better separation of concerns
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Styling**: Tailwind CSS 3.4.0, DaisyUI 4.7.2
+- **Charts**: Chart.js 4.4.1
+- **Interactions**: Alpine.js 3.13.5
+- **Icons**: Lucide SVG Icons
+- **Build Tool**: PostCSS, Autoprefixer
 
-### 6. Error Handling
-- Added try-catch blocks around Chart.js initialization
-- Graceful degradation when external resources fail
-- Console warnings for debugging
+## 📦 Installation
 
-## Browser Compatibility
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd rutgers-dashboard
+   ```
 
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-## Performance Notes
-
-- Uses Tailwind CSS CDN (not recommended for production)
-- Consider installing Tailwind locally for production use
-- Chart.js is loaded from CDN with fallback handling
-
-## Development
-
-### Prerequisites
-- Node.js (v16 or higher)
-- npm (v8 or higher)
-
-### Setup and Build
-
-1. **Install dependencies:**
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-2. **Build for development:**
+3. **Build the project**
    ```bash
+   # Development build with watch mode
    npm run dev
-   # or
-   ./build.sh
-   ```
-
-3. **Build for production:**
-   ```bash
+   
+   # Production build (minified)
    npm run build:prod
-   # or
-   ./build.sh prod
    ```
 
-4. **Open the dashboard:**
-   - Open `index.html` in a web browser
-   - For local development, you can use a simple HTTP server:
-     ```bash
-     npx serve .
-     # or
-     python -m http.server 8000
-     ```
+4. **Open in browser**
+   ```bash
+   # Open index.html in your browser
+   # Or use a local server
+   python -m http.server 8000
+   ```
 
-### Build Process
-- Tailwind CSS is compiled from `src/input.css` to `dist/styles.css`
-- JavaScript is externalized to `static/js/main.js`
-- CSP-compliant with nonce-based script loading
-- Production builds are minified and optimized
+## 🎨 Design System
 
-## File Structure
+### Color Palette
+- **Primary**: Rutgers Red (#CC0033)
+- **Secondary**: Blue (#2563eb)
+- **Accent**: Purple (#9333ea)
+- **Success**: Green (#36d399)
+- **Warning**: Yellow (#fbbd23)
+- **Error**: Red (#f87272)
 
-```
-dashboard-test/
-├── index.html              # Main dashboard page
-├── all-posts.html          # Posts listing page
-├── package.json            # Node.js dependencies and scripts
-├── tailwind.config.js      # Tailwind CSS configuration
-├── postcss.config.js       # PostCSS configuration
-├── build.sh               # Build automation script
-├── src/
-│   └── input.css          # Source CSS for Tailwind processing
-├── dist/
-│   └── styles.css         # Compiled CSS (generated)
-├── static/
-│   └── js/
-│       └── main.js        # Externalized JavaScript
-└── README.md              # This file
-```
+### Typography
+- **Font Family**: Poppins (Google Fonts)
+- **Headings**: Bold weights for hierarchy
+- **Body**: Regular weight for readability
 
-## Known Issues
+### Components
+- **Cards**: Soft shadows, rounded corners, hover effects
+- **Buttons**: Gradient backgrounds, smooth transitions
+- **Charts**: Custom styling with Rutgers branding
+- **Modals**: Backdrop blur, smooth animations
 
-- ~~Tailwind CSS CDN warning~~ ✅ **Fixed** - Now uses local build
-- ~~Feature policy warnings~~ ✅ **Fixed** - Removed unsupported policies
-- ~~CSP warnings~~ ✅ **Fixed** - Proper CSP with nonce-based scripts
-- Some browser feature policy warnings (non-critical, browser-specific)
+## 📱 Responsive Design
 
-## Future Improvements
+The dashboard is fully responsive with:
+- **Mobile-first approach**
+- **Collapsible sidebar** for mobile devices
+- **Adaptive grid layouts**
+- **Touch-friendly interactions**
 
-- [ ] Implement local Tailwind CSS build
-- [ ] Add more interactive features
-- [ ] Implement real data integration
-- [ ] Add user authentication
-- [ ] Create mobile app version
+## 🔧 Customization
+
+### Adding New Pages
+1. Create a new HTML file in the root directory
+2. Copy the sidebar structure from existing pages
+3. Update navigation links in all pages
+4. Add page-specific styles in `src/input.css`
+
+### Modifying Colors
+1. Update the color palette in `tailwind.config.js`
+2. Modify DaisyUI theme colors
+3. Rebuild the CSS with `npm run build:prod`
+
+### Adding New Charts
+1. Create chart data in `static/js/main.js`
+2. Initialize Chart.js with custom options
+3. Add chart container to HTML
+4. Style with Tailwind classes
+
+## 🚀 Performance Optimizations
+
+- **Minified CSS** for production
+- **Optimized images** and SVGs
+- **Lazy loading** for chart components
+- **Efficient animations** with CSS transforms
+- **Reduced bundle size** with tree shaking
+
+## 📊 Analytics Features
+
+### Engagement Tracking
+- **Multi-platform data** (Instagram, Facebook)
+- **Time-based filtering** (7, 14, 30 days)
+- **Export functionality** for reports
+- **Interactive tooltips** with detailed metrics
+
+### Content Management
+- **Post scheduling** with visual calendar
+- **Engagement metrics** for each post
+- **Platform-specific** analytics
+- **Performance insights** and recommendations
+
+## 🤖 AI-Powered Features
+
+### Smart Recommendations
+- **Optimal posting times** based on engagement data
+- **Trending hashtag** suggestions
+- **Content ideas** with engagement predictions
+- **Performance optimization** tips
+
+### Automated Insights
+- **Engagement rate** analysis
+- **Growth trends** identification
+- **Content performance** scoring
+- **Audience behavior** insights
+
+## 🔒 Security & Compliance
+
+- **CSP (Content Security Policy)** enabled
+- **XSS protection** with proper input sanitization
+- **Secure external resources** loading
+- **Privacy-compliant** analytics
+
+## 📈 Future Enhancements
+
+- [ ] **Dark mode** toggle
+- [ ] **Real-time notifications**
+- [ ] **Advanced analytics** dashboard
+- [ ] **Multi-user** collaboration features
+- [ ] **API integration** with social platforms
+- [ ] **Automated posting** capabilities
+- [ ] **Advanced reporting** tools
+- [ ] **Mobile app** version
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🏫 About Rutgers University
+
+This dashboard is designed specifically for Rutgers University's social media management needs, featuring the university's official branding and color scheme.
+
+---
+
+**Built with ❤️ for Rutgers University**

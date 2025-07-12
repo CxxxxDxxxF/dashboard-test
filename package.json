@@ -13,6 +13,11 @@
     "postcss": "^8.4.32",
     "autoprefixer": "^10.4.16"
   },
+  "dependencies": {
+    "daisyui": "^4.7.2",
+    "chart.js": "^4.4.1",
+    "alpinejs": "^3.13.5"
+  },
   "keywords": ["dashboard", "social-media", "rutgers"],
   "author": "Rutgers University",
   "license": "MIT"
