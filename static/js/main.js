@@ -93,20 +93,37 @@ function initializeThemeToggle() {
  * Enhanced Chart initialization and management
  */
 function initializeCharts() {
-    // Enhanced Engagement Chart Sample Data
+    // Enhanced Engagement Chart Sample Data with realistic dates
+    const getDateLabels = (days) => {
+        const labels = [];
+        const today = new Date();
+        for (let i = days - 1; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            if (days <= 7) {
+                labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+            } else if (days <= 14) {
+                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            } else {
+                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            }
+        }
+        return labels;
+    };
+
     const engagementData = {
         7: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels: getDateLabels(7),
             instagram: [120, 150, 180, 170, 200, 220, 210],
             facebook: [80, 100, 120, 110, 140, 160, 150]
         },
         14: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels: getDateLabels(14),
             instagram: [110, 130, 140, 160, 170, 180, 175, 160, 150, 170, 190, 210, 220, 210],
             facebook: [70, 90, 100, 120, 130, 140, 135, 120, 110, 130, 150, 170, 180, 170]
         },
         30: {
-            labels: Array.from({length: 30}, (_, i) => `Day ${i+1}`),
+            labels: getDateLabels(30),
             instagram: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 230, 220, 210, 200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 120, 130],
             facebook: [60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 100, 90, 80, 70, 80, 90]
         }
@@ -183,19 +200,31 @@ function initializeCharts() {
                         scales: {
                             x: {
                                 grid: {
-                                    display: false
+                                    display: true,
+                                    color: 'rgba(0,0,0,0.05)',
+                                    drawBorder: false
                                 },
                                 ticks: {
                                     color: '#6b7280',
                                     font: {
                                         size: 12
+                                    },
+                                    maxTicksLimit: 7,
+                                    callback: function(value, index, values) {
+                                        // Show date labels for better context
+                                        const labels = this.getLabelForValue(value);
+                                        return labels;
                                     }
+                                },
+                                border: {
+                                    display: false
                                 }
                             },
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    color: 'rgba(0,0,0,0.05)'
+                                    color: 'rgba(0,0,0,0.05)',
+                                    drawBorder: false
                                 },
                                 ticks: {
                                     color: '#6b7280',
