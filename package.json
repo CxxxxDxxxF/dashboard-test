@@ -5,13 +5,21 @@
   "main": "index.html",
   "scripts": {
     "build": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
-    "build:prod": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "build:prod": "npm run build:css && npm run build:js && npm run optimize:assets",
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "build:js": "terser static/js/main.js -o dist/main.min.js --compress --mangle",
+    "optimize:assets": "node scripts/optimize-assets.js",
+    "analyze": "npm run build:prod && node scripts/analyze-bundle.js",
     "dev": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.0",
     "postcss": "^8.4.32",
-    "autoprefixer": "^10.4.16"
+    "autoprefixer": "^10.4.16",
+    "terser": "^5.24.0",
+    "imagemin": "^8.0.1",
+    "imagemin-svgo": "^3.0.0",
+    "critical": "^5.1.1"
   },
   "dependencies": {
     "daisyui": "^4.7.2",
