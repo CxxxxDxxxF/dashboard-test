@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Custom styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   body {
-    font-family: Poppins, sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
   
   /* Fix deprecated -webkit-text-size-adjust */
   html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
 }
@@ -43,7 +44,7 @@
   }
   
   .gradient-bg {
-    background: linear-gradient(135deg, #C03 0%, #990026 100%);
+    background: linear-gradient(135deg, #CC0033 0%, #990026 100%);
   }
   
   .post-card:hover {
@@ -57,7 +58,7 @@
 
 @layer utilities {
   /* Mobile responsive styles */
-  @media (width <= 768px) {
+  @media (max-width: 768px) {
     .sidebar {
       @apply fixed z-50 -translate-x-full;
     }
@@ -67,9 +68,7 @@
     }
     
     .content-area {
-      @apply transition-all duration-300 ease-in-out;
-
-      /* Remove ml-0 !important; use spacing utilities directly in HTML for better control */
+      @apply ml-0 !important;
     }
     
     .mobile-menu-btn {

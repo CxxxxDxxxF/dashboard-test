@@ -9,70 +9,6 @@
     <title>Post Composer - Rutgers University Social Media Manager</title>
     <link rel="stylesheet" href="dist/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-      /* Custom polish for post composer UI */
-      .composer-card {
-        background: rgba(255,255,255,0.9);
-        border-radius: 1rem;
-        box-shadow: 0 4px 24px 0 rgba(204,0,51,0.06);
-        border: 1px solid #f3f4f6;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        transition: box-shadow 0.3s, transform 0.3s;
-      }
-      .composer-card:hover {
-        box-shadow: 0 8px 32px 0 rgba(204,0,51,0.12);
-        transform: translateY(-2px) scale(1.01);
-      }
-      .composer-btn {
-        background: #fff;
-        color: #b91c1c;
-        padding: 0.75rem 2rem;
-        border-radius: 0.75rem;
-        font-weight: 600;
-        font-size: 1rem;
-        border: 1px solid #f3f4f6;
-        box-shadow: 0 2px 8px 0 rgba(204,0,51,0.04);
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .composer-btn:hover, .composer-btn:focus {
-        background: #f3f4f6;
-        color: #a21caf;
-        box-shadow: 0 4px 16px 0 rgba(204,0,51,0.10);
-        outline: 2px solid #b91c1c;
-      }
-      .composer-btn-primary {
-        background: #b91c1c;
-        color: #fff;
-        border: none;
-      }
-      .composer-btn-primary:hover, .composer-btn-primary:focus {
-        background: #a21caf;
-        color: #fff;
-        outline: 2px solid #a21caf;
-      }
-      .composer-icon {
-        font-size: 1.25rem;
-        margin-right: 0.5rem;
-        vertical-align: middle;
-      }
-      .composer-badge {
-        border-radius: 9999px;
-        padding: 0.25rem 0.75rem;
-        font-weight: 600;
-        font-size: 0.75rem;
-        display: inline-block;
-        margin-left: 0.5rem;
-      }
-      .composer-badge.scheduled { background: #dbeafe; color: #2563eb; }
-      .composer-badge.draft { background: #fef9c3; color: #ca8a04; }
-      .composer-badge.pending { background: #f3f4f6; color: #374151; }
-      .composer-badge.cancelled { background: #fee2e2; color: #dc2626; }
-      .composer-badge.completed { background: #dcfce7; color: #22c55e; }
-    </style>
 </head>
 <body class="bg-gray-50">
     <!-- Mobile Menu Button -->
@@ -173,18 +109,18 @@
         <!-- Main Content -->
         <main class="p-6 animate-fade-in">
             <!-- Composer Header -->
-            <div class="bg-gradient-to-r from-red-600 via-red-700 to-red-800 rounded-xl p-8 text-white mb-6 animate-fade-in shadow-soft relative overflow-hidden">
+            <div class="gradient-bg rounded-xl p-6 text-white mb-6 animate-fade-in">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div>
                         <h2 class="text-2xl font-bold mb-2">Create New Post</h2>
                         <p class="opacity-90">Compose and schedule content for all your social media platforms.</p>
                     </div>
                     <div class="mt-4 md:mt-0 flex space-x-3">
-                        <button class="composer-btn" type="button" aria-label="Save Draft">
-                            <i class="fas fa-save composer-icon"></i>Save Draft
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <i class="fas fa-save mr-2"></i>Save Draft
                         </button>
-                        <button class="composer-btn composer-btn-primary" type="button" aria-label="Publish Now">
-                            <i class="fas fa-paper-plane composer-icon"></i>Publish Now
+                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                            <i class="fas fa-paper-plane mr-2"></i>Publish Now
                         </button>
                     </div>
                 </div>
@@ -195,7 +131,7 @@
                 <!-- Main Composer -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Platform Selection -->
-                    <div class="composer-card animate-fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                         <h3 class="text-lg font-semibold mb-4">Select Platforms</h3>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-300">
@@ -230,7 +166,7 @@
                     </div>
                     
                     <!-- Content Editor -->
-                    <div class="composer-card animate-fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                         <h3 class="text-lg font-semibold mb-4">Content</h3>
                         <div class="space-y-4">
                             <div>
@@ -301,7 +237,7 @@
                 <!-- Sidebar -->
                 <div class="space-y-6">
                     <!-- Scheduling -->
-                    <div class="composer-card animate-fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                         <h3 class="text-lg font-semibold mb-4">Schedule</h3>
                         <div class="space-y-4">
                             <div>
@@ -320,7 +256,7 @@
                     </div>
                     
                     <!-- AI Suggestions -->
-                    <div class="composer-card animate-fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold">AI Suggestions</h3>
                             <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-sparkles" width="20" height="20" fill="none" stroke="#CC0033" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.07-6.07-1.41 1.41M6.34 17.66l-1.41 1.41m12.02 0-1.41-1.41M6.34 6.34l-1.41-1.41"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
@@ -342,7 +278,7 @@
                     </div>
                     
                     <!-- Preview -->
-                    <div class="composer-card animate-fade-in">
+                    <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                         <h3 class="text-lg font-semibold mb-4">Preview</h3>
                         <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
                             <div class="flex items-center mb-3">

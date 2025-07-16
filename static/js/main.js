@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.warn('Chart.js failed to load. Chart functionality will be disabled.');
         const chartElement = document.getElementById('engagementChart');
         if (chartElement) {
-            chartElement.innerHTML = '<div class="flex items-center justify-center h-full text-gray-600">Chart loading failed</div>';
+            chartElement.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">Chart loading failed</div>';
         }
     }
 
@@ -23,94 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeRecommendations();
     initializeStatCards();
     initializeGitHubIntegration();
-
-    // Chart.js demo for analytics.html
-    const chartCanvas = document.getElementById('analyticsChart');
-    const rangeSelector = document.getElementById('analyticsRange');
-    let chartInstance = null;
-    const demoData = {
-        7: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            instagram: [120, 150, 180, 170, 200, 220, 210],
-            facebook: [80, 100, 120, 110, 140, 160, 150]
-        },
-        14: {
-            labels: [
-                'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun',
-                'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
-            ],
-            instagram: [110, 130, 140, 160, 170, 180, 175, 160, 150, 170, 190, 210, 220, 210],
-            facebook: [70, 90, 100, 120, 130, 140, 135, 120, 110, 130, 150, 170, 180, 170]
-        },
-        30: {
-            labels: Array.from({length: 30}, (_, i) => `Day ${i+1}`),
-            instagram: Array.from({length: 30}, () => Math.floor(Math.random()*100+100)),
-            facebook: Array.from({length: 30}, () => Math.floor(Math.random()*80+60))
-        }
-    };
-    function renderChart(days) {
-        const data = demoData[days];
-        if (!data) return;
-        if (chartInstance) chartInstance.destroy();
-        chartInstance = new Chart(chartCanvas, {
-            type: 'line',
-            data: {
-                labels: data.labels,
-                datasets: [
-                    {
-                        label: 'Instagram',
-                        data: data.instagram,
-                        borderColor: '#CC0033',
-                        backgroundColor: 'rgba(204,0,51,0.1)',
-                        tension: 0.4,
-                        pointBackgroundColor: '#CC0033',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 6,
-                        pointHoverRadius: 8,
-                        fill: true,
-                        borderWidth: 3
-                    },
-                    {
-                        label: 'Facebook',
-                        data: data.facebook,
-                        borderColor: '#2563eb',
-                        backgroundColor: 'rgba(37,99,235,0.1)',
-                        tension: 0.4,
-                        pointBackgroundColor: '#2563eb',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 6,
-                        pointHoverRadius: 8,
-                        fill: true,
-                        borderWidth: 3
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
-    if (chartCanvas) {
-        renderChart(7);
-        if (rangeSelector) {
-            rangeSelector.addEventListener('change', function() {
-                renderChart(this.value);
-            });
-        }
-    }
 });
 
 /**
@@ -181,37 +93,20 @@ function initializeThemeToggle() {
  * Enhanced Chart initialization and management
  */
 function initializeCharts() {
-    // Enhanced Engagement Chart Sample Data with realistic dates
-    const getDateLabels = (days) => {
-        const labels = [];
-        const today = new Date();
-        for (let i = days - 1; i >= 0; i--) {
-            const date = new Date(today);
-            date.setDate(date.getDate() - i);
-            if (days <= 7) {
-                labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
-            } else if (days <= 14) {
-                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-            } else {
-                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-            }
-        }
-        return labels;
-    };
-
+    // Enhanced Engagement Chart Sample Data
     const engagementData = {
         7: {
-            labels: getDateLabels(7),
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             instagram: [120, 150, 180, 170, 200, 220, 210],
             facebook: [80, 100, 120, 110, 140, 160, 150]
         },
         14: {
-            labels: getDateLabels(14),
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             instagram: [110, 130, 140, 160, 170, 180, 175, 160, 150, 170, 190, 210, 220, 210],
             facebook: [70, 90, 100, 120, 130, 140, 135, 120, 110, 130, 150, 170, 180, 170]
         },
         30: {
-            labels: getDateLabels(30),
+            labels: Array.from({length: 30}, (_, i) => `Day ${i+1}`),
             instagram: [100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 230, 220, 210, 200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 120, 130],
             facebook: [60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 190, 180, 170, 160, 150, 140, 130, 120, 110, 100, 90, 80, 70, 80, 90]
         }
@@ -288,31 +183,19 @@ function initializeCharts() {
                         scales: {
                             x: {
                                 grid: {
-                                    display: true,
-                                    color: 'rgba(0,0,0,0.05)',
-                                    drawBorder: false
+                                    display: false
                                 },
                                 ticks: {
                                     color: '#6b7280',
                                     font: {
                                         size: 12
-                                    },
-                                    maxTicksLimit: 7,
-                                    callback: function(value, index, values) {
-                                        // Show date labels for better context
-                                        const labels = this.getLabelForValue(value);
-                                        return labels;
                                     }
-                                },
-                                border: {
-                                    display: false
                                 }
                             },
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    color: 'rgba(0,0,0,0.05)',
-                                    drawBorder: false
+                                    color: 'rgba(0,0,0,0.05)'
                                 },
                                 ticks: {
                                     color: '#6b7280',
@@ -329,7 +212,7 @@ function initializeCharts() {
             console.error('Failed to initialize chart:', error);
             const chartElement = document.getElementById('engagementChart');
             if (chartElement) {
-                chartElement.innerHTML = '<div class="flex items-center justify-center h-full text-gray-600">Chart initialization failed</div>';
+                chartElement.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">Chart initialization failed</div>';
             }
         }
     }
@@ -377,13 +260,13 @@ function initializeRecommendations() {
             const title = this.querySelector('h4').textContent;
             if (title.includes('Content Idea')) {
                 // Open post composer with the idea
-                window.location.href = 'post-composer.html';
+                console.log('Opening post composer with content idea');
             } else if (title.includes('Best Posting Time')) {
                 // Show detailed timing analysis
-                showNotification('Posting time analysis opened', 'info');
+                console.log('Showing posting time analysis');
             } else if (title.includes('Trending Hashtags')) {
                 // Show hashtag analytics
-                showNotification('Hashtag analytics opened', 'info');
+                console.log('Showing hashtag analytics');
             }
         });
     });

@@ -55,7 +55,7 @@ body {
     }
     
     .content-area {
-        margin-left: 0;
+        margin-left: 0 !important;
     }
     
     .mobile-menu-btn {
