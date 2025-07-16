@@ -1,0 +1,192 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Social media accounts
+  socialAccounts SocialAccount[]
+  
+  // Posts created by user
+  posts Post[]
+
+  // Events created by user
+  events Event[]
+
+  // Media files uploaded by user
+  mediaFiles MediaFile[]
+
+  // User settings
+  settings UserSettings?
+
+  @@map("users")
+}
+
+model SocialAccount {
+  id        String   @id @default(cuid())
+  platform  Platform
+  accountId String   @unique // External platform account ID
+  username  String
+  accessToken String?
+  refreshToken String?
+  expiresAt DateTime?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  posts  Post[]
+
+  @@unique([userId, platform])
+  @@map("social_accounts")
+}
+
+model Post {
+  id          String        @id @default(cuid())
+  title       String
+  content     String
+  mediaUrls   String[]      // Array of media file URLs
+  hashtags    String[]      // Array of hashtags
+  platforms   Platform[]    // Platforms to post to
+  scheduledAt DateTime?
+  publishedAt DateTime?
+  status      PostStatus    @default(DRAFT)
+  engagement  Engagement?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  socialAccountId String?
+  socialAccount   SocialAccount? @relation(fields: [socialAccountId], references: [id])
+
+  @@map("posts")
+}
+
+model Engagement {
+  id        String   @id @default(cuid())
+  likes     Int      @default(0)
+  comments  Int      @default(0)
+  shares    Int      @default(0)
+  clicks    Int      @default(0)
+  reach     Int      @default(0)
+  impressions Int    @default(0)
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  postId String @unique
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("engagements")
+}
+
+model Analytics {
+  id        String   @id @default(cuid())
+  platform  Platform
+  metric    String   // e.g., "followers", "engagement_rate", "reach"
+  value     Float
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@map("analytics")
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  location    String?
+  isAllDay    Boolean  @default(false)
+  color       String   @default("#3B82F6") // Blue by default
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("events")
+}
+
+model MediaFile {
+  id          String   @id @default(cuid())
+  filename    String
+  originalName String
+  mimeType    String
+  size        Int      // File size in bytes
+  url         String   // Storage URL
+  thumbnail   String?  // Thumbnail URL for images
+  tags        String[] // Array of tags
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("media_files")
+}
+
+model UserSettings {
+  id                String   @id @default(cuid())
+  theme             String   @default("light") // light, dark, auto
+  notifications     Boolean  @default(true)
+  emailNotifications Boolean @default(true)
+  language          String   @default("en")
+  timezone          String   @default("America/New_York")
+  dateFormat        String   @default("MM/DD/YYYY")
+  timeFormat        String   @default("12h") // 12h, 24h
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relationships
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_settings")
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  USER
+}
+
+enum Platform {
+  INSTAGRAM
+  FACEBOOK
+  TWITTER
+  LINKEDIN
+  TIKTOK
+}
+
+enum PostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  FAILED
+  CANCELLED
+} 
