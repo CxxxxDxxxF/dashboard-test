@@ -175,7 +175,7 @@
                                     <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
                                 </svg>
                             </div>
-                            <h2 class="text-3xl font-bold">Welcome back, John!</h2>
+                            <h2 class="text-3xl font-bold">Welcome back, Cristian!</h2>
                         </div>
                         <p class="text-lg opacity-90 mb-4">Here's what's happening with your social media accounts today.</p>
                         <div class="flex items-center gap-4 text-sm">
@@ -193,13 +193,13 @@
                         </div>
                     </div>
                     <div class="mt-6 md:mt-0 flex gap-3">
-                        <button class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-lg font-medium hover:bg-white/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-white/20" type="button">
+                        <button id="quickPostBtn" class="bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-lg font-medium hover:bg-white/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-white/20" type="button" onclick="openQuickPost()">
                             <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 5v14M5 12h14"/>
                             </svg>
                             Quick Post
                         </button>
-                        <button class="bg-white text-red-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1" type="button">
+                        <button id="createPostBtn" class="bg-white text-red-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1" type="button" onclick="openPostComposer()">
                             <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="m12 19 7-7 3 3-7 7-3-3z"/>
                                 <path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
@@ -215,7 +215,7 @@
             <!-- Enhanced Stats Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 animate-fade-in">
                 <!-- Instagram Followers Card -->
-                <div class="stat-card bg-gradient-to-br from-red-50 to-red-100 rounded-xl shadow-soft p-6 animate-bounce-in transition-all duration-300 hover:shadow-glow hover:-translate-y-2 border border-red-200/50">
+                <div class="stat-card bg-gradient-to-br from-red-50 to-red-100 rounded-xl shadow-soft p-6 animate-bounce-in transition-all duration-300 hover:shadow-glow hover:-translate-y-2 border border-red-200/50 cursor-pointer" onclick="viewInstagramAnalytics()">
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
                             <div class="flex items-center gap-2 mb-2">
@@ -226,7 +226,7 @@
                                 </svg>
                                 <p class="text-sm font-medium text-red-700">Instagram Followers</p>
                             </div>
-                            <h3 class="text-3xl font-bold text-red-800 mb-2">5,248</h3>
+                            <h3 class="text-3xl font-bold text-red-800 mb-2" id="instagramFollowers">5,248</h3>
                             <div class="flex items-center gap-2">
                                 <div class="flex items-center text-sm text-green-600 font-medium">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2">
@@ -246,10 +246,11 @@
                             </svg>
                         </div>
                     </div>
+
                 </div>
                 
                 <!-- Facebook Followers Card -->
-                <div class="stat-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-soft p-6 animate-bounce-in transition-all duration-300 hover:shadow-glow hover:-translate-y-2 border border-blue-200/50">
+                <div class="stat-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-soft p-6 animate-bounce-in transition-all duration-300 hover:shadow-glow hover:-translate-y-2 border border-blue-200/50 cursor-pointer" onclick="viewFacebookAnalytics()">
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
                             <div class="flex items-center gap-2 mb-2">
@@ -258,7 +259,7 @@
                                 </svg>
                                 <p class="text-sm font-medium text-blue-700">Facebook Followers</p>
                             </div>
-                            <h3 class="text-3xl font-bold text-blue-800 mb-2">3,782</h3>
+                            <h3 class="text-3xl font-bold text-blue-800 mb-2" id="facebookFollowers">3,782</h3>
                             <div class="flex items-center gap-2">
                                 <div class="flex items-center text-sm text-green-600 font-medium">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="lucide-icon w-4 h-4 mr-1" fill="none" stroke="currentColor" stroke-width="2">
@@ -276,6 +277,7 @@
                             </svg>
                         </div>
                     </div>
+
                 </div>
                 
                 <!-- Engagement Rate Card -->

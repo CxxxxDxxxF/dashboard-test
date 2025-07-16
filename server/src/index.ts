@@ -18,7 +18,7 @@ import analyticsRouter from './routes/analytics.js';
 import socialAccountsRouter from './routes/socialAccounts.js';
 import healthRouter from './routes/health.js';
 import calendarRouter from './routes/calendar.js';
-import mediaRouter from './routes/media.js';
+// import mediaRouter from './routes/media.js';
 import composerRouter from './routes/composer.js';
 import settingsRouter from './routes/settings.js';
 
@@ -103,7 +103,7 @@ app.use('/api/posts', postsRouter);
 app.use('/api/analytics', analyticsRouter);
 app.use('/api/social-accounts', socialAccountsRouter);
 app.use('/api/calendar', calendarRouter);
-app.use('/api/media', mediaRouter);
+// app.use('/api/media', mediaRouter);
 app.use('/api/composer', composerRouter);
 app.use('/api/settings', settingsRouter);
 
