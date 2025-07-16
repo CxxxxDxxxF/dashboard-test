@@ -21,7 +21,7 @@ Create a `.env` file in your project root:
 cp env.example .env
 
 # Edit the .env file and add your API key
-HUGGINGFACE_API_KEY=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
+HUGGINGFACE_API_KEY=x
 PORT=3000
 NODE_ENV=development
 ```
