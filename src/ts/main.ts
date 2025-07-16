@@ -4,7 +4,6 @@
  */
 
 // Dashboard Interactive Functionality
-import { CalendarManager } from './components/Calendar.js';
 import { DashboardState } from './types/dashboard.js';
 
 // Global state
@@ -90,8 +89,10 @@ async function apiCall(endpoint: string, options: RequestInit = {}) {
 export function initializeDashboard() {
     console.log('Initializing Rutgers Dashboard...');
     
-    // Initialize components
-    // Calendar.initialize(); // Commented out for now
+    // Initialize components only if we're on the right page
+    if (window.location.pathname.includes('calendar.html')) {
+        // Calendar.initialize(); // Only initialize on calendar page
+    }
     
     // Load initial data
     loadDashboardData();
