@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
     "build:prod": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
-    "dev": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch"
+    "dev": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
+    "start": "python3 -m http.server 8000",
+    "deploy:test": "npm run build:prod && echo '✅ Production build ready for deployment!'"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.0",

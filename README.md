@@ -74,14 +74,38 @@ A modern, responsive social media management dashboard built with Tailwind CSS, 
    
    # Production build (minified)
    npm run build:prod
+   
+   # Test production deployment
+   npm run deploy:test
    ```
 
-4. **Open in browser**
+4. **Start local server**
    ```bash
-   # Open index.html in your browser
+   npm start
    # Or use a local server
    python -m http.server 8000
    ```
+
+## 🚀 Quick Deploy
+
+### Netlify (Recommended)
+1. Connect your GitHub repository to Netlify
+2. Build command: `./build.sh prod`
+3. Publish directory: `.`
+4. Deploy automatically on push to main branch
+
+### Vercel
+1. Import your GitHub repository to Vercel
+2. Framework preset: Other
+3. Build command: `npm run build:prod`
+4. Output directory: `.`
+
+### GitHub Pages
+1. Push to main branch
+2. GitHub Actions will automatically build and deploy
+3. Available at: `https://yourusername.github.io/repository-name`
+
+📖 **Detailed deployment guide**: [DEPLOYMENT.md](./DEPLOYMENT.md)
 
 ## 🎨 Design System
 
