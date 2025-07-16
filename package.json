@@ -1,0 +1,40 @@
+{
+  "name": "rutgers-dashboard",
+  "version": "1.0.0",
+  "description": "Rutgers University Social Media Management Dashboard",
+  "main": "index.html",
+  "scripts": {
+    "build": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
+    "build:prod": "tailwindcss -i ./src/input.css -o ./dist/styles.css --minify",
+    "dev": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
+    "start": "node server.js",
+    "dev:server": "nodemon server.js",
+    "mcp:test": "node mcp-server.js"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "nodemon": "^3.1.10",
+    "postcss": "^8.4.32",
+    "stylelint": "^16.21.1",
+    "stylelint-config-standard": "^38.0.0",
+    "stylelint-config-tailwindcss": "^1.0.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "dependencies": {
+    "@huggingface/inference": "^4.5.1",
+    "@modelcontextprotocol/sdk": "^1.15.1",
+    "alpinejs": "^3.13.5",
+    "chart.js": "^4.5.0",
+    "cors": "^2.8.5",
+    "daisyui": "^4.7.2",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0"
+  },
+  "keywords": [
+    "dashboard",
+    "social-media",
+    "rutgers"
+  ],
+  "author": "Rutgers University",
+  "license": "MIT"
+}

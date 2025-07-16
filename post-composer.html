@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Rutgers University Social Media Post Composer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://m.stripe.network; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    <title>Post Composer - Rutgers University Social Media Manager</title>
+    <link rel="stylesheet" href="dist/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      /* Custom polish for post composer UI */
+      .composer-card {
+        background: rgba(255,255,255,0.9);
+        border-radius: 1rem;
+        box-shadow: 0 4px 24px 0 rgba(204,0,51,0.06);
+        border: 1px solid #f3f4f6;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        transition: box-shadow 0.3s, transform 0.3s;
+      }
+      .composer-card:hover {
+        box-shadow: 0 8px 32px 0 rgba(204,0,51,0.12);
+        transform: translateY(-2px) scale(1.01);
+      }
+      .composer-btn {
+        background: #fff;
+        color: #b91c1c;
+        padding: 0.75rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        font-size: 1rem;
+        border: 1px solid #f3f4f6;
+        box-shadow: 0 2px 8px 0 rgba(204,0,51,0.04);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .composer-btn:hover, .composer-btn:focus {
+        background: #f3f4f6;
+        color: #a21caf;
+        box-shadow: 0 4px 16px 0 rgba(204,0,51,0.10);
+        outline: 2px solid #b91c1c;
+      }
+      .composer-btn-primary {
+        background: #b91c1c;
+        color: #fff;
+        border: none;
+      }
+      .composer-btn-primary:hover, .composer-btn-primary:focus {
+        background: #a21caf;
+        color: #fff;
+        outline: 2px solid #a21caf;
+      }
+      .composer-icon {
+        font-size: 1.25rem;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+      }
+      .composer-badge {
+        border-radius: 9999px;
+        padding: 0.25rem 0.75rem;
+        font-weight: 600;
+        font-size: 0.75rem;
+        display: inline-block;
+        margin-left: 0.5rem;
+      }
+      .composer-badge.scheduled { background: #dbeafe; color: #2563eb; }
+      .composer-badge.draft { background: #fef9c3; color: #ca8a04; }
+      .composer-badge.pending { background: #f3f4f6; color: #374151; }
+      .composer-badge.cancelled { background: #fee2e2; color: #dc2626; }
+      .composer-badge.completed { background: #dcfce7; color: #22c55e; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden fixed top-4 left-4 z-50 animate-fade-in">
+        <button id="mobileMenuBtn" class="bg-white p-2 rounded-lg shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1" title="Toggle mobile menu" aria-label="Toggle mobile menu">
+            <i class="fas fa-bars text-red-700"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar fixed h-full bg-white shadow-lg w-64 flex flex-col animate-fade-in">
+        <!-- Logo -->
+        <div class="p-4 flex items-center justify-between border-b border-gray-200 animate-fade-in">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNDQzAwMzMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UlU8L3RleHQ+Cjwvc3ZnPgo=" alt="Rutgers Logo" class="w-10 h-10 rounded-full transition-transform duration-300 hover:scale-110">
+                <span class="logo-text ml-3 text-xl font-bold text-red-800">Rutgers University</span>
+            </div>
+            <button id="collapseBtn" class="text-gray-500 hover:text-gray-700 md:block hidden transition-transform duration-300 hover:scale-110" title="Collapse sidebar" aria-label="Collapse sidebar">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="flex-1 overflow-y-auto py-4">
+            <ul>
+                <li>
+                    <a href="index.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-text ml-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="analytics.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-chart-line"></i>
+                        <span class="nav-text ml-3">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="calendar.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="nav-text ml-3">Calendar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="post-composer.html" class="flex items-center px-6 py-3 text-red-700 bg-red-50 border-l-4 border-red-600">
+                        <i class="fas fa-pen"></i>
+                        <span class="nav-text ml-3">Post Composer</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="media-library.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-image"></i>
+                        <span class="nav-text ml-3">Media Library</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="settings.html" class="flex items-center px-6 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50">
+                        <i class="fas fa-cog"></i>
+                        <span class="nav-text ml-3">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- User Profile -->
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex items-center">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNlNWU3ZWYiLz4KPHN2ZyB4PSIxMCIgeT0iMTAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM5Y2EzYWYiIHN0cm9rZS13aWR0aD0iMiI+CjxwYXRoIGQ9Ik0yMCAyMS4xMlYxOWE0IDQgMCAwIDAtNC00SDhhNCA0IDAgMCAwLTQgNHYyIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCIvPgo8L3N2Zz4K" alt="User Profile" class="w-10 h-10 rounded-full">
+                <div class="ml-3">
+                    <p class="text-sm font-medium text-gray-900">John Smith</p>
+                    <p class="text-xs text-gray-500">Marketing Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="contentArea" class="content-area min-h-screen ml-64 animate-fade-in">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm py-4 px-6 flex justify-between items-center animate-fade-in">
+            <h1 class="text-2xl font-bold text-red-800">Post Composer</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Notifications" aria-label="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button id="themeToggle" class="p-2 text-gray-500 hover:text-gray-700 transition-transform duration-300 hover:scale-110" title="Toggle dark mode" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="p-6 animate-fade-in">
+            <!-- Composer Header -->
+            <div class="bg-gradient-to-r from-red-600 via-red-700 to-red-800 rounded-xl p-8 text-white mb-6 animate-fade-in shadow-soft relative overflow-hidden">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-2">Create New Post</h2>
+                        <p class="opacity-90">Compose and schedule content for all your social media platforms.</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex space-x-3">
+                        <button class="composer-btn" type="button" aria-label="Save Draft">
+                            <i class="fas fa-save composer-icon"></i>Save Draft
+                        </button>
+                        <button class="composer-btn composer-btn-primary" type="button" aria-label="Publish Now">
+                            <i class="fas fa-paper-plane composer-icon"></i>Publish Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Composer Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
+                <!-- Main Composer -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Platform Selection -->
+                    <div class="composer-card animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Select Platforms</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-300">
+                                <input type="checkbox" class="mr-3 text-red-600" checked>
+                                <div class="flex items-center">
+                                    <i class="fab fa-instagram text-pink-600 text-xl mr-2"></i>
+                                    <span class="font-medium">Instagram</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-300">
+                                <input type="checkbox" class="mr-3 text-red-600" checked>
+                                <div class="flex items-center">
+                                    <i class="fab fa-facebook-f text-blue-600 text-xl mr-2"></i>
+                                    <span class="font-medium">Facebook</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-300">
+                                <input type="checkbox" class="mr-3 text-red-600">
+                                <div class="flex items-center">
+                                    <i class="fab fa-twitter text-blue-400 text-xl mr-2"></i>
+                                    <span class="font-medium">Twitter</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-300">
+                                <input type="checkbox" class="mr-3 text-red-600">
+                                <div class="flex items-center">
+                                    <i class="fab fa-linkedin text-blue-700 text-xl mr-2"></i>
+                                    <span class="font-medium">LinkedIn</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Editor -->
+                    <div class="composer-card animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Content</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Post Text</label>
+                                <textarea 
+                                    class="w-full p-4 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-red-500 focus:border-transparent" 
+                                    rows="6" 
+                                    placeholder="What's happening at Rutgers University today? Share your story..."
+                                ></textarea>
+                                <div class="flex justify-between items-center mt-2">
+                                    <span class="text-sm text-gray-500">0/280 characters</span>
+                                    <div class="flex space-x-2">
+                                        <button class="text-sm text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-bold"></i>
+                                        </button>
+                                        <button class="text-sm text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-italic"></i>
+                                        </button>
+                                        <button class="text-sm text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-link"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Media Upload -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Media</label>
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-red-400 transition-colors duration-300 cursor-pointer">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                    <p class="text-lg font-medium text-gray-600 mb-2">Upload Media</p>
+                                    <p class="text-sm text-gray-500">Drag and drop images or videos here, or click to browse</p>
+                                    <input type="file" class="hidden" multiple accept="image/*,video/*">
+                                </div>
+                            </div>
+                            
+                            <!-- Hashtags -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Hashtags</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm flex items-center">
+                                        #RutgersUniversity
+                                        <button class="ml-2 text-red-500 hover:text-red-700">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </span>
+                                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center">
+                                        #ScarletKnights
+                                        <button class="ml-2 text-blue-500 hover:text-blue-700">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </span>
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm flex items-center">
+                                        #HigherEducation
+                                        <button class="ml-2 text-green-500 hover:text-green-700">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </span>
+                                    <button class="text-red-600 hover:text-red-700 text-sm">
+                                        <i class="fas fa-plus mr-1"></i>Add Hashtag
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Scheduling -->
+                    <div class="composer-card animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Schedule</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Publish Date</label>
+                                <input type="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Publish Time</label>
+                                <input type="time" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="bestTime" class="mr-3 text-red-600">
+                                <label for="bestTime" class="text-sm text-gray-700">Use best time to post</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Suggestions -->
+                    <div class="composer-card animate-fade-in">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">AI Suggestions</h3>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-sparkles" width="20" height="20" fill="none" stroke="#CC0033" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.07-6.07-1.41 1.41M6.34 17.66l-1.41 1.41m12.02 0-1.41-1.41M6.34 6.34l-1.41-1.41"/><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></svg>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-red-50 p-3 rounded-lg">
+                                <h4 class="font-medium text-red-800 text-sm mb-1">Best Posting Time</h4>
+                                <p class="text-xs text-gray-600">Today between 4-6 PM for highest engagement</p>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <h4 class="font-medium text-blue-800 text-sm mb-1">Hashtag Suggestions</h4>
+                                <p class="text-xs text-gray-600">#RutgersLife #ScarletKnights #HigherEducation</p>
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded-lg">
+                                <h4 class="font-medium text-purple-800 text-sm mb-1">Content Idea</h4>
+                                <p class="text-xs text-gray-600">Share student success stories or campus events</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Preview -->
+                    <div class="composer-card animate-fade-in">
+                        <h3 class="text-lg font-semibold mb-4">Preview</h3>
+                        <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                            <div class="flex items-center mb-3">
+                                <div class="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center text-white text-sm font-bold mr-2">RU</div>
+                                <div>
+                                    <p class="font-medium text-sm">Rutgers University</p>
+                                    <p class="text-xs text-gray-500">Just now</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700 mb-3">What's happening at Rutgers University today? Share your story...</p>
+                            <div class="bg-gray-200 rounded-lg h-32 flex items-center justify-center">
+                                <i class="fas fa-image text-gray-400 text-2xl"></i>
+                            </div>
+                            <div class="flex justify-between items-center mt-3 text-sm text-gray-500">
+                                <span>❤️ 0</span>
+                                <span>💬 0</span>
+                                <span>🔄 0</span>
+                                <span>📤 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html> 

@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+
+@layer base {
+  body {
+    font-family: Poppins, sans-serif;
+  }
+  
+  /* Fix deprecated -webkit-text-size-adjust */
+  html {
+    text-size-adjust: 100%;
+  }
+}
+
+@layer components {
+  .sidebar {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .sidebar.collapsed {
+    @apply w-20;
+  }
+  
+  .sidebar.collapsed .nav-text {
+    @apply hidden;
+  }
+  
+  .sidebar.collapsed .logo-text {
+    @apply hidden;
+  }
+  
+  .content-area {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .content-area.expanded {
+    @apply ml-20;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #C03 0%, #990026 100%);
+  }
+  
+  .post-card:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+  
+  .chart-container {
+    @apply h-80;
+  }
+}
+
+@layer utilities {
+  /* Mobile responsive styles */
+  @media (width <= 768px) {
+    .sidebar {
+      @apply fixed z-50 -translate-x-full;
+    }
+    
+    .sidebar.open {
+      @apply translate-x-0;
+    }
+    
+    .content-area {
+      @apply transition-all duration-300 ease-in-out;
+
+      /* Remove ml-0 !important; use spacing utilities directly in HTML for better control */
+    }
+    
+    .mobile-menu-btn {
+      @apply block;
+    }
+  }
+  
+  /* Accessibility improvements */
+  button:focus,
+  select:focus,
+  a:focus {
+    @apply outline-2 outline-rutgers-red outline-offset-2;
+  }
+  
+  /* Loading states */
+  .loading {
+    @apply opacity-60 pointer-events-none;
+  }
+  
+  /* Error states */
+  .error-message {
+    @apply text-red-600 bg-red-50 border border-red-200 p-3 rounded-lg my-2;
+  }
+  
+  /* Success states */
+  .success-message {
+    @apply text-green-600 bg-green-50 border border-green-200 p-3 rounded-lg my-2;
+  }
+} 

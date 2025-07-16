@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "huggingface": {
+      "command": "node",
+      "args": ["mcp-server-simple.js"],
+      "env": {
+        "HUGGINGFACE_API_KEY": "${HUGGINGFACE_API_KEY}"
+      }
+    }
+  }
+} 

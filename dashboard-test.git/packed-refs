@@ -1,0 +1,5 @@
+# pack-refs with: peeled fully-peeled sorted 
+747adc0b832471f914c0da969001966f37408ae3 refs/heads/cursor/optimize-codebase-for-performance-6612
+75d8eced651d10fc207045f422b38d7f1d331058 refs/heads/main
+747adc0b832471f914c0da969001966f37408ae3 refs/pull/1/head
+584d10550deb3580206762c2503380b80805a730 refs/pull/1/merge
