@@ -50,7 +50,7 @@
     "vite": "^7.0.4"
   },
   "dependencies": {
-    "alpinejs": "^3.13.5",
+
     "chart.js": "^4.4.1",
     "daisyui": "^4.7.2"
   },
