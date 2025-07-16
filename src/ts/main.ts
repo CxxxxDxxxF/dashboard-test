@@ -4,7 +4,7 @@
  */
 
 // Dashboard Interactive Functionality
-import { DashboardState } from './types/dashboard.js';
+import { DashboardState } from './types/dashboard';
 
 // Global state
 let dashboardState = {
@@ -285,10 +285,10 @@ function updateEngagementChart(data: any) {
     
     // Update chart data
     engagementChart.data.labels = chartData.labels;
-    if (engagementChart.data.datasets[0]) {
+    if (engagementChart.data.datasets[0] && chartData.datasets[0]) {
         (engagementChart.data.datasets[0] as any).data = chartData.datasets[0].data;
     }
-    if (engagementChart.data.datasets[1]) {
+    if (engagementChart.data.datasets[1] && chartData.datasets[1]) {
         (engagementChart.data.datasets[1] as any).data = chartData.datasets[1].data;
     }
     
