@@ -1,0 +1,106 @@
+# Rutgers Social Media Dashboard - AI Assistant Rules
+
+## Project Overview
+This is a production-ready Rutgers University Social Media Dashboard with TypeScript frontend (Tailwind CSS, DaisyUI, Chart.js) and Node.js/Express backend with PostgreSQL persistence.
+
+## Code Quality Standards
+
+### TypeScript Best Practices
+- Always use strict TypeScript with proper type annotations
+- Prefer interfaces over types for object shapes
+- Use enums for constants and status values
+- Implement proper error handling with typed errors
+- Use generics where appropriate for reusable components
+- Avoid `any` type - use `unknown` or proper typing instead
+
+### Frontend Conventions
+- Use Tailwind CSS utility classes for styling
+- Implement DaisyUI components for consistent UI
+- Use Chart.js for data visualization
+- Follow React/Component best practices
+- Implement proper accessibility (ARIA labels, semantic HTML)
+- Use TypeScript for all frontend code (no JavaScript)
+
+### Backend Conventions
+- Use Express.js with TypeScript
+- Implement proper middleware for security, logging, and error handling
+- Use Prisma ORM for database operations
+- Follow RESTful API design principles
+- Implement proper validation using Joi or similar
+- Use Winston for structured logging
+
+### Database Design
+- Use PostgreSQL with Prisma schema
+- Implement proper relationships and constraints
+- Use enums for status fields
+- Include proper indexes for performance
+- Follow naming conventions (snake_case for DB, camelCase for JS)
+
+## Security Guidelines
+- Never expose API keys or secrets in code
+- Use environment variables for configuration
+- Implement proper CORS settings
+- Use rate limiting for API endpoints
+- Validate all user inputs
+- Implement proper authentication/authorization
+
+## Testing Requirements
+- Write unit tests for all business logic
+- Implement integration tests for API endpoints
+- Use Jest for testing framework
+- Maintain good test coverage
+- Mock external dependencies
+
+## Performance Considerations
+- Implement proper caching strategies
+- Use database indexes for queries
+- Optimize bundle sizes for frontend
+- Implement lazy loading where appropriate
+- Use compression middleware
+
+## Error Handling
+- Implement proper error boundaries in frontend
+- Use structured error responses in API
+- Log errors with appropriate levels
+- Provide user-friendly error messages
+- Handle edge cases gracefully
+
+## Code Organization
+- Follow SOLID principles
+- Use proper separation of concerns
+- Implement clean architecture patterns
+- Use meaningful variable and function names
+- Add proper JSDoc comments for complex functions
+
+## Git Workflow
+- Write descriptive commit messages
+- Use conventional commit format
+- Keep commits atomic and focused
+- Update documentation with code changes
+
+## Accessibility
+- Implement proper ARIA labels
+- Ensure keyboard navigation
+- Use semantic HTML elements
+- Provide alt text for images
+- Test with screen readers
+
+## Documentation
+- Keep README files updated
+- Document API endpoints
+- Include setup instructions
+- Document environment variables
+- Provide usage examples
+
+## Social Media Integration
+- Implement proper API rate limiting
+- Handle API failures gracefully
+- Cache social media data appropriately
+- Implement proper error handling for external APIs
+- Use environment-driven configuration for API keys
+
+Remember: This is a production application for Rutgers University, so prioritize security, performance, and maintainability in all code decisions.
+description:
+globs:
+alwaysApply: false
+---

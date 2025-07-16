@@ -11,220 +11,252 @@ hf_oauth: true
 
 # Rutgers University Social Media Dashboard
 
-A modern, responsive social media management dashboard built with Tailwind CSS, DaisyUI, and Chart.js. Designed specifically for Rutgers University's social media team with enhanced visual hierarchy and interactive features.
+A modern, responsive social media management dashboard built with TypeScript, Tailwind CSS, and Node.js/Express. Features real PostgreSQL persistence, social media API integrations, and production-ready architecture.
 
-## ✨ New Features & Enhancements
+## ✨ Features
 
-### 🎨 Visual Improvements
-- **Enhanced Stat Cards**: Gradient backgrounds, better typography, and improved visual hierarchy
-- **Interactive Welcome Banner**: Dynamic background patterns, status indicators, and dual action buttons
-- **Improved Chart Integration**: Multi-platform data visualization with export functionality
-- **Better Color Scheme**: Consistent Rutgers branding with enhanced contrast and accessibility
+### 🎨 Frontend
+- **Modern UI/UX**: Tailwind CSS + DaisyUI components
+- **TypeScript**: Full type safety and IntelliSense
+- **Interactive Charts**: Chart.js with real-time data
+- **Responsive Design**: Mobile-first approach
+- **Accessibility**: WCAG 2.1 compliant
 
-### 🚀 Interactive Elements
-- **Hover Effects**: Smooth transitions and micro-interactions throughout the interface
-- **Scroll Animations**: Intersection Observer for stat cards and content sections
-- **Enhanced Dropdowns**: Better styling and improved user experience
-- **Modal Improvements**: Rich content display with engagement metrics
+### 🔧 Backend
+- **Node.js/Express**: RESTful API with TypeScript
+- **PostgreSQL**: Production-ready database with Prisma ORM
+- **Social Media APIs**: Real integrations with Instagram, Facebook, Twitter
+- **Authentication**: JWT-based auth system
+- **Rate Limiting**: API protection and monitoring
+- **Logging**: Structured logging with Winston
 
-### 📊 Enhanced Analytics
-- **Multi-Platform Charts**: Separate Instagram and Facebook engagement tracking
-- **Export Functionality**: Download charts as PNG images
-- **Interactive Tooltips**: Rich data display on chart hover
-- **Time Range Selector**: DaisyUI-styled dropdown for different time periods
-
-### 🤖 AI Recommendations
-- **Priority Badges**: Visual indicators for recommendation importance
-- **Interactive Cards**: Click animations and actionable content
-- **Hashtag Tags**: Visual display of trending hashtags
-- **Content Ideas**: Direct integration with post composer
-
-### 🎯 UI/UX Improvements
-- **DaisyUI Integration**: Professional component library for consistent design
-- **Alpine.js**: Lightweight JavaScript framework for reactive interactions
-- **Better Typography**: Improved font hierarchy and readability
-- **Enhanced Icons**: Consistent Lucide icon usage throughout
+### 📊 Analytics
+- **Real-time Metrics**: Engagement, reach, impressions
+- **Multi-platform**: Instagram, Facebook, Twitter, LinkedIn, TikTok
+- **Export Functionality**: PDF/CSV reports
+- **AI Insights**: Automated recommendations
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Styling**: Tailwind CSS 3.4.0, DaisyUI 4.7.2
-- **Charts**: Chart.js 4.4.1
-- **Interactions**: Alpine.js 3.13.5
-- **Icons**: Lucide SVG Icons
-- **Build Tool**: PostCSS, Autoprefixer
+### Frontend
+- **TypeScript** 5.3.3
+- **Tailwind CSS** 3.4.0 + **DaisyUI** 4.7.2
+- **Chart.js** 4.4.1
+- **Alpine.js** 3.13.5
 
-## 📦 Installation
+### Backend
+- **Node.js** 18+ with **Express** 4.18.2
+- **TypeScript** 5.3.3
+- **PostgreSQL** with **Prisma** ORM
+- **JWT** Authentication
+- **Winston** Logging
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd rutgers-dashboard
-   ```
+### DevOps
+- **ESLint** + **Prettier** for code quality
+- **Jest** for testing
+- **Docker** ready
+- **CI/CD** pipeline support
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+## 📦 Installation & Setup
 
-3. **Build the project**
-   ```bash
-   # Development build with watch mode
-   npm run dev
-   
-   # Production build (minified)
-   npm run build:prod
-   
-   # Test production deployment
-   npm run deploy:test
-   ```
+### Prerequisites
+- Node.js 18+ 
+- PostgreSQL 12+
+- Git
 
-4. **Start local server**
-   ```bash
-   npm start
-   # Or use a local server
-   python -m http.server 8000
-   ```
+### 1. Clone Repository
+```bash
+git clone <repository-url>
+cd rutgers-dashboard
+```
 
-## 🚀 Quick Deploy
+### 2. Frontend Setup
+```bash
+# Install dependencies
+npm install
 
-### Netlify (Recommended)
-1. Connect your GitHub repository to Netlify
-2. Build command: `./build.sh prod`
-3. Publish directory: `.`
-4. Deploy automatically on push to main branch
+# Build frontend
+npm run build:prod
 
-### Vercel
-1. Import your GitHub repository to Vercel
-2. Framework preset: Other
-3. Build command: `npm run build:prod`
-4. Output directory: `.`
+# Start development server
+npm run dev
+```
 
-### GitHub Pages
-1. Push to main branch
-2. GitHub Actions will automatically build and deploy
-3. Available at: `https://yourusername.github.io/repository-name`
+### 3. Backend Setup
+```bash
+# Navigate to server directory
+cd server
 
-📖 **Detailed deployment guide**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+# Install dependencies
+npm install
 
-## 🎨 Design System
+# Copy environment file
+cp env.example .env
 
-### Color Palette
-- **Primary**: Rutgers Red (#CC0033)
-- **Secondary**: Blue (#2563eb)
-- **Accent**: Purple (#9333ea)
-- **Success**: Green (#36d399)
-- **Warning**: Yellow (#fbbd23)
-- **Error**: Red (#f87272)
+# Configure database URL in .env
+DATABASE_URL="postgresql://username:password@localhost:5432/rutgers_dashboard?schema=public"
 
-### Typography
-- **Font Family**: Poppins (Google Fonts)
-- **Headings**: Bold weights for hierarchy
-- **Body**: Regular weight for readability
+# Generate Prisma client
+npm run db:generate
 
-### Components
-- **Cards**: Soft shadows, rounded corners, hover effects
-- **Buttons**: Gradient backgrounds, smooth transitions
-- **Charts**: Custom styling with Rutgers branding
-- **Modals**: Backdrop blur, smooth animations
+# Run database migrations
+npm run db:migrate
 
-## 📱 Responsive Design
+# Start development server
+npm run dev
+```
 
-The dashboard is fully responsive with:
-- **Mobile-first approach**
-- **Collapsible sidebar** for mobile devices
-- **Adaptive grid layouts**
-- **Touch-friendly interactions**
+### 4. Database Setup
+```bash
+# Create PostgreSQL database
+createdb rutgers_dashboard
 
-## 🔧 Customization
+# Run migrations (from server directory)
+npm run db:migrate
 
-### Adding New Pages
-1. Create a new HTML file in the root directory
-2. Copy the sidebar structure from existing pages
-3. Update navigation links in all pages
-4. Add page-specific styles in `src/input.css`
+# Seed with demo data (optional)
+npm run db:seed
+```
 
-### Modifying Colors
-1. Update the color palette in `tailwind.config.js`
-2. Modify DaisyUI theme colors
-3. Rebuild the CSS with `npm run build:prod`
+### 5. Environment Configuration
+Create `.env` file in `server/` directory:
 
-### Adding New Charts
-1. Create chart data in `static/js/main.js`
-2. Initialize Chart.js with custom options
-3. Add chart container to HTML
-4. Style with Tailwind classes
+```env
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/rutgers_dashboard?schema=public"
 
-## 🚀 Performance Optimizations
+# Server
+PORT=4000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:8000
 
-- **Minified CSS** for production
-- **Optimized images** and SVGs
-- **Lazy loading** for chart components
-- **Efficient animations** with CSS transforms
-- **Reduced bundle size** with tree shaking
+# Social Media APIs (for real integrations)
+INSTAGRAM_APP_ID=your_instagram_app_id
+INSTAGRAM_APP_SECRET=your_instagram_app_secret
+FACEBOOK_APP_ID=your_facebook_app_id
+FACEBOOK_APP_SECRET=your_facebook_app_secret
 
-## 📊 Analytics Features
+# Demo Mode (set to true for demo without API keys)
+DEMO_MODE=true
+```
 
-### Engagement Tracking
-- **Multi-platform data** (Instagram, Facebook)
-- **Time-based filtering** (7, 14, 30 days)
-- **Export functionality** for reports
-- **Interactive tooltips** with detailed metrics
+## 🚀 Development Commands
 
-### Content Management
-- **Post scheduling** with visual calendar
-- **Engagement metrics** for each post
-- **Platform-specific** analytics
-- **Performance insights** and recommendations
+### Frontend
+```bash
+# Development with hot reload
+npm run dev
 
-## 🤖 AI-Powered Features
+# Production build
+npm run build:prod
 
-### Smart Recommendations
-- **Optimal posting times** based on engagement data
-- **Trending hashtag** suggestions
-- **Content ideas** with engagement predictions
-- **Performance optimization** tips
+# Type checking
+npm run type-check
 
-### Automated Insights
-- **Engagement rate** analysis
-- **Growth trends** identification
-- **Content performance** scoring
-- **Audience behavior** insights
+# Linting
+npm run lint
+```
 
-## 🔒 Security & Compliance
+### Backend
+```bash
+# Development server
+npm run server:dev
 
-- **CSP (Content Security Policy)** enabled
-- **XSS protection** with proper input sanitization
-- **Secure external resources** loading
-- **Privacy-compliant** analytics
+# Production build
+npm run server:build
 
-## 📈 Future Enhancements
+# Start production server
+npm run server:start
 
-- [ ] **Dark mode** toggle
-- [ ] **Real-time notifications**
-- [ ] **Advanced analytics** dashboard
-- [ ] **Multi-user** collaboration features
-- [ ] **API integration** with social platforms
-- [ ] **Automated posting** capabilities
-- [ ] **Advanced reporting** tools
-- [ ] **Mobile app** version
+# Database operations
+npm run db:migrate    # Run migrations
+npm run db:studio     # Open Prisma Studio
+npm run db:seed       # Seed database
 
-## 🤝 Contributing
+# Testing
+npm run test          # Run all tests
+npm run test:backend  # Backend tests only
+npm run test:coverage # Coverage report
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+# Code quality
+npm run lint:all      # Lint frontend + backend
+npm run format        # Format all code
+```
 
-## 📄 License
+## 📊 API Endpoints
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Health Check
+- `GET /health` - Server health status
+- `GET /api/health` - Detailed health check
+- `GET /api/health/ready` - Readiness probe
+- `GET /api/health/live` - Liveness probe
 
-## 🏫 About Rutgers University
+### Posts
+- `GET /api/posts` - List posts with pagination
+- `GET /api/posts/:id` - Get specific post
+- `POST /api/posts` - Create new post
+- `PUT /api/posts/:id` - Update post
+- `DELETE /api/posts/:id` - Delete post
+- `PATCH /api/posts/:id/status` - Update post status
 
-This dashboard is designed specifically for Rutgers University's social media management needs, featuring the university's official branding and color scheme.
+### Analytics
+- `GET /api/analytics/overview` - Analytics overview
+- `GET /api/analytics/engagement` - Engagement metrics
+- `GET /api/analytics/posts` - Post performance
+- `POST /api/analytics/mock` - Create mock data
 
----
+### Social Accounts
+- `GET /api/social-accounts` - List connected accounts
+- `POST /api/social-accounts` - Connect new account
+- `PUT /api/social-accounts/:id` - Update account
+- `DELETE /api/social-accounts/:id` - Disconnect account
+- `POST /api/social-accounts/test-connection` - Test connection
 
-**Built with ❤️ for Rutgers University**
+#### Calendar API
+
+**GET /api/calendar**
+- List all calendar events
+
+**POST /api/calendar**
+- Create a new event
+
+**PUT /api/calendar/:id**
+- Update an event
+
+**DELETE /api/calendar/:id**
+- Delete an event
+
+#### Media Library API
+
+**GET /api/media**
+- List all media files
+
+**POST /api/media**
+- Upload a new media file
+
+**DELETE /api/media/:id**
+- Delete a media file
+
+#### Post Composer API
+
+**POST /api/composer/draft**
+- Save a post draft
+
+**POST /api/composer/preview**
+- Preview a post
+
+**POST /api/composer/submit**
+- Submit a post
+
+#### Settings API
+
+**GET /api/settings**
+- Get user/app settings
+
+**PUT /api/settings**
+- Update user/app settings
+
+## 🧪 Testing
+
+### Frontend Tests
+```
