@@ -19,6 +19,260 @@
     <link rel="stylesheet" href="dist/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
+        // Global functions for button handlers - defined early so they're available
+        function openQuickPost() {
+            alert('Quick Post button clicked!');
+            console.log('openQuickPost function called!');
+            // Create a quick post modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4 animate-fade-in">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-gray-800">Quick Post</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Platform</label>
+                            <select class="select select-bordered w-full">
+                                <option>Instagram</option>
+                                <option>Facebook</option>
+                                <option>Both</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea class="textarea textarea-bordered w-full h-24" placeholder="What's happening at Rutgers Golf Course?"></textarea>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="btn btn-outline flex-1" onclick="this.closest('.fixed').remove()">Cancel</button>
+                            <button class="btn btn-primary flex-1" onclick="submitQuickPost(this)">Post Now</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            console.log('Modal added to DOM');
+            
+            // Add click outside to close
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        function openPostComposer() {
+            alert('Post Composer button clicked!');
+            console.log('openPostComposer function called!');
+            // Create a full post composer modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto animate-fade-in">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800">Create Post</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Platforms</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="checkbox checkbox-primary mr-2" checked>
+                                        <span>Instagram</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="checkbox checkbox-primary mr-2" checked>
+                                        <span>Facebook</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Post Type</label>
+                                <select class="select select-bordered w-full">
+                                    <option>Image Post</option>
+                                    <option>Video Post</option>
+                                    <option>Story</option>
+                                    <option>Reel</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
+                            <textarea class="textarea textarea-bordered w-full h-32" placeholder="Share what's happening at Rutgers Golf Course..."></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Media</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors cursor-pointer">
+                                <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                <p class="text-gray-600">Click to upload image or video</p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hashtags</label>
+                            <input type="text" class="input input-bordered w-full" placeholder="#RutgersGolf #GolfLife #WeekendTeeTime">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Schedule</label>
+                                <select class="select select-bordered w-full">
+                                    <option>Post Now</option>
+                                    <option>Schedule for Later</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                                <input type="text" class="input input-bordered w-full" placeholder="Rutgers Golf Course" value="Rutgers Golf Course">
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3 pt-4">
+                            <button class="btn btn-outline flex-1" onclick="this.closest('.fixed').remove()">Save Draft</button>
+                            <button class="btn btn-primary flex-1" onclick="submitPost(this)">Create Post</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            console.log('Post Composer modal added to DOM');
+            
+            // Add click outside to close
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+
+        function submitQuickPost(button) {
+            const modal = button.closest('.fixed');
+            const textarea = modal?.querySelector('textarea');
+            const platform = modal?.querySelector('select');
+            
+            if (textarea?.value.trim()) {
+                // Show success notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 text-white';
+                notification.innerHTML = `Quick post created for ${platform?.value}!`;
+                document.body.appendChild(notification);
+                
+                modal?.remove();
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            } else {
+                // Show warning notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-yellow-500 text-white';
+                notification.innerHTML = 'Please enter a message';
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        function submitPost(button) {
+            const modal = button.closest('.fixed');
+            const textarea = modal?.querySelector('textarea');
+            
+            if (textarea?.value.trim()) {
+                // Show success notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 text-white';
+                notification.innerHTML = 'Post created and scheduled successfully!';
+                document.body.appendChild(notification);
+                
+                modal?.remove();
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            } else {
+                // Show warning notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-yellow-500 text-white';
+                notification.innerHTML = 'Please enter content for your post';
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        function viewInstagramAnalytics() {
+            // Show notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-blue-500 text-white';
+            notification.innerHTML = 'Loading Instagram Analytics...';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                window.location.href = 'analytics.html?platform=instagram';
+            }, 500);
+        }
+
+        function viewFacebookAnalytics() {
+            // Show notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-blue-500 text-white';
+            notification.innerHTML = 'Loading Facebook Analytics...';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                window.location.href = 'analytics.html?platform=facebook';
+            }, 500);
+        }
+
+        function exportChart() {
+            // Show notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-blue-500 text-white';
+            notification.innerHTML = 'Exporting chart data...';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                const successNotification = document.createElement('div');
+                successNotification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 text-white';
+                successNotification.innerHTML = 'Chart exported successfully!';
+                document.body.appendChild(successNotification);
+                
+                setTimeout(() => {
+                    successNotification.remove();
+                }, 3000);
+            }, 1000);
+        }
+    </script>
 </head>
 <body class="bg-gray-50">
     <!-- Mobile Menu Button -->
@@ -699,254 +953,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="dist/js/main.js"></script>
-    <script>
-        // Global functions for button handlers
-        function openQuickPost() {
-            // Create a quick post modal
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-            modal.innerHTML = `
-                <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4 animate-fade-in">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-gray-800">Quick Post</h3>
-                        <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Platform</label>
-                            <select class="select select-bordered w-full">
-                                <option>Instagram</option>
-                                <option>Facebook</option>
-                                <option>Both</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea class="textarea textarea-bordered w-full h-24" placeholder="What's happening at Rutgers Golf Course?"></textarea>
-                        </div>
-                        <div class="flex gap-2">
-                            <button class="btn btn-outline flex-1" onclick="this.closest('.fixed').remove()">Cancel</button>
-                            <button class="btn btn-primary flex-1" onclick="submitQuickPost(this)">Post Now</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Add click outside to close
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-
-        function openPostComposer() {
-            // Create a full post composer modal
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-            modal.innerHTML = `
-                <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto animate-fade-in">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-2xl font-bold text-gray-800">Create Post</h3>
-                        <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Platforms</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="checkbox checkbox-primary mr-2" checked>
-                                        <span>Instagram</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" class="checkbox checkbox-primary mr-2" checked>
-                                        <span>Facebook</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Post Type</label>
-                                <select class="select select-bordered w-full">
-                                    <option>Image Post</option>
-                                    <option>Video Post</option>
-                                    <option>Story</option>
-                                    <option>Reel</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
-                            <textarea class="textarea textarea-bordered w-full h-32" placeholder="Share what's happening at Rutgers Golf Course..."></textarea>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Media</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors cursor-pointer">
-                                <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                                </svg>
-                                <p class="text-gray-600">Click to upload image or video</p>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Hashtags</label>
-                            <input type="text" class="input input-bordered w-full" placeholder="#RutgersGolf #GolfLife #WeekendTeeTime">
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Schedule</label>
-                                <select class="select select-bordered w-full">
-                                    <option>Post Now</option>
-                                    <option>Schedule for Later</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                                <input type="text" class="input input-bordered w-full" placeholder="Rutgers Golf Course" value="Rutgers Golf Course">
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-3 pt-4">
-                            <button class="btn btn-outline flex-1" onclick="this.closest('.fixed').remove()">Save Draft</button>
-                            <button class="btn btn-primary flex-1" onclick="submitPost(this)">Create Post</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Add click outside to close
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                }
-            });
-        }
-
-        function submitQuickPost(button) {
-            const modal = button.closest('.fixed');
-            const textarea = modal?.querySelector('textarea');
-            const platform = modal?.querySelector('select');
-            
-            if (textarea?.value.trim()) {
-                // Show success notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 text-white';
-                notification.innerHTML = `Quick post created for ${platform?.value}!`;
-                document.body.appendChild(notification);
-                
-                modal?.remove();
-                
-                // Remove notification after 3 seconds
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            } else {
-                // Show warning notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-yellow-500 text-white';
-                notification.innerHTML = 'Please enter a message';
-                document.body.appendChild(notification);
-                
-                // Remove notification after 3 seconds
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            }
-        }
-
-        function submitPost(button) {
-            const modal = button.closest('.fixed');
-            const textarea = modal?.querySelector('textarea');
-            
-            if (textarea?.value.trim()) {
-                // Show success notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 text-white';
-                notification.innerHTML = 'Post created and scheduled successfully!';
-                document.body.appendChild(notification);
-                
-                modal?.remove();
-                
-                // Remove notification after 3 seconds
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            } else {
-                // Show warning notification
-                const notification = document.createElement('div');
-                notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-yellow-500 text-white';
-                notification.innerHTML = 'Please enter content for your post';
-                document.body.appendChild(notification);
-                
-                // Remove notification after 3 seconds
-                setTimeout(() => {
-                    notification.remove();
-                }, 3000);
-            }
-        }
-
-        function viewInstagramAnalytics() {
-            // Show notification
-            const notification = document.createElement('div');
-            notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-blue-500 text-white';
-            notification.innerHTML = 'Loading Instagram Analytics...';
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-                window.location.href = 'analytics.html?platform=instagram';
-            }, 500);
-        }
-
-        function viewFacebookAnalytics() {
-            // Show notification
-            const notification = document.createElement('div');
-            notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-blue-500 text-white';
-            notification.innerHTML = 'Loading Facebook Analytics...';
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-                window.location.href = 'analytics.html?platform=facebook';
-            }, 500);
-        }
-
-        function exportChart() {
-            // Show notification
-            const notification = document.createElement('div');
-            notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-blue-500 text-white';
-            notification.innerHTML = 'Exporting chart data...';
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-                const successNotification = document.createElement('div');
-                successNotification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 text-white';
-                successNotification.innerHTML = 'Chart exported successfully!';
-                document.body.appendChild(successNotification);
-                
-                setTimeout(() => {
-                    successNotification.remove();
-                }, 3000);
-            }, 1000);
-        }
-    </script>
 <p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" rel="noopener noreferrer">DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=cjruizz99/dashboard-test" style="color: #fff;text-decoration: underline;" target="_blank" rel="noopener noreferrer">Remix</a></p>
 
 </body>
