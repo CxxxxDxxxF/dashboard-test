@@ -88,7 +88,7 @@ export class SimpleChart {
 
     private renderStackedBars(): void {
         const chartWidth = this.width - (this.padding * 2);
-        const topPadding = 80; // Increased top padding for labels and legend
+        const topPadding = 100; // Increased top padding for labels and legend
         const chartHeight = this.height - (this.padding * 2) - topPadding;
         const numMetrics = this.data.labels.length;
         
@@ -123,11 +123,14 @@ export class SimpleChart {
             let currentY = this.height - this.padding - topPadding; // Start with top padding
             let totalValue = 0;
 
-            // Draw each dataset as a stacked segment
-            this.data.datasets.forEach((dataset, datasetIndex) => {
-                if (!dataset || !dataset.data) return;
+            // Draw each dataset as a stacked segment - REVERSE ORDER to match legend
+            // This ensures Instagram (first in legend) appears on top, Facebook (second) on bottom
+            for (let datasetIndex = this.data.datasets.length - 1; datasetIndex >= 0; datasetIndex--) {
+                const dataset = this.data.datasets[datasetIndex];
+                if (!dataset || !dataset.data) continue;
+                
                 const value = dataset.data[metricIndex];
-                if (value === undefined || value === 0) return;
+                if (value === undefined || value === 0) continue;
 
                 const segmentHeight = (value / maxTotal) * chartHeight * 0.8;
                 const segmentY = currentY - segmentHeight;
@@ -144,8 +147,11 @@ export class SimpleChart {
                 this.ctx.beginPath();
                 
                 // Different rounding based on position in stack
-                if (datasetIndex === 0) {
-                    // Bottom segment - round bottom corners
+                const isTopSegment = datasetIndex === this.data.datasets.length - 1; // First in reverse loop
+                const isBottomSegment = datasetIndex === 0; // Last in reverse loop
+                
+                if (isTopSegment) {
+                    // Top segment - round top corners only
                     this.ctx.moveTo(barX + 8, segmentY);
                     this.ctx.lineTo(barX + barWidth - 8, segmentY);
                     this.ctx.quadraticCurveTo(barX + barWidth, segmentY, barX + barWidth, segmentY + 8);
@@ -153,19 +159,17 @@ export class SimpleChart {
                     this.ctx.lineTo(barX, currentY);
                     this.ctx.lineTo(barX, segmentY + 8);
                     this.ctx.quadraticCurveTo(barX, segmentY, barX + 8, segmentY);
-                } else if (this.data.datasets && datasetIndex === this.data.datasets.length - 1) {
-                    // Top segment - round top corners
-                    this.ctx.moveTo(barX + 8, segmentY);
-                    this.ctx.lineTo(barX + barWidth - 8, segmentY);
-                    this.ctx.quadraticCurveTo(barX + barWidth, segmentY, barX + barWidth, segmentY + 8);
+                } else if (isBottomSegment) {
+                    // Bottom segment - round bottom corners only
+                    this.ctx.moveTo(barX, segmentY);
+                    this.ctx.lineTo(barX + barWidth, segmentY);
                     this.ctx.lineTo(barX + barWidth, currentY - 8);
                     this.ctx.quadraticCurveTo(barX + barWidth, currentY, barX + barWidth - 8, currentY);
                     this.ctx.lineTo(barX + 8, currentY);
                     this.ctx.quadraticCurveTo(barX, currentY, barX, currentY - 8);
-                    this.ctx.lineTo(barX, segmentY + 8);
-                    this.ctx.quadraticCurveTo(barX, segmentY, barX + 8, segmentY);
+                    this.ctx.lineTo(barX, segmentY);
                 } else {
-                    // Middle segment - no rounding
+                    // Middle segment - no rounding (seamless connection)
                     this.ctx.rect(barX, segmentY, barWidth, segmentHeight);
                 }
                 
@@ -180,13 +184,13 @@ export class SimpleChart {
 
                 currentY = segmentY;
                 totalValue += value;
-            });
+            }
 
-            // Draw total value WELL ABOVE the bar stack (clean separation)
+            // Draw total value with increased padding above the bar stack
             this.ctx.fillStyle = '#374151';
             this.ctx.font = 'bold 16px Inter, system-ui, sans-serif';
             this.ctx.textAlign = 'center';
-            this.ctx.fillText(totalValue.toLocaleString(), barX + barWidth / 2, currentY - 25);
+            this.ctx.fillText(totalValue.toLocaleString(), barX + barWidth / 2, currentY - 35); // Increased from -25 to -35
 
             // Draw metric label
             this.ctx.fillStyle = '#6B7280';
