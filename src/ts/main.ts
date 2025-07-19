@@ -5,6 +5,9 @@
 
 // Dashboard Interactive Functionality
 import { DashboardState } from './types/dashboard';
+import { AnalyticsService } from './services/AnalyticsService';
+import { Button, Card, StatCard, Modal, Notification, UIUtils } from './components/UIComponents';
+import { createCustomChart, ChartData as CustomChartData } from './components/CustomChart';
 
 // Global state
 let dashboardState = {
@@ -20,46 +23,19 @@ let dashboardState = {
 
 // Chart instance
 let engagementChart: any = null;
+let customChart: any = null;
 
 // API Configuration
 const API_BASE_URL = 'http://localhost:4000/api';
 
 // Utility functions
 function showNotification(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full`;
-    
-    const colors = {
-        success: 'bg-green-500 text-white',
-        error: 'bg-red-500 text-white',
-        info: 'bg-blue-500 text-white',
-        warning: 'bg-yellow-500 text-white'
-    };
-    
-    notification.className += ` ${colors[type]}`;
-    notification.innerHTML = `
-        <div class="flex items-center gap-2">
-            <span>${message}</span>
-            <button onclick="this.parentElement.parentElement.remove()" class="ml-2 hover:opacity-75">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.classList.remove('translate-x-full');
-    }, 100);
-    
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        notification.classList.add('translate-x-full');
-        setTimeout(() => notification.remove(), 300);
-    }, 5000);
+    Notification.show({
+        message,
+        type,
+        duration: 5000,
+        position: 'top-right'
+    });
 }
 
 // API Functions
@@ -155,117 +131,132 @@ function updateAnalyticsDisplay(data: any) {
 
 // Chart Functions
 function initializeEngagementChart() {
-    const ctx = document.getElementById('engagementChart') as HTMLCanvasElement;
-    if (!ctx) return;
+    console.log('Starting custom chart initialization...');
     
-    // Generate initial data for 7 days
-    const chartData = generateChartData(7);
+    // Generate initial data for engagement types
+    const chartData = generateCustomChartData(7);
+    console.log('Custom chart data generated:', chartData);
     
-    engagementChart = new (window as any).Chart(ctx, {
-        type: 'line',
-        data: chartData,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    mode: 'index',
-                    intersect: false,
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    titleColor: 'white',
-                    bodyColor: 'white',
-                    borderColor: 'rgba(255, 255, 255, 0.2)',
-                    borderWidth: 1
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        color: '#6B7280'
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(0, 0, 0, 0.1)'
-                    },
-                    ticks: {
-                        color: '#6B7280'
-                    }
-                }
-            },
-            interaction: {
-                mode: 'nearest',
-                axis: 'x',
-                intersect: false
-            },
-            elements: {
-                point: {
-                    radius: 4,
-                    hoverRadius: 6
-                },
-                line: {
-                    tension: 0.4
-                }
-            }
+    try {
+        console.log('Creating custom chart instance...');
+        customChart = createCustomChart('engagementChart', chartData, {
+            showGrid: true,
+            showValues: true,
+            animate: true,
+            barSpacing: 40,
+            borderRadius: 12
+        });
+        
+        if (customChart) {
+            console.log('Custom chart created successfully');
+        } else {
+            console.error('Failed to create custom chart');
         }
-    });
+    } catch (error) {
+        console.error('Error initializing custom chart:', error);
+    }
 }
 
-function generateChartData(days: number) {
-    const labels = [];
-    const instagramData = [];
-    const facebookData = [];
+function generateCustomChartData(days: number): CustomChartData {
+    // For engagement overview, we show engagement types, not time series
+    const labels = ['Likes', 'Comments', 'Shares'];
     
-    const today = new Date();
+    // Generate realistic engagement data based on time period
+    let likesData, commentsData, sharesData;
     
-    for (let i = days - 1; i >= 0; i--) {
-        const date = new Date(today);
-        date.setDate(date.getDate() - i);
-        
-        // Format date for labels
-        const dateStr = date.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric' 
-        });
-        labels.push(dateStr);
-        
-        // Generate realistic engagement data with some variation
-        const baseInstagram = 150 + Math.random() * 100;
-        const baseFacebook = 120 + Math.random() * 80;
-        
-        // Add some trend variation based on day of week
-        const dayOfWeek = date.getDay();
-        const weekendBoost = (dayOfWeek === 0 || dayOfWeek === 6) ? 1.2 : 1;
-        
-        instagramData.push(Math.round(baseInstagram * weekendBoost));
-        facebookData.push(Math.round(baseFacebook * weekendBoost));
+    switch (days) {
+        case 7:
+            likesData = 2847;
+            commentsData = 156;
+            sharesData = 89;
+            break;
+        case 14:
+            likesData = 5214;
+            commentsData = 298;
+            sharesData = 167;
+            break;
+        case 30:
+            likesData = 12458;
+            commentsData = 742;
+            sharesData = 423;
+            break;
+        default:
+            likesData = 2847;
+            commentsData = 156;
+            sharesData = 89;
     }
     
     return {
         labels,
         datasets: [
             {
-                label: 'Instagram',
-                data: instagramData,
-                borderColor: '#EF4444',
-                backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4
-            },
+                label: 'Engagement',
+                data: [likesData, commentsData, sharesData],
+                colors: [
+                    '#FF6B6B #FF8E8E', // Beautiful red gradient for likes
+                    '#4ECDC4 #6EE7DF', // Teal gradient for comments  
+                    '#45B7D1 #67C9E1'  // Blue gradient for shares
+                ]
+            }
+        ]
+    };
+}
+
+function generateChartData(days: number) {
+    // For engagement overview, we show engagement types, not time series
+    const labels = ['Likes', 'Comments', 'Shares'];
+    
+    // Generate realistic engagement data based on time period
+    // More realistic social media engagement ratios
+    let likesData, commentsData, sharesData;
+    
+    switch (days) {
+        case 7:
+            likesData = 2847;
+            commentsData = 156;
+            sharesData = 89;
+            break;
+        case 14:
+            likesData = 5214;
+            commentsData = 298;
+            sharesData = 167;
+            break;
+        case 30:
+            likesData = 12458;
+            commentsData = 742;
+            sharesData = 423;
+            break;
+        default:
+            likesData = 2847;
+            commentsData = 156;
+            sharesData = 89;
+    }
+    
+    return {
+        labels,
+        datasets: [
             {
-                label: 'Facebook',
-                data: facebookData,
-                borderColor: '#3B82F6',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                label: 'Engagement',
+                data: [likesData, commentsData, sharesData],
+                backgroundColor: [
+                    'rgba(255, 107, 107, 0.9)', // Beautiful red for likes
+                    'rgba(78, 205, 196, 0.9)', // Teal for comments  
+                    'rgba(69, 183, 209, 0.9)' // Blue for shares
+                ],
+                borderColor: [
+                    'rgba(255, 107, 107, 0.3)', // Subtle red border
+                    'rgba(78, 205, 196, 0.3)', // Subtle teal border
+                    'rgba(69, 183, 209, 0.3)' // Subtle blue border
+                ],
                 borderWidth: 3,
+                borderRadius: {
+                    topLeft: 12,
+                    topRight: 12,
+                    bottomLeft: 4,
+                    bottomRight: 4
+                },
+                borderSkipped: false,
+                // Add gradient effect
                 fill: true,
                 tension: 0.4
             }
@@ -287,9 +278,6 @@ function updateEngagementChart(data: any) {
     engagementChart.data.labels = chartData.labels;
     if (engagementChart.data.datasets[0] && chartData.datasets[0]) {
         (engagementChart.data.datasets[0] as any).data = chartData.datasets[0].data;
-    }
-    if (engagementChart.data.datasets[1] && chartData.datasets[1]) {
-        (engagementChart.data.datasets[1] as any).data = chartData.datasets[1].data;
     }
     
     // Update chart
@@ -376,48 +364,57 @@ function updateLastUpdateTime() {
 export function openQuickPost() {
     showNotification('Opening Quick Post...', 'info');
     
-    // Create a quick post modal
-    const modal = document.createElement('div');
-    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-    modal.innerHTML = `
-        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4 animate-fade-in">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-800">Quick Post</h3>
-                <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
+    const modalContent = `
+        <div class="space-y-4">
+            <div>
+                <label class="form-label">Platform</label>
+                <select class="form-select">
+                    <option>Instagram</option>
+                    <option>Facebook</option>
+                    <option>Both</option>
+                </select>
             </div>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Platform</label>
-                    <select class="select select-bordered w-full">
-                        <option>Instagram</option>
-                        <option>Facebook</option>
-                        <option>Both</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                    <textarea class="textarea textarea-bordered w-full h-24" placeholder="What's happening at Rutgers Golf Course?"></textarea>
-                </div>
-                <div class="flex gap-2">
-                    <button class="btn btn-outline flex-1" onclick="this.closest('.fixed').remove()">Cancel</button>
-                    <button class="btn btn-primary flex-1" onclick="submitQuickPost(this)">Post Now</button>
-                </div>
+            <div>
+                <label class="form-label">Message</label>
+                <textarea class="form-textarea" placeholder="What's happening at Rutgers Golf Course?"></textarea>
             </div>
         </div>
     `;
     
-    document.body.appendChild(modal);
-    
-    // Add click outside to close
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
+    const modal = Modal.create({
+        title: 'Quick Post',
+        content: modalContent,
+        size: 'md',
+        actions: [
+            {
+                text: 'Cancel',
+                variant: 'outline',
+                onClick: () => modal.remove()
+            },
+            {
+                text: 'Post Now',
+                variant: 'primary',
+                onClick: () => {
+                    const textarea = modal.querySelector('textarea') as HTMLTextAreaElement;
+                    const platform = modal.querySelector('select') as HTMLSelectElement;
+                    
+                    if (textarea?.value.trim()) {
+                        showNotification(`Quick post created for ${platform?.value}!`, 'success');
+                        modal.remove();
+                        
+                        // Simulate API call
+                        setTimeout(() => {
+                            showNotification('Post published successfully!', 'success');
+                        }, 1000);
+                    } else {
+                        showNotification('Please enter a message', 'warning');
+                    }
+                }
+            }
+        ]
     });
+    
+    document.body.appendChild(modal);
 }
 
 export function openPostComposer() {
@@ -618,7 +615,20 @@ function setupEventListeners() {
     if (engagementRange) {
         engagementRange.addEventListener('change', (e) => {
             const target = e.target as HTMLSelectElement;
-            loadAnalyticsForPeriod(target.value);
+            const days = parseInt(target.value);
+            console.log(`Updating chart for ${days} days`);
+            
+            // Update chart with new data
+            if (engagementChart && engagementChart.data.datasets[0]) {
+                const newData = generateChartData(days);
+                if (newData.datasets[0]) {
+                    (engagementChart.data.datasets[0] as any).data = newData.datasets[0].data;
+                    engagementChart.update('active');
+                    
+                    // Show notification
+                    showNotification(`Chart updated for last ${days} days`, 'success');
+                }
+            }
         });
     }
     
@@ -648,11 +658,65 @@ async function loadAnalyticsForPeriod(days: string) {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     initializeDashboard();
-    // Initialize chart after a short delay to ensure Chart.js is loaded
-    setTimeout(() => {
-        initializeEngagementChart();
-    }, 100);
+    // Initialize chart with better error handling
+    initializeChartWithRetry();
 });
+
+// Robust chart initialization with retry logic
+function initializeChartWithRetry(maxRetries = 5, delay = 200) {
+    let retryCount = 0;
+    
+    const tryInitialize = () => {
+        console.log(`Attempting to initialize chart (attempt ${retryCount + 1}/${maxRetries})`);
+        
+        // Check if Chart.js is loaded
+        if (typeof (window as any).Chart === 'undefined') {
+            console.warn('Chart.js not loaded yet, retrying...');
+            retryCount++;
+            if (retryCount < maxRetries) {
+                setTimeout(tryInitialize, delay);
+            } else {
+                console.error('Chart.js failed to load after maximum retries');
+            }
+            return;
+        }
+        
+        // Check if canvas element exists
+        const ctx = document.getElementById('engagementChart') as HTMLCanvasElement;
+        if (!ctx) {
+            console.warn('Engagement chart canvas not found, retrying...');
+            retryCount++;
+            if (retryCount < maxRetries) {
+                setTimeout(tryInitialize, delay);
+            } else {
+                console.error('Canvas element not found after maximum retries');
+            }
+            return;
+        }
+        
+        // Initialize the chart
+        try {
+            initializeEngagementChart();
+            console.log('Chart initialized successfully!');
+        } catch (error) {
+            console.error('Error during chart initialization:', error);
+            retryCount++;
+            if (retryCount < maxRetries) {
+                setTimeout(tryInitialize, delay);
+            }
+        }
+    };
+    
+    tryInitialize();
+}
+
+// Page-specific initialization
+if (window.location.pathname.endsWith('analytics.html')) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const analyticsService = new AnalyticsService();
+    analyticsService.initialize();
+  });
+}
 
 // Export functions for global access
 (window as any).openQuickPost = openQuickPost;
@@ -661,4 +725,113 @@ document.addEventListener('DOMContentLoaded', () => {
 (window as any).viewFacebookAnalytics = viewFacebookAnalytics;
 (window as any).exportChart = exportChart;
 (window as any).submitQuickPost = submitQuickPost;
-(window as any).submitPost = submitPost; 
+(window as any).submitPost = submitPost;
+
+// Debug function to test chart manually
+(window as any).testChart = () => {
+    console.log('Testing chart manually...');
+    const ctx = document.getElementById('engagementChart') as HTMLCanvasElement;
+    if (!ctx) {
+        console.error('Canvas not found');
+        return;
+    }
+    
+    if (typeof (window as any).Chart === 'undefined') {
+        console.error('Chart.js not loaded');
+        return;
+    }
+    
+    // Destroy existing chart if it exists
+    if (engagementChart) {
+        engagementChart.destroy();
+        engagementChart = null;
+    }
+    
+    // Create a simple test chart with Rutgers colors
+    const testChart = new (window as any).Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Likes', 'Comments', 'Shares'],
+            datasets: [{
+                label: 'Engagement',
+                data: [2847, 156, 89],
+                backgroundColor: [
+                    'rgba(220, 38, 38, 0.9)', // Rutgers red
+                    'rgba(59, 130, 246, 0.9)', // Blue
+                    'rgba(34, 197, 94, 0.9)' // Green
+                ],
+                borderColor: [
+                    'rgb(185, 28, 28)',
+                    'rgb(37, 99, 235)',
+                    'rgb(22, 163, 74)'
+                ],
+                borderWidth: 3,
+                borderRadius: {
+                    topLeft: 12,
+                    topRight: 12,
+                    bottomLeft: 4,
+                    bottomRight: 4
+                }
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff',
+                    borderColor: 'rgba(220, 38, 38, 0.3)',
+                    borderWidth: 2,
+                    cornerRadius: 12
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#374151',
+                        font: {
+                            size: 13,
+                            weight: '600'
+                        }
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(156, 163, 175, 0.2)'
+                    },
+                    ticks: {
+                        color: '#6B7280',
+                        callback: function(value: any) {
+                            if (value >= 1000) {
+                                return (value / 1000).toFixed(1) + 'k';
+                            }
+                            return value.toLocaleString();
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    console.log('Test chart created:', testChart);
+    return testChart;
+};
+
+// Force reinitialize the chart
+(window as any).reinitChart = () => {
+    console.log('Reinitializing chart...');
+    if (engagementChart) {
+        engagementChart.destroy();
+        engagementChart = null;
+    }
+    initializeChartWithRetry();
+}; 

@@ -4,6 +4,7 @@
 
 /* Custom styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('./components.css');
 
 @layer base {
   body {
@@ -230,4 +231,15 @@ svg, .icon-fix {
   max-height: 100% !important;
   box-sizing: content-box !important;
   padding: 0.1em !important;
+} 
+
+/* Staggered animation for cards */
+.animate-stagger-1 { animation-delay: 0.1s !important; }
+.animate-stagger-2 { animation-delay: 0.2s !important; }
+.animate-stagger-3 { animation-delay: 0.3s !important; }
+.animate-stagger-4 { animation-delay: 0.4s !important; }
+
+/* Enhanced shadow for hover effects */
+.hover\:shadow-glow:hover {
+  box-shadow: 0 10px 25px -3px rgba(204, 0, 51, 0.15), 0 4px 6px -2px rgba(0,0,0,0.05);
 } 

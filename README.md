@@ -11,252 +11,258 @@ hf_oauth: true
 
 # Rutgers University Social Media Dashboard
 
-A modern, responsive social media management dashboard built with TypeScript, Tailwind CSS, and Node.js/Express. Features real PostgreSQL persistence, social media API integrations, and production-ready architecture.
+A comprehensive social media management dashboard for Rutgers University, featuring analytics, content creation, scheduling, and multi-platform management capabilities.
 
-## ✨ Features
+## 🎯 Project Overview
 
-### 🎨 Frontend
-- **Modern UI/UX**: Tailwind CSS + DaisyUI components
-- **TypeScript**: Full type safety and IntelliSense
-- **Interactive Charts**: Chart.js with real-time data
-- **Responsive Design**: Mobile-first approach
-- **Accessibility**: WCAG 2.1 compliant
+This dashboard provides a complete solution for managing Rutgers University's social media presence across multiple platforms including Instagram, Facebook, and Twitter. Built with modern web technologies and designed for scalability and maintainability.
 
-### 🔧 Backend
-- **Node.js/Express**: RESTful API with TypeScript
-- **PostgreSQL**: Production-ready database with Prisma ORM
-- **Social Media APIs**: Real integrations with Instagram, Facebook, Twitter
-- **Authentication**: JWT-based auth system
-- **Rate Limiting**: API protection and monitoring
-- **Logging**: Structured logging with Winston
+## ✨ Key Features
 
-### 📊 Analytics
-- **Real-time Metrics**: Engagement, reach, impressions
-- **Multi-platform**: Instagram, Facebook, Twitter, LinkedIn, TikTok
-- **Export Functionality**: PDF/CSV reports
-- **AI Insights**: Automated recommendations
+### 📊 Analytics & Insights
+- **Real-time engagement tracking** with beautiful charts
+- **Multi-platform analytics** (Instagram, Facebook, Twitter)
+- **Performance metrics** and trend analysis
+- **Custom date range filtering** (7, 14, 30 days)
 
-## 🛠️ Technology Stack
+### 📝 Content Management
+- **Multi-platform post creation** with rich text editor
+- **Media library** with drag-and-drop upload
+- **Post scheduling** and calendar management
+- **Content templates** and AI-powered suggestions
 
-### Frontend
-- **TypeScript** 5.3.3
-- **Tailwind CSS** 3.4.0 + **DaisyUI** 4.7.2
-- **Chart.js** 4.4.1
-- **Alpine.js** 3.13.5
+### 🎨 Modern UI/UX
+- **Responsive design** that works on all devices
+- **Dark/Light theme** support
+- **Smooth animations** and transitions
+- **Accessibility compliant** (WCAG 2.1)
 
-### Backend
-- **Node.js** 18+ with **Express** 4.18.2
-- **TypeScript** 5.3.3
-- **PostgreSQL** with **Prisma** ORM
-- **JWT** Authentication
-- **Winston** Logging
+### 🔧 Technical Excellence
+- **TypeScript** for type safety
+- **Modern build system** with Vite
+- **Component-based architecture**
+- **RESTful API** with PostgreSQL database
 
-### DevOps
-- **ESLint** + **Prettier** for code quality
-- **Jest** for testing
-- **Docker** ready
-- **CI/CD** pipeline support
-
-## 📦 Installation & Setup
+## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+ 
-- PostgreSQL 12+
-- Git
+- PostgreSQL 14+
+- npm or yarn
 
-### 1. Clone Repository
+### 1. Install Dependencies
 ```bash
-git clone <repository-url>
-cd rutgers-dashboard
-```
-
-### 2. Frontend Setup
-```bash
-# Install dependencies
+# Install frontend dependencies
 npm install
 
-# Build frontend
-npm run build:prod
-
-# Start development server
-npm run dev
+# Install backend dependencies
+cd server && npm install
 ```
 
-### 3. Backend Setup
+### 2. Set Up Database
 ```bash
-# Navigate to server directory
-cd server
+# Start PostgreSQL (if not already running)
+brew services start postgresql@14
 
-# Install dependencies
-npm install
-
-# Copy environment file
-cp env.example .env
-
-# Configure database URL in .env
-DATABASE_URL="postgresql://username:password@localhost:5432/rutgers_dashboard?schema=public"
-
-# Generate Prisma client
-npm run db:generate
-
-# Run database migrations
-npm run db:migrate
-
-# Start development server
-npm run dev
-```
-
-### 4. Database Setup
-```bash
-# Create PostgreSQL database
+# Create database
 createdb rutgers_dashboard
 
-# Run migrations (from server directory)
+# Set up environment and run migrations
+cd server
+cp env.example .env
+# Edit .env with your database URL: postgresql://yourusername@localhost:5432/rutgers_dashboard?schema=public
 npm run db:migrate
-
-# Seed with demo data (optional)
-npm run db:seed
 ```
 
-### 5. Environment Configuration
-Create `.env` file in `server/` directory:
+### 3. Start Development Servers
 
-```env
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/rutgers_dashboard?schema=public"
-
-# Server
-PORT=4000
-NODE_ENV=development
-FRONTEND_URL=http://localhost:8000
-
-# Social Media APIs (for real integrations)
-INSTAGRAM_APP_ID=your_instagram_app_id
-INSTAGRAM_APP_SECRET=your_instagram_app_secret
-FACEBOOK_APP_ID=your_facebook_app_id
-FACEBOOK_APP_SECRET=your_facebook_app_secret
-
-# Demo Mode (set to true for demo without API keys)
-DEMO_MODE=true
-```
-
-## 🚀 Development Commands
-
-### Frontend
+#### Option A: Use the Development Script (Recommended)
 ```bash
-# Development with hot reload
+# Start both frontend and backend
+./dev.sh
+
+# Or start only frontend
+./dev.sh frontend
+
+# Or start only backend
+./dev.sh backend
+```
+
+#### Option B: Manual Start
+```bash
+# Terminal 1: Frontend (Vite)
 npm run dev
 
-# Production build
-npm run build:prod
-
-# Type checking
-npm run type-check
-
-# Linting
-npm run lint
+# Terminal 2: Backend (Express)
+cd server && npm run dev
 ```
+
+## 📁 Project Structure
+
+```
+dashboard-test/
+├── index.html                 # Main dashboard page
+├── analytics.html             # Analytics dashboard
+├── calendar.html              # Content calendar
+├── post-composer.html         # Post creation tool
+├── media-library.html         # Media management
+├── settings.html              # Account settings
+├── all-posts.html             # Post management
+├── src/
+│   ├── ts/                    # TypeScript source code
+│   │   ├── main.ts           # Main application logic
+│   │   ├── components/       # UI components
+│   │   │   └── UIComponents.ts # Standardized UI components
+│   │   ├── services/         # Business logic services
+│   │   │   ├── AnalyticsService.ts
+│   │   │   └── AnimationService.ts
+│   │   ├── types/           # TypeScript type definitions
+│   │   └── utils/           # Utility functions
+│   ├── components.css       # Component styles
+│   └── input.css            # Tailwind CSS input
+├── dist/                     # Compiled output
+├── server/                  # Backend (Express + PostgreSQL)
+│   ├── src/
+│   │   ├── controllers/     # API controllers
+│   │   ├── services/        # Business logic
+│   │   ├── routes/          # API routes
+│   │   ├── middleware/      # Express middleware
+│   │   └── utils/           # Server utilities
+│   └── prisma/              # Database schema and migrations
+├── vite.config.ts          # Vite configuration
+└── package.json            # Frontend dependencies
+```
+
+## 🛠 Development Commands
+
+### Frontend (Vite)
+```bash
+npm run dev          # Start Vite dev server (http://localhost:5173)
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run type-check   # TypeScript type checking
+npm run lint         # ESLint code linting
+```
+
+### Backend (Express)
+```bash
+cd server
+npm run dev          # Start Express dev server (http://localhost:4000)
+npm run build        # Build TypeScript
+npm test            # Run tests
+npm run db:studio   # Open Prisma Studio
+```
+
+### Both
+```bash
+./dev.sh            # Start both servers
+npm run lint:all    # Lint both frontend and backend
+npm run format      # Format all code
+```
+
+## 🌐 Access Points
+
+- **Frontend Dashboard**: http://localhost:5173
+- **Backend API**: http://localhost:4000/api
+- **Health Check**: http://localhost:4000/health
+- **Prisma Studio**: http://localhost:5555 (run `npm run db:studio`)
+
+## 🎨 UI Components
+
+The project includes a comprehensive UI component system:
+
+### Buttons
+- Primary, secondary, outline variants
+- Multiple sizes (xs, sm, md, lg)
+- Loading states and icons
+- Accessibility compliant
+
+### Cards
+- Default, elevated, outlined variants
+- Header, body, footer sections
+- Hover effects and animations
+
+### Charts
+- Interactive engagement charts
+- Responsive design
+- Custom tooltips and animations
+- Rutgers brand colors
+
+### Modals & Notifications
+- Responsive modal dialogs
+- Toast notifications
+- Click-outside-to-close functionality
+
+## 🔧 Technical Stack
+
+### Frontend
+- **Vite** - Fast development server with hot reload
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **DaisyUI** - Component library
+- **Chart.js** - Data visualization
+- **Alpine.js** - Lightweight JavaScript framework
 
 ### Backend
+- **Express.js** - Web framework
+- **PostgreSQL** - Database
+- **Prisma** - Database ORM
+- **TypeScript** - Type-safe server code
+- **Winston** - Logging
+- **Joi** - Validation
+
+## 🚀 Production Deployment
+
+### Vercel (Frontend)
 ```bash
-# Development server
-npm run server:dev
-
-# Production build
-npm run server:build
-
-# Start production server
-npm run server:start
-
-# Database operations
-npm run db:migrate    # Run migrations
-npm run db:studio     # Open Prisma Studio
-npm run db:seed       # Seed database
-
-# Testing
-npm run test          # Run all tests
-npm run test:backend  # Backend tests only
-npm run test:coverage # Coverage report
-
-# Code quality
-npm run lint:all      # Lint frontend + backend
-npm run format        # Format all code
+npm run build
+# Deploy dist/ folder to Vercel
 ```
 
-## 📊 API Endpoints
-
-### Health Check
-- `GET /health` - Server health status
-- `GET /api/health` - Detailed health check
-- `GET /api/health/ready` - Readiness probe
-- `GET /api/health/live` - Liveness probe
-
-### Posts
-- `GET /api/posts` - List posts with pagination
-- `GET /api/posts/:id` - Get specific post
-- `POST /api/posts` - Create new post
-- `PUT /api/posts/:id` - Update post
-- `DELETE /api/posts/:id` - Delete post
-- `PATCH /api/posts/:id/status` - Update post status
-
-### Analytics
-- `GET /api/analytics/overview` - Analytics overview
-- `GET /api/analytics/engagement` - Engagement metrics
-- `GET /api/analytics/posts` - Post performance
-- `POST /api/analytics/mock` - Create mock data
-
-### Social Accounts
-- `GET /api/social-accounts` - List connected accounts
-- `POST /api/social-accounts` - Connect new account
-- `PUT /api/social-accounts/:id` - Update account
-- `DELETE /api/social-accounts/:id` - Disconnect account
-- `POST /api/social-accounts/test-connection` - Test connection
-
-#### Calendar API
-
-**GET /api/calendar**
-- List all calendar events
-
-**POST /api/calendar**
-- Create a new event
-
-**PUT /api/calendar/:id**
-- Update an event
-
-**DELETE /api/calendar/:id**
-- Delete an event
-
-#### Media Library API
-
-**GET /api/media**
-- List all media files
-
-**POST /api/media**
-- Upload a new media file
-
-**DELETE /api/media/:id**
-- Delete a media file
-
-#### Post Composer API
-
-**POST /api/composer/draft**
-- Save a post draft
-
-**POST /api/composer/preview**
-- Preview a post
-
-**POST /api/composer/submit**
-- Submit a post
-
-#### Settings API
-
-**GET /api/settings**
-- Get user/app settings
-
-**PUT /api/settings**
-- Update user/app settings
-
-## 🧪 Testing
-
-### Frontend Tests
+### Railway/Heroku (Backend)
+```bash
+cd server
+npm run build
+# Deploy with environment variables
 ```
+
+## 🐛 Troubleshooting
+
+### Frontend Issues
+- **Build Errors**: Run `npm run type-check` to see TypeScript errors
+- **Missing Dependencies**: Run `npm install`
+- **Vite Issues**: Check `vite.config.ts` configuration
+
+### Backend Issues
+- **Database Connection**: Ensure PostgreSQL is running and `.env` is configured
+- **API Errors**: Check server logs at http://localhost:4000/health
+- **Migration Issues**: Run `npm run db:generate` then `npm run db:migrate`
+
+### Chart Issues
+- **Blank Chart**: Check browser console for errors
+- **Test Chart**: Run `testChart()` in browser console
+- **CSP Errors**: Expected when backend is not running
+
+## 📝 Development Notes
+
+- The project uses **Vite** for fast development
+- All JavaScript is compiled from TypeScript sources
+- UI components are standardized and reusable
+- Charts are interactive with Rutgers brand colors
+- Backend API is RESTful with proper error handling
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+**Built with ❤️ for Rutgers University**

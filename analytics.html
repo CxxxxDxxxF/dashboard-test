@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Rutgers University Social Media Analytics Dashboard">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://m.stripe.network; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://m.stripe.network; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' http://localhost:4000;">
     <meta property="og:title" content="Analytics - Rutgers University Social Media Manager" />
     <meta property="og:description" content="Rutgers University Social Media Analytics Dashboard" />
     <meta property="og:type" content="website" />
@@ -151,7 +151,7 @@
         <!-- Main Content -->
         <main class="p-6 animate-fade-in">
             <!-- Analytics Overview Banner -->
-            <div class="gradient-bg rounded-xl p-6 text-white mb-6 animate-fade-in">
+            <div class="gradient-bg rounded-xl p-6 text-white mb-6 animate-fade-in animate-on-scroll shadow-lg scale-100 transition-transform duration-700">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div>
                         <h2 class="text-2xl font-bold mb-2">Analytics Overview</h2>
@@ -164,7 +164,7 @@
                             <option value="90">Last 90 days</option>
                             <option value="365">Last year</option>
                         </select>
-                        <button class="bg-white text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-opacity-90 transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                        <button class="btn btn-primary" onclick="exportAnalyticsReport()">
                             Export Report
                         </button>
                     </div>
@@ -173,7 +173,7 @@
             
             <!-- Key Metrics -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 animate-fade-in">
-                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                <div class="bg-white rounded-xl shadow-soft p-6 animate-fade-in animate-stagger-1 animate-on-scroll transition-all duration-500 hover:shadow-glow hover:-translate-y-2 hover:scale-105">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500">Total Reach</p>
@@ -188,7 +188,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                <div class="bg-white rounded-xl shadow-soft p-6 animate-fade-in animate-stagger-2 animate-on-scroll transition-all duration-500 hover:shadow-glow hover:-translate-y-2 hover:scale-105">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500">Total Engagement</p>
@@ -203,7 +203,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                <div class="bg-white rounded-xl shadow-soft p-6 animate-fade-in animate-stagger-3 transition-all duration-500 hover:shadow-glow hover:-translate-y-2 hover:scale-105">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500">Click-Through Rate</p>
@@ -218,7 +218,7 @@
                     </div>
                 </div>
                 
-                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in transition-transform duration-300 hover:shadow-lg hover:-translate-y-1">
+                <div class="bg-white rounded-xl shadow-soft p-6 animate-fade-in animate-stagger-4 transition-all duration-500 hover:shadow-glow hover:-translate-y-2 hover:scale-105">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-sm text-gray-500">Conversion Rate</p>
@@ -235,7 +235,7 @@
             <!-- Charts Section -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 animate-fade-in">
                 <!-- Engagement Overview Chart -->
-                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                <div class="bg-white rounded-xl shadow-soft p-6 animate-fade-in animate-stagger-1 transition-all duration-500 hover:shadow-glow hover:-translate-y-2 hover:scale-105">
                     <div class="flex justify-between items-center mb-4">
                         <!-- No duplicate heading here -->
                         <div class="flex space-x-2">
@@ -254,10 +254,10 @@
                 </div>
                 
                 <!-- Platform Performance -->
-                <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
+                <div class="bg-white rounded-xl shadow-soft p-6 animate-fade-in animate-stagger-2 transition-all duration-500 hover:shadow-glow hover:-translate-y-2 hover:scale-105">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold">Platform Performance</h3>
-                        <button class="text-sm text-red-600 hover:underline">View Details</button>
+                        <button class="btn btn-ghost btn-sm" onclick="viewPlatformDetails()">View Details</button>
                     </div>
                     <div class="space-y-4">
                         <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -307,7 +307,7 @@
             <div class="bg-white rounded-xl shadow-sm p-6 animate-fade-in">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold">Top Performing Content</h3>
-                    <button class="text-sm text-red-600 hover:underline">View All</button>
+                    <button class="btn btn-ghost btn-sm" onclick="viewAllContent()">View All</button>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-300">
@@ -351,6 +351,59 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module">
+      import { animationService } from './src/ts/services/AnimationService';
+      document.addEventListener('DOMContentLoaded', () => {
+        animationService.initScrollAnimations();
+      });
+    </script>
     <script type="module" src="/dist/js/main.js"></script>
+    <script>
+        // Analytics page specific functions
+        function exportAnalyticsReport() {
+            // Show loading notification
+            if (window.showNotification) {
+                window.showNotification('Generating analytics report...', 'info');
+            }
+            
+            // Simulate report generation
+            setTimeout(() => {
+                if (window.showNotification) {
+                    window.showNotification('Analytics report exported successfully!', 'success');
+                }
+                // In a real app, this would trigger a download
+            }, 2000);
+        }
+        
+        function viewPlatformDetails() {
+            if (window.showNotification) {
+                window.showNotification('Opening platform details...', 'info');
+            }
+            // In a real app, this would open a detailed view
+            setTimeout(() => {
+                if (window.showNotification) {
+                    window.showNotification('Platform details loaded!', 'success');
+                }
+            }, 1000);
+        }
+        
+        function viewAllContent() {
+            if (window.showNotification) {
+                window.showNotification('Loading all content...', 'info');
+            }
+            // In a real app, this would navigate to a content list page
+            setTimeout(() => {
+                if (window.showNotification) {
+                    window.showNotification('Content list loaded!', 'success');
+                }
+            }, 1000);
+        }
+        
+        // Make functions globally available
+        window.exportAnalyticsReport = exportAnalyticsReport;
+        window.viewPlatformDetails = viewPlatformDetails;
+        window.viewAllContent = viewAllContent;
+    </script>
 </body>
 </html> 
