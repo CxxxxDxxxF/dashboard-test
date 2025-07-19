@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { logger } from '../utils/logger.js';
+import { MockDataService } from './mockDataService.js';
 
 const prisma = new PrismaClient();
 
@@ -19,26 +20,9 @@ export class SettingsService {
    * Get user settings
    */
   async getUserSettings(userId: string): Promise<any> {
-    try {
-      let settings = await prisma.userSettings.findUnique({
-        where: { userId },
-        include: {
-          user: {
-            select: { id: true, name: true, email: true }
-          }
-        }
-      });
-
-      // Create default settings if none exist
-      if (!settings) {
-        settings = await this.createDefaultSettings(userId);
-      }
-
-      return settings;
-    } catch (error) {
-      logger.error('Error fetching user settings:', error);
-      throw error;
-    }
+    // For demo purposes, always use mock data
+    logger.info('Using mock user settings data for demo');
+    return MockDataService.getMockUserSettings();
   }
 
   /**

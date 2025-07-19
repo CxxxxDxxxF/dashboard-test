@@ -7,7 +7,7 @@
 import { DashboardState } from './types/dashboard';
 import { AnalyticsService } from './services/AnalyticsService';
 import { Button, Card, StatCard, Modal, Notification, UIUtils } from './components/UIComponents';
-import { createCustomChart, ChartData as CustomChartData } from './components/CustomChart';
+import { SimpleChart, ChartData } from './components/SimpleChart';
 
 // Global state
 let dashboardState = {
@@ -23,7 +23,7 @@ let dashboardState = {
 
 // Chart instance
 let engagementChart: any = null;
-let customChart: any = null;
+let simpleChart: SimpleChart | null = null;
 
 // API Configuration
 const API_BASE_URL = 'http://localhost:4000/api';
@@ -84,150 +84,168 @@ export function initializeDashboard() {
 
 async function loadDashboardData() {
     try {
-        // Load analytics data
-        const analyticsData = await apiCall('/analytics?period=7d');
+        console.log('🔄 Loading dashboard data...');
+        
+        // Load analytics data with proper endpoint
+        console.log('📊 Fetching analytics data...');
+        const analyticsData = await apiCall('/analytics/dashboard?period=7d');
+        console.log('✅ Analytics data received:', analyticsData);
         updateAnalyticsDisplay(analyticsData);
         
         // Load recent posts
+        console.log('📝 Fetching recent posts...');
         const postsData = await apiCall('/posts?limit=5');
+        console.log('✅ Posts data received:', postsData);
         updateRecentPosts(postsData);
         
         // Load calendar events
+        console.log('📅 Fetching calendar events...');
         const eventsData = await apiCall('/calendar');
+        console.log('✅ Calendar data received:', eventsData);
         updateUpcomingEvents(eventsData);
         
     } catch (error) {
-        console.error('Failed to load dashboard data:', error);
+        console.error('❌ Failed to load dashboard data:', error);
         showNotification('Failed to load some dashboard data', 'warning');
+        
+        // Show fallback chart when API fails
+        console.log('🔄 Showing fallback chart due to API failure...');
+        createFallbackChart();
     }
 }
 
 function updateAnalyticsDisplay(data: any) {
+    console.log('📊 Updating analytics display with data:', data);
+    
+    // Check if we have valid data
+    if (!data || !data.data) {
+        console.warn('⚠️ No analytics data available, showing fallback');
+        showNoDataMessage();
+        return;
+    }
+    
+    const analytics = data.data;
+    
     // Update follower counts
     const instagramFollowers = document.getElementById('instagramFollowers');
-    if (instagramFollowers && data.instagram?.followers) {
-        instagramFollowers.textContent = data.instagram.followers.toLocaleString();
+    if (instagramFollowers && analytics.platformStats) {
+        const instagram = analytics.platformStats.find((p: any) => p.platform === 'instagram');
+        if (instagram) {
+            instagramFollowers.textContent = instagram.followers?.toLocaleString() || '0';
+        }
     }
     
     // Update other metrics
     const facebookFollowers = document.getElementById('facebookFollowers');
-    if (facebookFollowers && data.facebook?.followers) {
-        facebookFollowers.textContent = data.facebook.followers.toLocaleString();
+    if (facebookFollowers && analytics.platformStats) {
+        const facebook = analytics.platformStats.find((p: any) => p.platform === 'facebook');
+        if (facebook) {
+            facebookFollowers.textContent = facebook.followers?.toLocaleString() || '0';
+        }
     }
     
     const engagementRate = document.getElementById('engagementRate');
-    if (engagementRate && data.engagement) {
-        engagementRate.textContent = `${data.engagement.rate}%`;
+    if (engagementRate && analytics.overview) {
+        const rate = analytics.overview.averageEngagement || 0;
+        engagementRate.textContent = `${rate.toFixed(1)}%`;
     }
     
     const scheduledPosts = document.getElementById('scheduledPosts');
-    if (scheduledPosts && data.scheduled) {
-        scheduledPosts.textContent = data.scheduled.count;
+    if (scheduledPosts && analytics.overview) {
+        scheduledPosts.textContent = analytics.overview.totalPosts || '0';
     }
     
     // Update chart with new data
-    updateEngagementChart(data);
+    updateEngagementChart(analytics);
+}
+
+function showNoDataMessage() {
+    const canvas = document.getElementById('engagementChart') as HTMLCanvasElement;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Set canvas size
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * window.devicePixelRatio;
+    canvas.height = rect.height * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    
+    const width = rect.width;
+    const height = rect.height;
+    
+    // Draw background
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+    gradient.addColorStop(1, 'rgba(248, 250, 252, 0.98)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+    
+    // Draw no data message
+    ctx.fillStyle = '#6B7280';
+    ctx.font = 'bold 16px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('No engagement data available', width / 2, height / 2 - 20);
+    
+    ctx.fillStyle = '#9CA3AF';
+    ctx.font = '14px Inter, system-ui, sans-serif';
+    ctx.fillText('for this period', width / 2, height / 2 + 10);
+    
+    console.log('📊 No data message displayed');
 }
 
 // Chart Functions
 function initializeEngagementChart() {
-    console.log('Starting custom chart initialization...');
+    console.log('Starting simple chart initialization...');
     
     // Generate initial data for engagement types
-    const chartData = generateCustomChartData(7);
-    console.log('Custom chart data generated:', chartData);
+    const chartData = generateChartData(7);
+    console.log('Simple chart data generated:', chartData);
     
     try {
-        console.log('Creating custom chart instance...');
-        customChart = createCustomChart('engagementChart', chartData, {
-            showGrid: true,
-            showValues: true,
-            animate: true,
-            barSpacing: 40,
-            borderRadius: 12
-        });
+        console.log('Creating simple chart instance...');
+        simpleChart = new SimpleChart('engagementChart', chartData);
         
-        if (customChart) {
-            console.log('Custom chart created successfully');
+        if (simpleChart) {
+            console.log('Simple chart created successfully');
         } else {
-            console.error('Failed to create custom chart');
+            console.error('Failed to create simple chart');
         }
     } catch (error) {
-        console.error('Error initializing custom chart:', error);
+        console.error('Error initializing simple chart:', error);
+        createFallbackChart();
     }
 }
 
-function generateCustomChartData(days: number): CustomChartData {
+function generateChartData(days: number): ChartData {
     // For engagement overview, we show engagement types, not time series
     const labels = ['Likes', 'Comments', 'Shares'];
     
-    // Generate realistic engagement data based on time period
+    // Generate more balanced engagement data based on time period
     let likesData, commentsData, sharesData;
     
     switch (days) {
         case 7:
-            likesData = 2847;
+            likesData = 847;
             commentsData = 156;
             sharesData = 89;
             break;
         case 14:
-            likesData = 5214;
+            likesData = 1214;
             commentsData = 298;
             sharesData = 167;
             break;
         case 30:
-            likesData = 12458;
+            likesData = 2458;
             commentsData = 742;
             sharesData = 423;
             break;
         default:
-            likesData = 2847;
-            commentsData = 156;
-            sharesData = 89;
-    }
-    
-    return {
-        labels,
-        datasets: [
-            {
-                label: 'Engagement',
-                data: [likesData, commentsData, sharesData],
-                colors: [
-                    '#FF6B6B #FF8E8E', // Beautiful red gradient for likes
-                    '#4ECDC4 #6EE7DF', // Teal gradient for comments  
-                    '#45B7D1 #67C9E1'  // Blue gradient for shares
-                ]
-            }
-        ]
-    };
-}
-
-function generateChartData(days: number) {
-    // For engagement overview, we show engagement types, not time series
-    const labels = ['Likes', 'Comments', 'Shares'];
-    
-    // Generate realistic engagement data based on time period
-    // More realistic social media engagement ratios
-    let likesData, commentsData, sharesData;
-    
-    switch (days) {
-        case 7:
-            likesData = 2847;
-            commentsData = 156;
-            sharesData = 89;
-            break;
-        case 14:
-            likesData = 5214;
-            commentsData = 298;
-            sharesData = 167;
-            break;
-        case 30:
-            likesData = 12458;
-            commentsData = 742;
-            sharesData = 423;
-            break;
-        default:
-            likesData = 2847;
+            likesData = 847;
             commentsData = 156;
             sharesData = 89;
     }
@@ -239,43 +257,171 @@ function generateChartData(days: number) {
                 label: 'Engagement',
                 data: [likesData, commentsData, sharesData],
                 backgroundColor: [
-                    'rgba(255, 107, 107, 0.9)', // Beautiful red for likes
-                    'rgba(78, 205, 196, 0.9)', // Teal for comments  
-                    'rgba(69, 183, 209, 0.9)' // Blue for shares
+                    '#FF6B6B', // Beautiful red for likes
+                    '#4ECDC4', // Teal for comments  
+                    '#45B7D1'  // Blue for shares
                 ],
                 borderColor: [
-                    'rgba(255, 107, 107, 0.3)', // Subtle red border
-                    'rgba(78, 205, 196, 0.3)', // Subtle teal border
-                    'rgba(69, 183, 209, 0.3)' // Subtle blue border
-                ],
-                borderWidth: 3,
-                borderRadius: {
-                    topLeft: 12,
-                    topRight: 12,
-                    bottomLeft: 4,
-                    bottomRight: 4
-                },
-                borderSkipped: false,
-                // Add gradient effect
-                fill: true,
-                tension: 0.4
+                    '#E53E3E', // Darker red border
+                    '#38A169', // Darker teal border
+                    '#3182CE'  // Darker blue border
+                ]
             }
         ]
     };
 }
 
+
+
 function updateEngagementChart(data: any) {
-    if (!customChart) return;
+    console.log('📊 Updating engagement chart with data:', data);
+    console.log('📊 Data structure check:', {
+        hasData: !!data,
+        hasOverview: !!(data && data.overview),
+        hasPlatformStats: !!(data && data.platformStats),
+        platformStatsLength: data?.platformStats?.length,
+        overviewKeys: data?.overview ? Object.keys(data.overview) : []
+    });
+    
+    if (!simpleChart) {
+        console.log('🔄 Simple chart not initialized, creating new one...');
+        initializeEngagementChart();
+        return;
+    }
     
     // Get current selected period
     const engagementRange = document.getElementById('engagementRange') as HTMLSelectElement;
     const days = engagementRange ? parseInt(engagementRange.value) : 7;
+    console.log('📅 Selected period:', days, 'days');
     
-    // Generate new data for the selected period
-    const chartData = generateCustomChartData(days);
+    // Try to use API data first, fallback to generated data
+    let chartData: ChartData;
     
-    // Update custom chart data
-    customChart.update(chartData);
+    if (data && data.platformStats && Array.isArray(data.platformStats) && data.platformStats.length > 0) {
+        console.log('✅ Using API platformStats for chart');
+        chartData = generateChartDataFromAPI(data, days);
+    } else if (data && data.overview) {
+        console.log('✅ Using API overview data for chart');
+        chartData = generateChartDataFromAPI(data, days);
+    } else {
+        console.log('⚠️ Using fallback data for chart');
+        chartData = generateChartData(days);
+    }
+    
+    console.log('📊 Final chart data:', chartData);
+    
+    // Update simple chart data
+    try {
+        simpleChart.update(chartData);
+        console.log('✅ Chart updated successfully');
+    } catch (error) {
+        console.error('❌ Error updating chart:', error);
+        // Fallback to simple chart
+        createFallbackChart();
+    }
+}
+
+function generateChartDataFromAPI(data: any, days: number): ChartData {
+    console.log('📊 Generating chart data from API:', data);
+    
+    // Check if we have the new engagement structure with platform breakdown
+    if (data.engagement && data.engagement.likes && data.engagement.comments && data.engagement.shares) {
+        console.log('✅ Using new engagement structure for grouped chart');
+        
+        // Create grouped bar chart data
+        const labels = ['Likes', 'Comments', 'Shares'];
+        const instagramData = [
+            data.engagement.likes.instagram || 0,
+            data.engagement.comments.instagram || 0,
+            data.engagement.shares.instagram || 0
+        ];
+        const facebookData = [
+            data.engagement.likes.facebook || 0,
+            data.engagement.comments.facebook || 0,
+            data.engagement.shares.facebook || 0
+        ];
+        
+        console.log('📊 Grouped chart data:', { labels, instagramData, facebookData });
+        
+        return {
+            labels,
+            datasets: [
+                {
+                    label: 'Instagram',
+                    data: instagramData,
+                    backgroundColor: ['#FF6B6B'], // Red for Instagram
+                    borderColor: ['#E53E3E']
+                },
+                {
+                    label: 'Facebook',
+                    data: facebookData,
+                    backgroundColor: ['#1890FF'], // Blue for Facebook (matches legend)
+                    borderColor: ['#096DD9']
+                }
+            ]
+        };
+    }
+    
+    // Fallback: Check if we have platform-specific metrics in platformStats
+    if (data.platformStats && Array.isArray(data.platformStats) && data.platformStats.length > 0) {
+        console.log('✅ Using platformStats metrics for grouped chart');
+        
+        const labels = ['Likes', 'Comments', 'Shares'];
+        const instagramData = [];
+        const facebookData = [];
+        
+        const instagram = data.platformStats.find((p: any) => p.platform === 'instagram');
+        const facebook = data.platformStats.find((p: any) => p.platform === 'facebook');
+        
+        if (instagram?.metrics && facebook?.metrics) {
+            instagramData.push(
+                instagram.metrics.likes || 0,
+                instagram.metrics.comments || 0,
+                instagram.metrics.shares || 0
+            );
+            facebookData.push(
+                facebook.metrics.likes || 0,
+                facebook.metrics.comments || 0,
+                facebook.metrics.shares || 0
+            );
+            
+            return {
+                labels,
+                datasets: [
+                    {
+                        label: 'Instagram',
+                        data: instagramData,
+                        backgroundColor: ['#FF6B6B'],
+                        borderColor: ['#E53E3E']
+                    },
+                                    {
+                    label: 'Facebook',
+                    data: facebookData,
+                    backgroundColor: ['#1890FF'],
+                    borderColor: ['#096DD9']
+                }
+                ]
+            };
+        }
+    }
+    
+    // Final fallback: Use overview data
+    console.log('⚠️ Using overview data as fallback');
+    const totalEngagement = data.overview?.totalEngagement || 1432;
+    const scaleFactor = days / 7;
+    const scaledEngagement = Math.round(totalEngagement * scaleFactor);
+    
+    return {
+        labels: ['Total Engagement'],
+        datasets: [
+            {
+                label: 'Engagement',
+                data: [scaledEngagement],
+                backgroundColor: ['#FF6B6B'],
+                borderColor: ['#E53E3E']
+            }
+        ]
+    };
 }
 
 function updateRecentPosts(data: any) {
@@ -612,10 +758,10 @@ function setupEventListeners() {
             const days = parseInt(target.value);
             console.log(`Updating custom chart for ${days} days`);
             
-            // Update custom chart with new data
-            if (customChart) {
-                const newData = generateCustomChartData(days);
-                customChart.update(newData);
+            // Update simple chart with new data
+            if (simpleChart) {
+                const newData = generateChartData(days);
+                simpleChart.update(newData);
                 
                 // Show notification
                 showNotification(`Chart updated for last ${days} days`, 'success');
@@ -648,9 +794,19 @@ async function loadAnalyticsForPeriod(days: string) {
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing dashboard...');
     initializeDashboard();
-    // Initialize chart with better error handling
-    initializeChartWithRetry();
+    
+    // Force custom chart initialization with fallback
+    console.log('Forcing custom chart initialization...');
+    setTimeout(() => {
+        try {
+            initializeEngagementChart();
+        } catch (error) {
+            console.error('Custom chart failed, using fallback:', error);
+            createFallbackChart();
+        }
+    }, 100);
 });
 
 // Robust chart initialization with retry logic
@@ -706,111 +862,228 @@ if (window.location.pathname.endsWith('analytics.html')) {
 (window as any).submitQuickPost = submitQuickPost;
 (window as any).submitPost = submitPost;
 
-// Debug function to test chart manually
-(window as any).testChart = () => {
-    console.log('Testing chart manually...');
-    const ctx = document.getElementById('engagementChart') as HTMLCanvasElement;
+// Initialize dashboard when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM loaded, initializing dashboard...');
+    console.log('🔍 Checking for canvas element...');
+    const canvas = document.getElementById('engagementChart') as HTMLCanvasElement;
+    console.log('📊 Canvas element found:', canvas);
+    if (canvas) {
+        console.log('📏 Canvas dimensions:', canvas.width, 'x', canvas.height);
+        console.log('📍 Canvas position:', canvas.getBoundingClientRect());
+    }
+    initializeDashboard();
+});
+
+// Fallback chart function (simple canvas implementation)
+function createFallbackChart() {
+    console.log('Creating fallback chart...');
+    const canvas = document.getElementById('engagementChart') as HTMLCanvasElement;
+    if (!canvas) {
+        console.error('Canvas not found for fallback chart');
+        return;
+    }
+    
+    const ctx = canvas.getContext('2d');
     if (!ctx) {
-        console.error('Canvas not found');
+        console.error('Could not get canvas context');
         return;
     }
     
-    if (typeof (window as any).Chart === 'undefined') {
-        console.error('Chart.js not loaded');
-        return;
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Set canvas size
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * window.devicePixelRatio;
+    canvas.height = rect.height * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    
+    const width = rect.width;
+    const height = rect.height;
+    const padding = 40;
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
+    
+    // Draw background
+    const gradient = ctx.createLinearGradient(0, 0, 0, height);
+    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+    gradient.addColorStop(1, 'rgba(248, 250, 252, 0.98)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+    
+    // Data
+    const labels = ['Likes', 'Comments', 'Shares'];
+    const data = [2847, 156, 89];
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1'];
+    
+    // Calculate scale
+    const maxValue = Math.max(...data);
+    const scale = chartHeight / (maxValue * 1.2);
+    
+    // Draw grid
+    ctx.strokeStyle = 'rgba(107, 114, 128, 0.1)';
+    ctx.lineWidth = 1;
+    const gridLines = 5;
+    for (let i = 0; i <= gridLines; i++) {
+        const y = padding + (chartHeight / gridLines) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding, y);
+        ctx.lineTo(padding + chartWidth, y);
+        ctx.stroke();
     }
     
-    // Destroy existing chart if it exists
-    if (engagementChart) {
-        engagementChart.destroy();
-        engagementChart = null;
-    }
+    // Draw bars
+    const barWidth = (chartWidth - (labels.length - 1) * 40) / labels.length;
     
-    // Create a simple test chart with Rutgers colors
-    const testChart = new (window as any).Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Likes', 'Comments', 'Shares'],
-            datasets: [{
-                label: 'Engagement',
-                data: [2847, 156, 89],
-                backgroundColor: [
-                    'rgba(220, 38, 38, 0.9)', // Rutgers red
-                    'rgba(59, 130, 246, 0.9)', // Blue
-                    'rgba(34, 197, 94, 0.9)' // Green
-                ],
-                borderColor: [
-                    'rgb(185, 28, 28)',
-                    'rgb(37, 99, 235)',
-                    'rgb(22, 163, 74)'
-                ],
-                borderWidth: 3,
-                borderRadius: {
-                    topLeft: 12,
-                    topRight: 12,
-                    bottomLeft: 4,
-                    bottomRight: 4
-                }
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                    titleColor: '#ffffff',
-                    bodyColor: '#ffffff',
-                    borderColor: 'rgba(220, 38, 38, 0.3)',
-                    borderWidth: 2,
-                    cornerRadius: 12
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        color: '#374151',
-                        font: {
-                            size: 13,
-                            weight: '600'
-                        }
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(156, 163, 175, 0.2)'
-                    },
-                    ticks: {
-                        color: '#6B7280',
-                        callback: function(value: any) {
-                            if (value >= 1000) {
-                                return (value / 1000).toFixed(1) + 'k';
-                            }
-                            return value.toLocaleString();
-                        }
-                    }
-                }
-            }
-        }
+    data.forEach((value, index) => {
+        const x = padding + index * (barWidth + 40);
+        const barHeight = value * scale;
+        const y = padding + chartHeight - barHeight;
+        
+        // Create gradient for bar
+        const barGradient = ctx.createLinearGradient(0, y, 0, y + barHeight);
+        const color = colors[index] || '#FF6B6B';
+        barGradient.addColorStop(0, color);
+        barGradient.addColorStop(1, color + 'CC');
+        
+        // Draw rounded rectangle
+        ctx.save();
+        ctx.fillStyle = barGradient;
+        ctx.beginPath();
+        ctx.moveTo(x + 12, y);
+        ctx.lineTo(x + barWidth - 12, y);
+        ctx.quadraticCurveTo(x + barWidth, y, x + barWidth, y + 12);
+        ctx.lineTo(x + barWidth, y + barHeight - 12);
+        ctx.quadraticCurveTo(x + barWidth, y + barHeight, x + barWidth - 12, y + barHeight);
+        ctx.lineTo(x + 12, y + barHeight);
+        ctx.quadraticCurveTo(x, y + barHeight, x, y + barHeight - 12);
+        ctx.lineTo(x, y + 12);
+        ctx.quadraticCurveTo(x, y, x + 12, y);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+        
+        // Draw value on top
+        ctx.fillStyle = '#1F2937';
+        ctx.font = 'bold 14px Inter, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(value.toLocaleString(), x + barWidth / 2, y - 10);
     });
     
-    console.log('Test chart created:', testChart);
-    return testChart;
+    // Draw labels
+    labels.forEach((label, index) => {
+        const x = padding + index * (barWidth + 40) + barWidth / 2;
+        const y = padding + chartHeight + 25;
+        
+        ctx.fillStyle = '#6B7280';
+        ctx.font = 'bold 14px Inter, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, x, y);
+    });
+    
+    console.log('Fallback chart created successfully');
+}
+
+// Force custom chart initialization
+(window as any).forceCustomChart = () => {
+    console.log('Forcing custom chart initialization...');
+    
+    // Clear any existing chart
+    const canvas = document.getElementById('engagementChart') as HTMLCanvasElement;
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+    
+    // Initialize custom chart
+    initializeEngagementChart();
 };
 
 // Force reinitialize the chart
 (window as any).reinitChart = () => {
-    console.log('Reinitializing chart...');
-    if (engagementChart) {
-        engagementChart.destroy();
-        engagementChart = null;
+    console.log('Reinitializing simple chart...');
+    if (simpleChart) {
+        simpleChart.destroy();
+        simpleChart = null;
     }
-    initializeChartWithRetry();
+    initializeEngagementChart();
+};
+
+// Manual fallback chart trigger
+(window as any).useFallbackChart = () => {
+    console.log('Manually triggering fallback chart...');
+    createFallbackChart();
+};
+
+// Manual chart test with API data
+(window as any).testChartWithAPIData = () => {
+    console.log('🧪 Testing chart with API data...');
+    
+    // Simulate the exact API response structure
+    const mockAPIData = {
+        overview: {
+            totalPosts: 45,
+            totalEngagement: {
+                likes: 2847,
+                comments: 156,
+                shares: 89,
+                total: 3092
+            },
+            averageEngagement: 68.71
+        },
+        platformStats: [
+            {
+                platform: 'instagram',
+                followers: 12450,
+                posts: 28,
+                engagement: 2156
+            },
+            {
+                platform: 'facebook',
+                followers: 8920,
+                posts: 17,
+                engagement: 936
+            }
+        ]
+    };
+    
+    console.log('🧪 Mock API data:', mockAPIData);
+    updateEngagementChart(mockAPIData);
+};
+
+// Debug chart state
+(window as any).debugChart = () => {
+    console.log('🔍 Chart debug info:');
+    console.log('- Simple chart instance:', simpleChart);
+    console.log('- Chart canvas:', document.getElementById('engagementChart'));
+    console.log('- Chart container:', document.querySelector('.chart-container'));
+};
+
+// Force chart initialization
+(window as any).forceChart = () => {
+    console.log('🔧 Forcing chart initialization...');
+    
+    // Clear any existing chart
+    const canvas = document.getElementById('engagementChart') as HTMLCanvasElement;
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+    
+    // Initialize chart with mock data
+    const chartData = generateChartData(7);
+    console.log('📊 Chart data:', chartData);
+    
+    try {
+        simpleChart = new SimpleChart('engagementChart', chartData);
+        console.log('✅ Chart initialized successfully');
+    } catch (error) {
+        console.error('❌ Chart initialization failed:', error);
+        createFallbackChart();
+    }
 }; 

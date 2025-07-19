@@ -248,7 +248,7 @@ export class CustomChart {
     }
 
     public resize() {
-        this.resize();
+        this.resizeCanvas();
         this.draw();
     }
 }

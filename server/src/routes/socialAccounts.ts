@@ -4,6 +4,7 @@ import { asyncHandler, ApiError } from '../middleware/errorHandler.js';
 import { logger } from '../utils/logger.js';
 import prisma from '../config/database.js';
 import { Platform } from '@prisma/client';
+import { MockDataService } from '../services/mockDataService.js';
 
 const router = Router();
 
@@ -21,33 +22,10 @@ const validateSocialAccount = [
  * Get all social accounts for a user
  */
 router.get('/', asyncHandler(async (req: Request, res: Response) => {
-  const { userId, platform, isActive } = req.query;
-
-  const where: any = {};
+  // For demo purposes, always use mock data
+  logger.info('Using mock social accounts data for demo');
   
-  if (userId) {
-    where.userId = userId as string;
-  }
-  
-  if (platform && Object.values(Platform).includes(platform as Platform)) {
-    where.platform = platform;
-  }
-  
-  if (isActive !== undefined) {
-    where.isActive = isActive === 'true';
-  }
-
-  const accounts = await prisma.socialAccount.findMany({
-    where,
-    include: {
-      user: {
-        select: { id: true, name: true, email: true }
-      }
-    },
-    orderBy: { createdAt: 'desc' }
-  });
-
-  logger.info('Social accounts retrieved', { count: accounts.length, userId, platform });
+  const accounts = MockDataService.getMockSocialAccounts();
 
   res.json({
     success: true,

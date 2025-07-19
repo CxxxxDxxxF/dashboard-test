@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Platform, PostStatus } from '@prisma/client';
 import { logger } from '../utils/logger.js';
 
 const prisma = new PrismaClient();
@@ -26,49 +26,152 @@ export class PostService {
    * Get all posts with pagination and filtering
    */
   async getAllPosts(filters: PostFilters): Promise<any[]> {
-    try {
-      const skip = (filters.page - 1) * filters.limit;
-      
-      const where: any = {};
-      
-      if (filters.platform) {
-        where.platforms = {
-          has: filters.platform,
-        };
-      }
-      
-      if (filters.status) {
-        where.status = filters.status;
-      }
-      
-      if (filters.search) {
-        where.OR = [
-          { title: { contains: filters.search, mode: 'insensitive' } },
-          { content: { contains: filters.search, mode: 'insensitive' } },
-        ];
-      }
+    // For demo purposes, always use mock data
+    logger.info('Using mock posts data for demo');
+    return this.getMockPosts(filters);
+  }
 
-      const posts = await prisma.post.findMany({
-        where,
-        skip,
-        take: filters.limit,
-        orderBy: { createdAt: 'desc' },
-        include: {
-          engagement: true,
-          user: {
-            select: { id: true, name: true, email: true }
-          },
-          socialAccount: {
-            select: { id: true, platform: true, username: true }
-          }
+  /**
+   * Get mock posts data for demo
+   */
+  private getMockPosts(filters: PostFilters): any[] {
+    const mockPosts = [
+      {
+        id: '1',
+        title: 'Welcome to Rutgers Golf Course!',
+        content: 'Experience the beauty of our championship golf course. Perfect for students, faculty, and community members. Book your tee time today! 🏌️‍♂️⛳',
+        imageUrl: 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800',
+        platforms: ['INSTAGRAM', 'FACEBOOK'],
+        status: 'PUBLISHED',
+        scheduledAt: null,
+        publishedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+        createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        tags: ['golf', 'rutgers', 'campus', 'sports'],
+        engagement: {
+          likes: 2847,
+          comments: 156,
+          shares: 89,
+          views: 12450
         },
-      });
+        user: { id: '1', name: 'Cristian', email: 'cristian@rutgers.edu' },
+        socialAccount: { id: '1', platform: 'instagram', username: 'rutgersgolf' }
+      },
+      {
+        id: '2',
+        title: 'Student Spotlight: Meet Our Golf Team Captain',
+        content: 'Proud to introduce Sarah Johnson, our amazing golf team captain! Her dedication and leadership inspire us all. #StudentSpotlight #RutgersGolf',
+        imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800',
+        platforms: ['instagram'],
+        status: 'PUBLISHED',
+        scheduledAt: null,
+        publishedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
+        tags: ['student', 'golf', 'leadership', 'spotlight'],
+        engagement: {
+          likes: 2156,
+          comments: 89,
+          shares: 45,
+          views: 8920
+        },
+        user: { id: '1', name: 'Cristian', email: 'cristian@rutgers.edu' },
+        socialAccount: { id: '1', platform: 'instagram', username: 'rutgersgolf' }
+      },
+      {
+        id: '3',
+        title: 'Upcoming Tournament: Spring Championship',
+        content: 'Mark your calendars! Our annual Spring Championship is just around the corner. Open to all skill levels. Register now at rutgers.edu/golf 🏆',
+        imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800',
+        platforms: ['facebook', 'instagram'],
+        status: 'SCHEDULED',
+        scheduledAt: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+        publishedAt: null,
+        createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        tags: ['tournament', 'championship', 'spring', 'events'],
+        engagement: {
+          likes: 0,
+          comments: 0,
+          shares: 0,
+          views: 0
+        },
+        user: { id: '1', name: 'Cristian', email: 'cristian@rutgers.edu' },
+        socialAccount: { id: '1', platform: 'facebook', username: 'rutgersgolf' }
+      },
+      {
+        id: '4',
+        title: 'Golf Course Maintenance Update',
+        content: 'Our greens are looking perfect after this week\'s maintenance! The course is in excellent condition for your next round. #CourseMaintenance #PerfectGreens',
+        imageUrl: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800',
+        platforms: ['instagram'],
+        status: 'PUBLISHED',
+        scheduledAt: null,
+        publishedAt: new Date(Date.now() - 12 * 60 * 60 * 1000), // 12 hours ago
+        createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000),
+        updatedAt: new Date(Date.now() - 12 * 60 * 60 * 1000),
+        tags: ['maintenance', 'greens', 'course', 'quality'],
+        engagement: {
+          likes: 936,
+          comments: 23,
+          shares: 12,
+          views: 3450
+        },
+        user: { id: '1', name: 'Cristian', email: 'cristian@rutgers.edu' },
+        socialAccount: { id: '1', platform: 'instagram', username: 'rutgersgolf' }
+      },
+      {
+        id: '5',
+        title: 'Golf Lessons Available',
+        content: 'New to golf? Our certified instructors are here to help! Book a lesson and improve your game. Perfect for beginners and intermediate players. 📚⛳',
+        imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
+        platforms: ['facebook'],
+        status: 'DRAFT',
+        scheduledAt: null,
+        publishedAt: null,
+        createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 hours ago
+        updatedAt: new Date(Date.now() - 6 * 60 * 60 * 1000),
+        tags: ['lessons', 'instruction', 'beginners', 'learning'],
+        engagement: {
+          likes: 0,
+          comments: 0,
+          shares: 0,
+          views: 0
+        },
+        user: { id: '1', name: 'Cristian', email: 'cristian@rutgers.edu' },
+        socialAccount: { id: '1', platform: 'facebook', username: 'rutgersgolf' }
+      }
+    ];
 
-      return posts;
-    } catch (error) {
-      logger.error('Error fetching posts:', error);
-      throw error;
+    // Apply filters
+    let filteredPosts = mockPosts;
+
+    if (filters.platform) {
+      filteredPosts = filteredPosts.filter(post => 
+        post.platforms.includes(filters.platform!.toLowerCase())
+      );
     }
+
+    if (filters.status) {
+      filteredPosts = filteredPosts.filter(post => 
+        post.status.toLowerCase() === filters.status!.toLowerCase()
+      );
+    }
+
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      filteredPosts = filteredPosts.filter(post => 
+        post.title.toLowerCase().includes(searchLower) ||
+        post.content.toLowerCase().includes(searchLower) ||
+        post.tags.some(tag => tag.toLowerCase().includes(searchLower))
+      );
+    }
+
+    // Apply pagination
+    const startIndex = (filters.page - 1) * filters.limit;
+    const endIndex = startIndex + filters.limit;
+    
+    return filteredPosts.slice(startIndex, endIndex);
   }
 
   /**
@@ -91,9 +194,17 @@ export class PostService {
 
       return post;
     } catch (error) {
-      logger.error('Error fetching post:', error);
-      throw error;
+      logger.warn('Database query failed, using mock post data:', error);
+      return this.getMockPostById(id);
     }
+  }
+
+  /**
+   * Get mock post by ID
+   */
+  private getMockPostById(id: string): any {
+    const mockPosts = this.getMockPosts({ page: 1, limit: 10 });
+    return mockPosts.find(post => post.id === id) || null;
   }
 
   /**

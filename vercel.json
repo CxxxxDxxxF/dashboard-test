@@ -5,17 +5,24 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "."
+        "distDir": "dist"
       }
+    },
+    {
+      "src": "server/src/index.ts",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/src/index.ts"
+    },
     {
       "src": "/(.*)",
       "dest": "/index.html"
     }
   ],
-  "functions": {},
   "env": {
     "NODE_ENV": "production"
   }

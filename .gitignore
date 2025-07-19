@@ -5,6 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Build outputs
+dist/
 dist/styles.css
 dist/*.css.map
 
@@ -14,6 +15,9 @@ dist/*.css.map
 .env.development.local
 .env.test.local
 .env.production.local
+server/.env
+server/.env.*
+!.env.example
 
 # IDE files
 .vscode/
@@ -46,4 +50,8 @@ coverage/
 
 # Temporary folders
 tmp/
-temp/ 
+temp/
+
+# Test files
+*.test.html
+tests/ 

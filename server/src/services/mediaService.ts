@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { logger } from '../utils/logger.js';
+import { MockDataService } from './mockDataService.js';
 
 const prisma = new PrismaClient();
 
@@ -20,24 +21,9 @@ export class MediaService {
    * Get all media files for a user
    */
   async getMediaFiles(userId: string, limit: number = 50, offset: number = 0): Promise<any[]> {
-    try {
-      const mediaFiles = await prisma.mediaFile.findMany({
-        where: { userId },
-        orderBy: { createdAt: 'desc' },
-        take: limit,
-        skip: offset,
-        include: {
-          user: {
-            select: { id: true, name: true, email: true }
-          }
-        }
-      });
-
-      return mediaFiles;
-    } catch (error) {
-      logger.error('Error fetching media files:', error);
-      throw error;
-    }
+    // For demo purposes, always use mock data
+    logger.info('Using mock media files data for demo');
+    return MockDataService.getMockMediaFiles();
   }
 
   /**
