@@ -353,6 +353,8 @@
       // Premium Chart Component - Inline to avoid module loading issues
       class SimpleChart {
         constructor(canvasId, data) {
+          console.log('🔧 SimpleChart constructor called with:', { canvasId, data });
+          
           this.width = 600;
           this.height = 300;
           this.padding = 50;
@@ -370,6 +372,7 @@
           this.canvas = canvas;
           this.ctx = canvas.getContext('2d');
           this.data = data;
+          console.log('🔧 SimpleChart data set to:', this.data);
           this.resize();
           this.render();
         }
@@ -422,12 +425,20 @@
         
         render() {
           this.drawBackground();
+          console.log('🔍 Chart render - data:', this.data);
+          console.log('🔍 Chart render - datasets[0]:', this.data.datasets[0]);
+          console.log('🔍 Chart render - datasets[0].data:', this.data.datasets[0]?.data);
+          console.log('🔍 Chart render - datasets[0].data.length:', this.data.datasets[0]?.data?.length);
+          
           if (!this.data.datasets[0] || this.data.datasets[0].data.length === 0) {
+            console.log('⚠️ No data detected, showing no data message');
             this.renderNoData();
             return;
           }
           
+          console.log('✅ Data is valid, rendering chart');
           const isStacked = this.data.datasets.length > 1;
+          console.log('🔍 Is stacked chart:', isStacked);
           if (isStacked) {
             this.renderStackedBars();
           } else {
@@ -459,7 +470,7 @@
             totalValues.push(total);
           }
           
-          const maxTotal = Math.max(...totalValues);
+          const maxTotal = Math.max(...totalValues) || 1; // Prevent division by zero
           
           this.data.labels.forEach((label, metricIndex) => {
             const barX = this.padding + (metricIndex * (barWidth + barSpacing));
@@ -471,7 +482,8 @@
               if (!dataset || !dataset.data) continue;
               
               const value = dataset.data[metricIndex];
-              if (value === undefined || value === 0) continue;
+              if (value === undefined) continue;
+              // Don't skip zero values - they should still render as small bars
               
               const animatedValue = value * this.animationProgress;
               const segmentHeight = (animatedValue / maxTotal) * chartHeight * 0.75;
@@ -699,14 +711,14 @@
                 {
                     label: 'Instagram',
                     data: [847, 156, 89],
-                    backgroundColor: ['#FF6B6B'],
-                    borderColor: ['#E53E3E']
+                    backgroundColor: ['#FF6B6B', '#FF6B6B', '#FF6B6B'],
+                    borderColor: ['#E53E3E', '#E53E3E', '#E53E3E']
                 },
                 {
                     label: 'Facebook',
                     data: [200, 90, 50],
-                    backgroundColor: ['#1890FF'],
-                    borderColor: ['#096DD9']
+                    backgroundColor: ['#1890FF', '#1890FF', '#1890FF'],
+                    borderColor: ['#096DD9', '#096DD9', '#096DD9']
                 }
             ]
         };
