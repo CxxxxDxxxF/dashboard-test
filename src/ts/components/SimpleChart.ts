@@ -298,7 +298,7 @@ export class SimpleChart {
             // Draw rounded rectangle background
             this.ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
             this.ctx.beginPath();
-            this.ctx.roundRect(legendX - 8, legendY - 8, 140, 32, 8);
+            this.drawRoundedRect(legendX - 8, legendY - 8, 140, 32, 8);
             this.ctx.fill();
             this.ctx.restore();
             
@@ -347,7 +347,7 @@ export class SimpleChart {
             
             this.ctx.fillStyle = gradient;
             this.ctx.beginPath();
-            this.ctx.roundRect(x, y, this.barWidth, barHeight, 12);
+            this.drawRoundedRect(x, y, this.barWidth, barHeight, 12);
             this.ctx.fill();
             this.ctx.restore();
 
@@ -404,6 +404,19 @@ export class SimpleChart {
         this.ctx.textBaseline = 'middle';
         this.ctx.fillText('No data available', this.width / 2, this.height / 2);
         this.ctx.restore();
+    }
+
+    // Utility function to draw rounded rectangles (browser compatibility)
+    private drawRoundedRect(x: number, y: number, width: number, height: number, radius: number): void {
+        this.ctx.moveTo(x + radius, y);
+        this.ctx.lineTo(x + width - radius, y);
+        this.ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        this.ctx.lineTo(x + width, y + height - radius);
+        this.ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        this.ctx.lineTo(x + radius, y + height);
+        this.ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        this.ctx.lineTo(x, y + radius);
+        this.ctx.quadraticCurveTo(x, y, x + radius, y);
     }
 
     // Utility functions for color manipulation

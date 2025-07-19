@@ -353,9 +353,26 @@
       import { animationService } from './js/services/AnimationService.js';
       import { SimpleChart } from './js/components/SimpleChart.js';
       
-      document.addEventListener('DOMContentLoaded', () => {
+      // Wait for DOM to be fully ready
+      function initializeChart() {
+        console.log('🔄 Starting chart initialization...');
+        
+        // Check if canvas exists
+        const canvas = document.getElementById('engagementChart');
+        if (!canvas) {
+          console.error('❌ Canvas element not found');
+          return;
+        }
+        
+        console.log('✅ Canvas found:', canvas);
+        
         // Initialize animations
-        animationService.initScrollAnimations();
+        try {
+          animationService.initScrollAnimations();
+          console.log('✅ Animations initialized');
+        } catch (error) {
+          console.warn('⚠️ Animation service error:', error);
+        }
         
         // Initialize the premium engagement chart
         const chartData = {
@@ -376,6 +393,8 @@
             ]
         };
         
+        console.log('📊 Chart data prepared:', chartData);
+        
         // Initialize the premium chart with error handling
         try {
             const chart = new SimpleChart('engagementChart', chartData);
@@ -385,10 +404,28 @@
             window.engagementChart = chart;
         } catch (error) {
             console.error('❌ Error initializing premium engagement chart:', error);
+            console.error('Error details:', error.message, error.stack);
         }
-      });
+      }
+      
+      // Try multiple initialization strategies
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeChart);
+      } else {
+        // DOM is already ready
+        setTimeout(initializeChart, 100);
+      }
+      
+      // Fallback initialization
+      setTimeout(() => {
+        if (!window.engagementChart) {
+          console.log('🔄 Fallback chart initialization...');
+          initializeChart();
+        }
+      }, 1000);
     </script>
-    <script type="module" src="js/main.js"></script>
+    <!-- Remove main.js to prevent conflicts -->
+    <!-- <script type="module" src="js/main.js"></script> -->
     <script>
         // Analytics page specific functions
         function exportAnalyticsReport() {
