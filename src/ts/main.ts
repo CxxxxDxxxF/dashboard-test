@@ -446,12 +446,18 @@ export function initializeDashboard() {
         // Calendar.initialize(); // Only initialize on calendar page
     }
     
-    // Handle analytics page - let analytics.html handle chart initialization
+    // Handle analytics page with chart initialization
     if (window.location.pathname.includes('analytics.html')) {
-        console.log('📊 Analytics page detected - skipping main.js chart initialization');
-        console.log('📊 Analytics page will handle its own chart initialization');
-        // Set up event listeners only
+        console.log('📊 Analytics page detected - initializing chart with main.js');
+        // Set up event listeners
         setupEventListeners();
+        
+        // Initialize chart with fallback data
+        setTimeout(() => {
+            console.log('🔄 Analytics page: Initializing chart...');
+            initializeEngagementChart();
+        }, 500); // Give page time to load
+        
         return;
     }
     
@@ -585,12 +591,6 @@ function showNoDataMessage() {
 
 // Chart Functions
 function initializeEngagementChart() {
-    // Prevent main.js from interfering with analytics page
-    if (window.location.pathname.includes('analytics.html') && (window as any).analyticsPageInitialized) {
-        console.log('📊 Analytics page chart already initialized, skipping main.js chart');
-        return;
-    }
-    
     console.log('🔄 Starting universal chart initialization...');
     
     // Check if canvas exists
