@@ -116,9 +116,9 @@ async function loadDashboardData() {
         console.error('❌ Failed to load dashboard data:', error);
         showNotification('Failed to load some dashboard data', 'warning');
         
-        // Show fallback chart when API fails
-        console.log('🔄 Showing fallback chart due to API failure...');
-        createFallbackChart();
+        // Use premium SimpleChart even when API fails
+        console.log('🔄 Using premium SimpleChart with sample data due to API failure...');
+        initializeEngagementChart();
     }
 }
 
@@ -127,8 +127,8 @@ function updateAnalyticsDisplay(data: any) {
     
     // Check if we have valid data
     if (!data || !data.data) {
-        console.warn('⚠️ No analytics data available, showing fallback');
-        showNoDataMessage();
+        console.warn('⚠️ No analytics data available, using premium chart with sample data');
+        initializeEngagementChart();
         return;
     }
     
@@ -234,46 +234,57 @@ function generateChartData(days: number): ChartData {
     const labels = ['Likes', 'Comments', 'Shares'];
     
     // Generate more balanced engagement data based on time period
-    let likesData, commentsData, sharesData;
+    let instagramLikes, instagramComments, instagramShares;
+    let facebookLikes, facebookComments, facebookShares;
     
     switch (days) {
         case 7:
-            likesData = 847;
-            commentsData = 156;
-            sharesData = 89;
+            instagramLikes = 847;
+            instagramComments = 156;
+            instagramShares = 89;
+            facebookLikes = 200;
+            facebookComments = 90;
+            facebookShares = 50;
             break;
         case 14:
-            likesData = 1214;
-            commentsData = 298;
-            sharesData = 167;
+            instagramLikes = 1214;
+            instagramComments = 298;
+            instagramShares = 167;
+            facebookLikes = 350;
+            facebookComments = 180;
+            facebookShares = 100;
             break;
         case 30:
-            likesData = 2458;
-            commentsData = 742;
-            sharesData = 423;
+            instagramLikes = 2458;
+            instagramComments = 742;
+            instagramShares = 423;
+            facebookLikes = 800;
+            facebookComments = 400;
+            facebookShares = 250;
             break;
         default:
-            likesData = 847;
-            commentsData = 156;
-            sharesData = 89;
+            instagramLikes = 847;
+            instagramComments = 156;
+            instagramShares = 89;
+            facebookLikes = 200;
+            facebookComments = 90;
+            facebookShares = 50;
     }
     
     return {
         labels,
         datasets: [
             {
-                label: 'Engagement',
-                data: [likesData, commentsData, sharesData],
-                backgroundColor: [
-                    '#FF6B6B', // Beautiful red for likes
-                    '#4ECDC4', // Teal for comments  
-                    '#45B7D1'  // Blue for shares
-                ],
-                borderColor: [
-                    '#E53E3E', // Darker red border
-                    '#38A169', // Darker teal border
-                    '#3182CE'  // Darker blue border
-                ]
+                label: 'Instagram',
+                data: [instagramLikes, instagramComments, instagramShares],
+                backgroundColor: ['#FF6B6B'],
+                borderColor: ['#E53E3E']
+            },
+            {
+                label: 'Facebook',
+                data: [facebookLikes, facebookComments, facebookShares],
+                backgroundColor: ['#1890FF'],
+                borderColor: ['#096DD9']
             }
         ]
     };
