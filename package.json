@@ -5,7 +5,7 @@
   "main": "index.html",
   "type": "module",
   "scripts": {
-    "build": "npm run build:css && npm run build:ts",
+    "build": "npm run build:css:prod && npm run build:ts:prod && npm run copy-html",
     "build:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
     "build:ts": "tsc --watch",
     "build:prod": "npm run build:css:prod && npm run build:ts:prod",
@@ -30,7 +30,8 @@
     "test:frontend": "jest src/ts/**/*.test.ts",
     "test:backend": "cd server && npm test",
     "lint:all": "npm run lint && cd server && npm run lint",
-    "format": "prettier --write . && cd server && npm run format"
+    "format": "prettier --write . && cd server && npm run format",
+    "copy-html": "cp *.html dist/ 2>/dev/null || true"
   },
   "devDependencies": {
     "@types/chart.js": "^2.9.41",

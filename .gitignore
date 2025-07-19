@@ -55,3 +55,4 @@ temp/
 # Test files
 *.test.html
 tests/ 
+.vercel
