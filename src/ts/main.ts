@@ -103,12 +103,24 @@ class SimpleChart {
     
     render() {
         this.drawBackground();
-        if (!this.data.datasets[0] || this.data.datasets[0].data.length === 0) {
+        
+        // Validate data structure
+        if (!this.data || !this.data.datasets || !Array.isArray(this.data.datasets) || this.data.datasets.length === 0) {
+            console.log('⚠️ Invalid data structure, showing no data message');
             this.renderNoData();
             return;
         }
         
+        const firstDataset = this.data.datasets[0];
+        if (!firstDataset || !firstDataset.data || !Array.isArray(firstDataset.data) || firstDataset.data.length === 0) {
+            console.log('⚠️ No valid data in first dataset, showing no data message');
+            this.renderNoData();
+            return;
+        }
+        
+        console.log('✅ Data is valid, rendering chart');
         const isStacked = this.data.datasets.length > 1;
+        console.log('🔍 Is stacked chart:', isStacked);
         if (isStacked) {
             this.renderStackedBars();
         } else {
@@ -152,7 +164,8 @@ class SimpleChart {
                 if (!dataset || !dataset.data) continue;
                 
                 const value = dataset.data[metricIndex];
-                if (value === undefined || value === 0) continue;
+                if (value === undefined) continue;
+                // Don't skip zero values - they should still render as small bars
                 
                 const animatedValue = value * this.animationProgress;
                 const segmentHeight = (animatedValue / maxTotal) * chartHeight * 0.75;
@@ -578,23 +591,46 @@ function initializeEngagementChart() {
         return;
     }
     
-    console.log('Starting simple chart initialization...');
+    console.log('🔄 Starting universal chart initialization...');
+    
+    // Check if canvas exists
+    const canvas = document.getElementById('engagementChart');
+    if (!canvas) {
+        console.error('❌ Canvas element not found');
+        return;
+    }
+    
+    console.log('✅ Canvas found:', canvas);
+    console.log('🔍 Canvas dimensions:', (canvas as HTMLCanvasElement).width, 'x', (canvas as HTMLCanvasElement).height);
     
     // Generate initial data for engagement types
     const chartData = generateChartData(7);
-    console.log('Simple chart data generated:', chartData);
+    console.log('📊 Chart data generated:', chartData);
+    console.log('🔍 Chart data validation:');
+    console.log('  - labels:', chartData.labels);
+    console.log('  - datasets length:', chartData.datasets.length);
+    console.log('  - dataset 0 data:', chartData.datasets[0]?.data);
+    console.log('  - dataset 1 data:', chartData.datasets[1]?.data);
     
     try {
-        console.log('Creating simple chart instance...');
+        console.log('🔧 Creating SimpleChart instance...');
         simpleChart = new SimpleChart('engagementChart', chartData);
         
         if (simpleChart) {
-            console.log('Simple chart created successfully');
+            console.log('✅ Simple chart created successfully');
+            
+            // Force a re-render after a short delay
+            setTimeout(() => {
+                console.log('🔄 Forcing chart re-render...');
+                if (simpleChart) {
+                    simpleChart.render();
+                }
+            }, 500);
         } else {
-            console.error('Failed to create simple chart');
+            console.error('❌ Failed to create simple chart');
         }
     } catch (error) {
-        console.error('Error initializing simple chart:', error);
+        console.error('❌ Error initializing simple chart:', error);
         createFallbackChart();
     }
 }
