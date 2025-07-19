@@ -764,6 +764,10 @@
         }
       }
       
+      // Prevent main.js from interfering with analytics page chart
+      window.analyticsPageInitialized = true;
+      window.preventMainJSChart = true;
+      
       // Try multiple initialization strategies
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeChart);

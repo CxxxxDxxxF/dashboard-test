@@ -433,21 +433,12 @@ export function initializeDashboard() {
         // Calendar.initialize(); // Only initialize on calendar page
     }
     
-    // Handle analytics page with fallback chart initialization
+    // Handle analytics page - let analytics.html handle chart initialization
     if (window.location.pathname.includes('analytics.html')) {
-        console.log('📊 Analytics page detected - initializing with fallback chart support');
-        // Set up event listeners
+        console.log('📊 Analytics page detected - skipping main.js chart initialization');
+        console.log('📊 Analytics page will handle its own chart initialization');
+        // Set up event listeners only
         setupEventListeners();
-        
-        // Initialize chart with fallback data in case API fails
-        setTimeout(() => {
-            const canvas = document.getElementById('engagementChart');
-            if (canvas && !simpleChart) {
-                console.log('🔄 Analytics page: Initializing fallback chart...');
-                initializeEngagementChart();
-            }
-        }, 1000); // Give analytics.html time to initialize first
-        
         return;
     }
     
@@ -581,6 +572,12 @@ function showNoDataMessage() {
 
 // Chart Functions
 function initializeEngagementChart() {
+    // Prevent main.js from interfering with analytics page
+    if (window.location.pathname.includes('analytics.html') && (window as any).analyticsPageInitialized) {
+        console.log('📊 Analytics page chart already initialized, skipping main.js chart');
+        return;
+    }
+    
     console.log('Starting simple chart initialization...');
     
     // Generate initial data for engagement types
