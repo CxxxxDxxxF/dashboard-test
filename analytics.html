@@ -247,7 +247,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <canvas id="engagementChart" class="w-full h-64" style="min-height: 250px;"></canvas>
+                        <canvas id="engagementChart" width="600" height="350" class="w-full h-64" style="min-height: 250px;"></canvas>
                     </div>
                 </div>
                 
@@ -397,14 +397,30 @@
         
         // Initialize the premium chart with error handling
         try {
+            console.log('🔧 About to create SimpleChart instance...');
+            console.log('🔧 Canvas element:', canvas);
+            console.log('🔧 Chart data:', chartData);
+            
             const chart = new SimpleChart('engagementChart', chartData);
             console.log('✅ Premium engagement chart initialized successfully');
+            console.log('✅ Chart instance:', chart);
             
             // Store chart instance globally for potential updates
             window.engagementChart = chart;
         } catch (error) {
             console.error('❌ Error initializing premium engagement chart:', error);
             console.error('Error details:', error.message, error.stack);
+            
+            // Try to create a basic fallback to see if canvas works at all
+            console.log('🔄 Trying basic canvas test...');
+            try {
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = 'red';
+                ctx.fillRect(10, 10, 100, 50);
+                console.log('✅ Basic canvas test works');
+            } catch (canvasError) {
+                console.error('❌ Even basic canvas test failed:', canvasError);
+            }
         }
       }
       
