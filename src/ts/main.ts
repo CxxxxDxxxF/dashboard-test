@@ -265,23 +265,17 @@ function generateChartData(days: number) {
 }
 
 function updateEngagementChart(data: any) {
-    if (!engagementChart) return;
+    if (!customChart) return;
     
     // Get current selected period
     const engagementRange = document.getElementById('engagementRange') as HTMLSelectElement;
     const days = engagementRange ? parseInt(engagementRange.value) : 7;
     
     // Generate new data for the selected period
-    const chartData = generateChartData(days);
+    const chartData = generateCustomChartData(days);
     
-    // Update chart data
-    engagementChart.data.labels = chartData.labels;
-    if (engagementChart.data.datasets[0] && chartData.datasets[0]) {
-        (engagementChart.data.datasets[0] as any).data = chartData.datasets[0].data;
-    }
-    
-    // Update chart
-    engagementChart.update('active');
+    // Update custom chart data
+    customChart.update(chartData);
 }
 
 function updateRecentPosts(data: any) {
@@ -616,18 +610,15 @@ function setupEventListeners() {
         engagementRange.addEventListener('change', (e) => {
             const target = e.target as HTMLSelectElement;
             const days = parseInt(target.value);
-            console.log(`Updating chart for ${days} days`);
+            console.log(`Updating custom chart for ${days} days`);
             
-            // Update chart with new data
-            if (engagementChart && engagementChart.data.datasets[0]) {
-                const newData = generateChartData(days);
-                if (newData.datasets[0]) {
-                    (engagementChart.data.datasets[0] as any).data = newData.datasets[0].data;
-                    engagementChart.update('active');
-                    
-                    // Show notification
-                    showNotification(`Chart updated for last ${days} days`, 'success');
-                }
+            // Update custom chart with new data
+            if (customChart) {
+                const newData = generateCustomChartData(days);
+                customChart.update(newData);
+                
+                // Show notification
+                showNotification(`Chart updated for last ${days} days`, 'success');
             }
         });
     }
@@ -667,19 +658,7 @@ function initializeChartWithRetry(maxRetries = 5, delay = 200) {
     let retryCount = 0;
     
     const tryInitialize = () => {
-        console.log(`Attempting to initialize chart (attempt ${retryCount + 1}/${maxRetries})`);
-        
-        // Check if Chart.js is loaded
-        if (typeof (window as any).Chart === 'undefined') {
-            console.warn('Chart.js not loaded yet, retrying...');
-            retryCount++;
-            if (retryCount < maxRetries) {
-                setTimeout(tryInitialize, delay);
-            } else {
-                console.error('Chart.js failed to load after maximum retries');
-            }
-            return;
-        }
+        console.log(`Attempting to initialize custom chart (attempt ${retryCount + 1}/${maxRetries})`);
         
         // Check if canvas element exists
         const ctx = document.getElementById('engagementChart') as HTMLCanvasElement;
@@ -694,12 +673,12 @@ function initializeChartWithRetry(maxRetries = 5, delay = 200) {
             return;
         }
         
-        // Initialize the chart
+        // Initialize the custom chart
         try {
             initializeEngagementChart();
-            console.log('Chart initialized successfully!');
+            console.log('Custom chart initialized successfully!');
         } catch (error) {
-            console.error('Error during chart initialization:', error);
+            console.error('Error during custom chart initialization:', error);
             retryCount++;
             if (retryCount < maxRetries) {
                 setTimeout(tryInitialize, delay);
