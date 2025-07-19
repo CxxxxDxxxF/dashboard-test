@@ -640,14 +640,14 @@ function generateChartData(days: number): ChartData {
             {
                 label: 'Instagram',
                 data: [instagramLikes, instagramComments, instagramShares],
-                backgroundColor: ['#FF6B6B'],
-                borderColor: ['#E53E3E']
+                backgroundColor: ['#FF6B6B', '#FF6B6B', '#FF6B6B'],
+                borderColor: ['#E53E3E', '#E53E3E', '#E53E3E']
             },
             {
                 label: 'Facebook',
                 data: [facebookLikes, facebookComments, facebookShares],
-                backgroundColor: ['#1890FF'],
-                borderColor: ['#096DD9']
+                backgroundColor: ['#1890FF', '#1890FF', '#1890FF'],
+                borderColor: ['#096DD9', '#096DD9', '#096DD9']
             }
         ]
     };
@@ -731,14 +731,14 @@ function generateChartDataFromAPI(data: any, days: number): ChartData {
                 {
                     label: 'Instagram',
                     data: instagramData,
-                    backgroundColor: ['#FF6B6B'], // Red for Instagram
-                    borderColor: ['#E53E3E']
+                    backgroundColor: ['#FF6B6B', '#FF6B6B', '#FF6B6B'], // Red for Instagram
+                    borderColor: ['#E53E3E', '#E53E3E', '#E53E3E']
                 },
                 {
                     label: 'Facebook',
                     data: facebookData,
-                    backgroundColor: ['#1890FF'], // Blue for Facebook (matches legend)
-                    borderColor: ['#096DD9']
+                    backgroundColor: ['#1890FF', '#1890FF', '#1890FF'], // Blue for Facebook (matches legend)
+                    borderColor: ['#096DD9', '#096DD9', '#096DD9']
                 }
             ]
         };
@@ -773,15 +773,15 @@ function generateChartDataFromAPI(data: any, days: number): ChartData {
                     {
                         label: 'Instagram',
                         data: instagramData,
-                        backgroundColor: ['#FF6B6B'],
-                        borderColor: ['#E53E3E']
+                        backgroundColor: ['#FF6B6B', '#FF6B6B', '#FF6B6B'],
+                        borderColor: ['#E53E3E', '#E53E3E', '#E53E3E']
                     },
-                                    {
-                    label: 'Facebook',
-                    data: facebookData,
-                    backgroundColor: ['#1890FF'],
-                    borderColor: ['#096DD9']
-                }
+                    {
+                        label: 'Facebook',
+                        data: facebookData,
+                        backgroundColor: ['#1890FF', '#1890FF', '#1890FF'],
+                        borderColor: ['#096DD9', '#096DD9', '#096DD9']
+                    }
                 ]
             };
         }
