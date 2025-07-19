@@ -1,6 +1,6 @@
 /**
- * Simple Chart Component
- * A reliable, lightweight chart implementation using Canvas API
+ * Premium Chart Component
+ * A modern, polished chart implementation using Canvas API with gradients, animations, and premium styling
  */
 
 export interface ChartData {
@@ -19,9 +19,12 @@ export class SimpleChart {
     private data: ChartData;
     private width: number = 600;
     private height: number = 300;
-    private padding: number = 40;
+    private padding: number = 50; // Increased padding for better spacing
     private barWidth: number = 60;
     private barSpacing: number = 40;
+    private animationFrame: number | null = null;
+    private animationProgress: number = 0;
+    private isAnimating: boolean = false;
 
     constructor(canvasId: string, data: ChartData) {
         const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
@@ -42,7 +45,7 @@ export class SimpleChart {
         if (container) {
             // Make chart responsive and fill container width
             this.width = container.clientWidth;
-            this.height = container.clientHeight || 300;
+            this.height = container.clientHeight || 350; // Increased height for better spacing
             
             // Ensure minimum width for readability
             if (this.width < 400) {
@@ -50,13 +53,13 @@ export class SimpleChart {
             }
         } else {
             this.width = 600;
-            this.height = 300;
+            this.height = 350;
         }
 
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         
-        // Get the 2D context
+        // Get the 2D context with high quality settings
         this.ctx = this.canvas.getContext('2d')!;
         this.ctx.imageSmoothingEnabled = true;
         this.ctx.imageSmoothingQuality = 'high';
@@ -64,12 +67,37 @@ export class SimpleChart {
 
     public update(newData: ChartData): void {
         this.data = newData;
+        this.startAnimation();
+    }
+
+    private startAnimation(): void {
+        if (this.animationFrame) {
+            cancelAnimationFrame(this.animationFrame);
+        }
+        
+        this.animationProgress = 0;
+        this.isAnimating = true;
+        this.animate();
+    }
+
+    private animate(): void {
+        this.animationProgress += 0.05; // Smooth animation speed
+        
+        if (this.animationProgress >= 1) {
+            this.animationProgress = 1;
+            this.isAnimating = false;
+        }
+        
         this.render();
+        
+        if (this.isAnimating) {
+            this.animationFrame = requestAnimationFrame(() => this.animate());
+        }
     }
 
     private render(): void {
-        // Clear canvas
-        this.ctx.clearRect(0, 0, this.width, this.height);
+        // Clear canvas with subtle background
+        this.drawBackground();
 
         if (!this.data.datasets[0] || this.data.datasets[0].data.length === 0) {
             this.renderNoData();
@@ -88,14 +116,14 @@ export class SimpleChart {
 
     private renderStackedBars(): void {
         const chartWidth = this.width - (this.padding * 2);
-        const topPadding = 100; // Increased top padding for labels and legend
+        const topPadding = 120; // Increased top padding for labels and legend
         const chartHeight = this.height - (this.padding * 2) - topPadding;
         const numMetrics = this.data.labels.length;
         
         // Calculate bar dimensions for stacked bars - wider bars for better visual impact
-        const availableWidth = chartWidth - (numMetrics - 1) * 60; // More spacing between bars
-        const barWidth = Math.max(availableWidth / numMetrics, 100); // Minimum 100px width, wider bars
-        const barSpacing = 60; // Increased spacing between metric groups
+        const availableWidth = chartWidth - (numMetrics - 1) * 80; // More spacing between bars
+        const barWidth = Math.max(availableWidth / numMetrics, 120); // Minimum 120px width, wider bars
+        const barSpacing = 80; // Increased spacing between metric groups
 
         // Calculate total values for each metric (for scaling)
         const totalValues: number[] = [];
@@ -114,9 +142,6 @@ export class SimpleChart {
 
         const maxTotal = Math.max(...totalValues);
 
-        // Draw background
-        this.drawBackground();
-
         // Draw stacked bars
         this.data.labels.forEach((label, metricIndex) => {
             const barX = this.padding + (metricIndex * (barWidth + barSpacing));
@@ -132,75 +157,165 @@ export class SimpleChart {
                 const value = dataset.data[metricIndex];
                 if (value === undefined || value === 0) continue;
 
-                const segmentHeight = (value / maxTotal) * chartHeight * 0.8;
+                // Apply animation to segment height
+                const animatedValue = value * this.animationProgress;
+                const segmentHeight = (animatedValue / maxTotal) * chartHeight * 0.75; // Reduced to 75% for better spacing
                 const segmentY = currentY - segmentHeight;
 
-                // Create gradient for segment
-                const gradient = this.ctx.createLinearGradient(0, segmentY, 0, currentY);
-                const color = dataset.backgroundColor[0] || '#3B82F6';
-                gradient.addColorStop(0, color);
-                gradient.addColorStop(1, color + 'CC');
-
-                // Draw rounded rectangle segment
-                this.ctx.save();
-                this.ctx.fillStyle = gradient;
-                this.ctx.beginPath();
+                // Create premium gradient for segment
+                const gradient = this.createPremiumGradient(segmentY, currentY, dataset.backgroundColor[0] || '#3B82F6');
                 
-                // Different rounding based on position in stack
-                const isTopSegment = datasetIndex === this.data.datasets.length - 1; // First in reverse loop
-                const isBottomSegment = datasetIndex === 0; // Last in reverse loop
-                
-                if (isTopSegment) {
-                    // Top segment - round top corners only
-                    this.ctx.moveTo(barX + 8, segmentY);
-                    this.ctx.lineTo(barX + barWidth - 8, segmentY);
-                    this.ctx.quadraticCurveTo(barX + barWidth, segmentY, barX + barWidth, segmentY + 8);
-                    this.ctx.lineTo(barX + barWidth, currentY);
-                    this.ctx.lineTo(barX, currentY);
-                    this.ctx.lineTo(barX, segmentY + 8);
-                    this.ctx.quadraticCurveTo(barX, segmentY, barX + 8, segmentY);
-                } else if (isBottomSegment) {
-                    // Bottom segment - round bottom corners only
-                    this.ctx.moveTo(barX, segmentY);
-                    this.ctx.lineTo(barX + barWidth, segmentY);
-                    this.ctx.lineTo(barX + barWidth, currentY - 8);
-                    this.ctx.quadraticCurveTo(barX + barWidth, currentY, barX + barWidth - 8, currentY);
-                    this.ctx.lineTo(barX + 8, currentY);
-                    this.ctx.quadraticCurveTo(barX, currentY, barX, currentY - 8);
-                    this.ctx.lineTo(barX, segmentY);
-                } else {
-                    // Middle segment - no rounding (seamless connection)
-                    this.ctx.rect(barX, segmentY, barWidth, segmentHeight);
-                }
-                
-                this.ctx.closePath();
-                this.ctx.fill();
-                this.ctx.restore();
-
-                // Draw border
-                this.ctx.strokeStyle = dataset.borderColor[0] || '#1E40AF';
-                this.ctx.lineWidth = 1;
-                this.ctx.stroke();
+                // Draw rounded rectangle segment with shadow
+                this.drawSegmentWithShadow(barX, segmentY, barWidth, segmentHeight, gradient, datasetIndex === this.data.datasets.length - 1, datasetIndex === 0);
 
                 currentY = segmentY;
-                totalValue += value;
+                totalValue += animatedValue;
             }
 
-            // Draw total value with increased padding above the bar stack
-            this.ctx.fillStyle = '#374151';
-            this.ctx.font = 'bold 16px Inter, system-ui, sans-serif';
-            this.ctx.textAlign = 'center';
-            this.ctx.fillText(totalValue.toLocaleString(), barX + barWidth / 2, currentY - 35); // Increased from -25 to -35
+            // Draw total value with increased padding and premium styling
+            this.drawTotalValue(barX + barWidth / 2, currentY - 45, totalValue);
 
-            // Draw metric label
-            this.ctx.fillStyle = '#6B7280';
-            this.ctx.font = 'bold 14px Inter, system-ui, sans-serif';
-            this.ctx.textAlign = 'center';
-            this.ctx.fillText(label, barX + barWidth / 2, this.height - 15);
+            // Draw metric label with premium styling
+            this.drawMetricLabel(barX + barWidth / 2, this.height - 20, label);
         });
 
-        // Draw legend
-        this.drawLegend();
+        // Draw legend with premium styling
+        this.drawPremiumLegend();
+    }
+
+    private createPremiumGradient(startY: number, endY: number, baseColor: string): CanvasGradient {
+        const gradient = this.ctx.createLinearGradient(0, startY, 0, endY);
+        
+        // Create rich gradient with multiple stops for depth
+        gradient.addColorStop(0, this.lightenColor(baseColor, 0.3)); // Light top
+        gradient.addColorStop(0.3, baseColor); // Main color
+        gradient.addColorStop(0.7, this.darkenColor(baseColor, 0.2)); // Darker middle
+        gradient.addColorStop(1, this.darkenColor(baseColor, 0.4)); // Darkest bottom
+        
+        return gradient;
+    }
+
+    private drawSegmentWithShadow(x: number, y: number, width: number, height: number, gradient: CanvasGradient, isTopSegment: boolean, isBottomSegment: boolean): void {
+        // Draw shadow first
+        this.ctx.save();
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+        this.ctx.shadowBlur = 8;
+        this.ctx.shadowOffsetX = 2;
+        this.ctx.shadowOffsetY = 4;
+        
+        // Draw the segment
+        this.ctx.fillStyle = gradient;
+        this.ctx.beginPath();
+        
+        const radius = 12; // Increased radius for modern look
+        
+        if (isTopSegment) {
+            // Top segment - round top corners only
+            this.ctx.moveTo(x + radius, y);
+            this.ctx.lineTo(x + width - radius, y);
+            this.ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            this.ctx.lineTo(x + width, y + height);
+            this.ctx.lineTo(x, y + height);
+            this.ctx.lineTo(x, y + radius);
+            this.ctx.quadraticCurveTo(x, y, x + radius, y);
+        } else if (isBottomSegment) {
+            // Bottom segment - round bottom corners only
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x + width, y);
+            this.ctx.lineTo(x + width, y + height - radius);
+            this.ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            this.ctx.lineTo(x + radius, y + height);
+            this.ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            this.ctx.lineTo(x, y);
+        } else {
+            // Middle segment - no rounding (seamless connection)
+            this.ctx.rect(x, y, width, height);
+        }
+        
+        this.ctx.closePath();
+        this.ctx.fill();
+        this.ctx.restore();
+
+        // Draw subtle border
+        this.ctx.save();
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        this.ctx.lineWidth = 1;
+        this.ctx.stroke();
+        this.ctx.restore();
+    }
+
+    private drawTotalValue(x: number, y: number, value: number): void {
+        // Draw background circle for value
+        this.ctx.save();
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+        this.ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+        this.ctx.shadowBlur = 4;
+        this.ctx.shadowOffsetX = 0;
+        this.ctx.shadowOffsetY = 2;
+        
+        // Draw circle background
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, 25, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.restore();
+
+        // Draw value text
+        this.ctx.save();
+        this.ctx.fillStyle = '#1F2937';
+        this.ctx.font = 'bold 14px Inter, system-ui, sans-serif';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillText(value.toLocaleString(), x, y);
+        this.ctx.restore();
+    }
+
+    private drawMetricLabel(x: number, y: number, label: string): void {
+        this.ctx.save();
+        this.ctx.fillStyle = '#6B7280';
+        this.ctx.font = '600 14px Inter, system-ui, sans-serif';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'top';
+        this.ctx.fillText(label, x, y);
+        this.ctx.restore();
+    }
+
+    private drawPremiumLegend(): void {
+        // Position legend at the top, above the chart with premium styling
+        const legendY = 30;
+        const legendSpacing = 160; // Increased spacing
+        const legendStartX = this.padding;
+        
+        this.data.datasets.forEach((dataset, index) => {
+            const legendX = legendStartX + (index * legendSpacing);
+            
+            // Draw legend background with shadow
+            this.ctx.save();
+            this.ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+            this.ctx.shadowBlur = 4;
+            this.ctx.shadowOffsetX = 0;
+            this.ctx.shadowOffsetY = 2;
+            
+            // Draw rounded rectangle background
+            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            this.ctx.beginPath();
+            this.ctx.roundRect(legendX - 8, legendY - 8, 140, 32, 8);
+            this.ctx.fill();
+            this.ctx.restore();
+            
+            // Draw legend color indicator with gradient
+            const gradient = this.createPremiumGradient(legendY, legendY + 16, dataset.backgroundColor[0] || '#3B82F6');
+            this.ctx.fillStyle = gradient;
+            this.ctx.fillRect(legendX, legendY, 16, 16);
+            
+            // Draw legend text
+            this.ctx.save();
+            this.ctx.fillStyle = '#374151';
+            this.ctx.font = '600 14px Inter, system-ui, sans-serif';
+            this.ctx.textAlign = 'left';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText(dataset.label, legendX + 24, legendY + 8);
+            this.ctx.restore();
+        });
     }
 
     private renderSingleBars(): void {
@@ -213,86 +328,58 @@ export class SimpleChart {
         const barAreaWidth = chartWidth - (this.barSpacing * (dataset.data.length - 1));
         this.barWidth = barAreaWidth / dataset.data.length;
 
-        // Draw background
-        this.drawBackground();
-
         // Draw bars
         dataset.data.forEach((value, index) => {
-            const barHeight = (value / maxValue) * chartHeight * 0.8;
+            const animatedValue = value * this.animationProgress;
+            const barHeight = (animatedValue / maxValue) * chartHeight * 0.75;
             const x = this.padding + (index * (this.barWidth + this.barSpacing));
             const y = this.height - this.padding - barHeight;
 
-            // Create gradient for bar
-            const gradient = this.ctx.createLinearGradient(0, y, 0, y + barHeight);
-            const color = dataset.backgroundColor[index] || '#3B82F6';
-            gradient.addColorStop(0, color);
-            gradient.addColorStop(1, color + 'CC');
+            // Create premium gradient for bar
+            const gradient = this.createPremiumGradient(y, y + barHeight, dataset.backgroundColor[index] || '#3B82F6');
 
-            // Draw rounded rectangle bar
+            // Draw rounded rectangle bar with shadow
             this.ctx.save();
+            this.ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
+            this.ctx.shadowBlur = 8;
+            this.ctx.shadowOffsetX = 2;
+            this.ctx.shadowOffsetY = 4;
+            
             this.ctx.fillStyle = gradient;
             this.ctx.beginPath();
-            this.ctx.moveTo(x + 8, y);
-            this.ctx.lineTo(x + this.barWidth - 8, y);
-            this.ctx.quadraticCurveTo(x + this.barWidth, y, x + this.barWidth, y + 8);
-            this.ctx.lineTo(x + this.barWidth, y + barHeight - 8);
-            this.ctx.quadraticCurveTo(x + this.barWidth, y + barHeight, x + this.barWidth - 8, y + barHeight);
-            this.ctx.lineTo(x + 8, y + barHeight);
-            this.ctx.quadraticCurveTo(x, y + barHeight, x, y + barHeight - 8);
-            this.ctx.lineTo(x, y + 8);
-            this.ctx.quadraticCurveTo(x, y, x + 8, y);
-            this.ctx.closePath();
+            this.ctx.roundRect(x, y, this.barWidth, barHeight, 12);
             this.ctx.fill();
             this.ctx.restore();
 
-            // Draw border
-            this.ctx.strokeStyle = dataset.borderColor[index] || '#1E40AF';
-            this.ctx.lineWidth = 1;
-            this.ctx.stroke();
+            // Draw value with premium styling
+            this.drawTotalValue(x + this.barWidth / 2, y - 20, animatedValue);
 
-            // Draw value
-            this.ctx.fillStyle = '#374151';
-            this.ctx.font = 'bold 14px Inter, system-ui, sans-serif';
-            this.ctx.textAlign = 'center';
-            this.ctx.fillText(value.toLocaleString(), x + this.barWidth / 2, y - 10);
-
-            // Draw label
-            this.ctx.fillStyle = '#6B7280';
-            this.ctx.font = 'bold 12px Inter, system-ui, sans-serif';
-            this.ctx.fillText(this.data.labels[index] || `Data ${index + 1}`, x + this.barWidth / 2, this.height - 15);
+            // Draw label with premium styling
+            this.drawMetricLabel(x + this.barWidth / 2, this.height - 20, this.data.labels[index] || `Data ${index + 1}`);
         });
 
-        // Draw title
+        // Draw title with premium styling
+        this.ctx.save();
         this.ctx.fillStyle = '#111827';
-        this.ctx.font = 'bold 18px Inter, system-ui, sans-serif';
+        this.ctx.font = 'bold 20px Inter, system-ui, sans-serif';
         this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'top';
         this.ctx.fillText(dataset.label, this.width / 2, 25);
-    }
-
-    private drawLegend(): void {
-        // Position legend at the top, above the chart
-        const legendY = 20;
-        const legendSpacing = 140;
-        const legendStartX = this.padding;
-        
-        this.data.datasets.forEach((dataset, index) => {
-            const legendX = legendStartX + (index * legendSpacing);
-            
-            // Draw legend color box
-            this.ctx.fillStyle = dataset.backgroundColor[0] || '#3B82F6';
-            this.ctx.fillRect(legendX, legendY, 16, 16);
-            
-            // Draw legend text
-            this.ctx.fillStyle = '#374151';
-            this.ctx.font = 'bold 14px Inter, system-ui, sans-serif';
-            this.ctx.textAlign = 'left';
-            this.ctx.fillText(dataset.label, legendX + 24, legendY + 12);
-        });
+        this.ctx.restore();
     }
 
     private drawBackground(): void {
-        // Draw grid lines
-        this.ctx.strokeStyle = '#E5E7EB';
+        // Create subtle gradient background
+        const gradient = this.ctx.createLinearGradient(0, 0, 0, this.height);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+        gradient.addColorStop(1, 'rgba(248, 250, 252, 0.98)');
+        
+        this.ctx.fillStyle = gradient;
+        this.ctx.fillRect(0, 0, this.width, this.height);
+
+        // Draw subtle grid lines
+        this.ctx.save();
+        this.ctx.strokeStyle = 'rgba(229, 231, 235, 0.6)';
         this.ctx.lineWidth = 1;
         
         const chartHeight = this.height - (this.padding * 2);
@@ -305,17 +392,47 @@ export class SimpleChart {
             this.ctx.lineTo(this.width - this.padding, y);
             this.ctx.stroke();
         }
+        this.ctx.restore();
     }
 
     private renderNoData(): void {
+        // Draw premium no data message
+        this.ctx.save();
         this.ctx.fillStyle = '#9CA3AF';
-        this.ctx.font = '16px Arial';
+        this.ctx.font = '16px Inter, system-ui, sans-serif';
         this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
         this.ctx.fillText('No data available', this.width / 2, this.height / 2);
+        this.ctx.restore();
+    }
+
+    // Utility functions for color manipulation
+    private lightenColor(color: string, amount: number): string {
+        const num = parseInt(color.replace('#', ''), 16);
+        const amt = Math.round(2.55 * amount * 100);
+        const R = (num >> 16) + amt;
+        const G = (num >> 8 & 0x00FF) + amt;
+        const B = (num & 0x0000FF) + amt;
+        return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+            (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+    }
+
+    private darkenColor(color: string, amount: number): string {
+        const num = parseInt(color.replace('#', ''), 16);
+        const amt = Math.round(2.55 * amount * 100);
+        const R = (num >> 16) - amt;
+        const G = (num >> 8 & 0x00FF) - amt;
+        const B = (num & 0x0000FF) - amt;
+        return '#' + (0x1000000 + (R > 255 ? 255 : R < 0 ? 0 : R) * 0x10000 +
+            (G > 255 ? 255 : G < 0 ? 0 : G) * 0x100 +
+            (B > 255 ? 255 : B < 0 ? 0 : B)).toString(16).slice(1);
     }
 
     public destroy(): void {
-        // Clean up if needed
+        if (this.animationFrame) {
+            cancelAnimationFrame(this.animationFrame);
+        }
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
 } 
