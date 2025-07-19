@@ -129,14 +129,23 @@ class SimpleChart {
     }
     
     renderStackedBars() {
+        console.log('🔍 renderStackedBars - Starting...');
+        console.log('🔍 renderStackedBars - Canvas dimensions:', this.width, 'x', this.height);
+        console.log('🔍 renderStackedBars - Data:', this.data);
+        
         const chartWidth = this.width - (this.padding * 2);
         const topPadding = 120;
         const chartHeight = this.height - (this.padding * 2) - topPadding;
         const numMetrics = this.data.labels.length;
         
+        console.log('🔍 renderStackedBars - Chart dimensions:', chartWidth, 'x', chartHeight);
+        console.log('🔍 renderStackedBars - Num metrics:', numMetrics);
+        
         const availableWidth = chartWidth - (numMetrics - 1) * 80;
         const barWidth = Math.max(availableWidth / numMetrics, 120);
         const barSpacing = 80;
+        
+        console.log('🔍 renderStackedBars - Bar width:', barWidth, 'Bar spacing:', barSpacing);
         
         const totalValues = [];
         for (let i = 0; i < numMetrics; i++) {
@@ -152,12 +161,18 @@ class SimpleChart {
             totalValues.push(total);
         }
         
+        console.log('🔍 renderStackedBars - Total values:', totalValues);
         const maxTotal = Math.max(...totalValues);
+        console.log('🔍 renderStackedBars - Max total:', maxTotal);
         
         this.data.labels.forEach((label, metricIndex) => {
+            console.log('🔍 renderStackedBars - Processing label:', label, 'at index:', metricIndex);
+            
             const barX = this.padding + (metricIndex * (barWidth + barSpacing));
             let currentY = this.height - this.padding - topPadding;
             let totalValue = 0;
+            
+            console.log('🔍 renderStackedBars - Bar X position:', barX, 'Current Y:', currentY);
             
             for (let datasetIndex = this.data.datasets.length - 1; datasetIndex >= 0; datasetIndex--) {
                 const dataset = this.data.datasets[datasetIndex];
@@ -171,6 +186,8 @@ class SimpleChart {
                 const segmentHeight = (animatedValue / maxTotal) * chartHeight * 0.75;
                 const segmentY = currentY - segmentHeight;
                 
+                console.log('🔍 renderStackedBars - Dataset:', dataset.label, 'Value:', value, 'Animated:', animatedValue, 'Height:', segmentHeight, 'Y:', segmentY);
+                
                 const gradient = this.createPremiumGradient(segmentY, currentY, dataset.backgroundColor[0] || '#3B82F6');
                 this.drawSegmentWithShadow(barX, segmentY, barWidth, segmentHeight, gradient, datasetIndex === this.data.datasets.length - 1, datasetIndex === 0);
                 
@@ -178,6 +195,7 @@ class SimpleChart {
                 totalValue += animatedValue;
             }
             
+            console.log('🔍 renderStackedBars - Total value for', label, ':', totalValue);
             this.drawTotalValue(barX + barWidth / 2, currentY - 45, totalValue);
             this.drawMetricLabel(barX + barWidth / 2, this.height - 20, label);
         });
