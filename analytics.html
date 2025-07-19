@@ -247,9 +247,7 @@
                         </div>
                     </div>
                     <div class="chart-container">
-                        <div class="bg-gray-100 rounded-lg h-full flex items-center justify-center text-gray-400">
-                            <canvas id="engagementChart" width="600" height="250"></canvas>
-                        </div>
+                        <canvas id="engagementChart" class="w-full h-64" style="min-height: 250px;"></canvas>
                     </div>
                 </div>
                 
@@ -359,6 +357,39 @@
       });
     </script>
     <script type="module" src="js/main.js"></script>
+    <script type="module">
+        // Initialize the engagement chart when the page loads
+        import { SimpleChart } from './js/components/SimpleChart.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate sample data for the engagement chart
+            const chartData = {
+                labels: ['Likes', 'Comments', 'Shares'],
+                datasets: [
+                    {
+                        label: 'Instagram',
+                        data: [847, 156, 89],
+                        backgroundColor: ['#FF6B6B'],
+                        borderColor: ['#E53E3E']
+                    },
+                    {
+                        label: 'Facebook',
+                        data: [200, 90, 50],
+                        backgroundColor: ['#1890FF'],
+                        borderColor: ['#096DD9']
+                    }
+                ]
+            };
+            
+            // Initialize the chart
+            try {
+                new SimpleChart('engagementChart', chartData);
+                console.log('Engagement chart initialized successfully');
+            } catch (error) {
+                console.error('Error initializing engagement chart:', error);
+            }
+        });
+    </script>
     <script>
         // Analytics page specific functions
         function exportAnalyticsReport() {
