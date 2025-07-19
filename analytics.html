@@ -411,16 +411,7 @@
             console.error('❌ Error initializing premium engagement chart:', error);
             console.error('Error details:', error.message, error.stack);
             
-            // Try to create a basic fallback to see if canvas works at all
-            console.log('🔄 Trying basic canvas test...');
-            try {
-                const ctx = canvas.getContext('2d');
-                ctx.fillStyle = 'red';
-                ctx.fillRect(10, 10, 100, 50);
-                console.log('✅ Basic canvas test works');
-            } catch (canvasError) {
-                console.error('❌ Even basic canvas test failed:', canvasError);
-            }
+
         }
       }
       
@@ -432,13 +423,7 @@
         setTimeout(initializeChart, 100);
       }
       
-      // Fallback initialization
-      setTimeout(() => {
-        if (!window.engagementChart) {
-          console.log('🔄 Fallback chart initialization...');
-          initializeChart();
-        }
-      }, 1000);
+
     </script>
     <!-- Remove main.js to prevent conflicts -->
     <!-- <script type="module" src="js/main.js"></script> -->
