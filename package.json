@@ -5,7 +5,7 @@
   "main": "index.html",
   "type": "module",
   "scripts": {
-    "build": "npm run build:css:prod && npm run build:ts:prod && npm run copy-html && echo 'Build complete!'",
+    "build": "npm run build:css:prod && npm run build:ts:prod && cp *.html dist/ && echo '✅ Build complete!'",
     "build:css": "tailwindcss -i ./src/input.css -o ./dist/styles.css --watch",
     "build:ts": "tsc --watch",
     "build:prod": "npm run build:css:prod && npm run build:ts:prod",
