@@ -349,47 +349,46 @@
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module">
       import { animationService } from './src/ts/services/AnimationService';
+      import { SimpleChart } from './js/components/SimpleChart.js';
+      
       document.addEventListener('DOMContentLoaded', () => {
+        // Initialize animations
         animationService.initScrollAnimations();
+        
+        // Initialize the premium engagement chart
+        const chartData = {
+            labels: ['Likes', 'Comments', 'Shares'],
+            datasets: [
+                {
+                    label: 'Instagram',
+                    data: [847, 156, 89],
+                    backgroundColor: ['#FF6B6B'],
+                    borderColor: ['#E53E3E']
+                },
+                {
+                    label: 'Facebook',
+                    data: [200, 90, 50],
+                    backgroundColor: ['#1890FF'],
+                    borderColor: ['#096DD9']
+                }
+            ]
+        };
+        
+        // Initialize the premium chart with error handling
+        try {
+            const chart = new SimpleChart('engagementChart', chartData);
+            console.log('✅ Premium engagement chart initialized successfully');
+            
+            // Store chart instance globally for potential updates
+            window.engagementChart = chart;
+        } catch (error) {
+            console.error('❌ Error initializing premium engagement chart:', error);
+        }
       });
     </script>
     <script type="module" src="js/main.js"></script>
-    <script type="module">
-        // Initialize the engagement chart when the page loads
-        import { SimpleChart } from './js/components/SimpleChart.js';
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            // Generate sample data for the engagement chart
-            const chartData = {
-                labels: ['Likes', 'Comments', 'Shares'],
-                datasets: [
-                    {
-                        label: 'Instagram',
-                        data: [847, 156, 89],
-                        backgroundColor: ['#FF6B6B'],
-                        borderColor: ['#E53E3E']
-                    },
-                    {
-                        label: 'Facebook',
-                        data: [200, 90, 50],
-                        backgroundColor: ['#1890FF'],
-                        borderColor: ['#096DD9']
-                    }
-                ]
-            };
-            
-            // Initialize the chart
-            try {
-                new SimpleChart('engagementChart', chartData);
-                console.log('Engagement chart initialized successfully');
-            } catch (error) {
-                console.error('Error initializing engagement chart:', error);
-            }
-        });
-    </script>
     <script>
         // Analytics page specific functions
         function exportAnalyticsReport() {

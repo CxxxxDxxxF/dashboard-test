@@ -70,6 +70,14 @@ export function initializeDashboard() {
         // Calendar.initialize(); // Only initialize on calendar page
     }
     
+    // Skip chart initialization on analytics page (handled by analytics.html)
+    if (window.location.pathname.includes('analytics.html')) {
+        console.log('📊 Analytics page detected - skipping main.js chart initialization');
+        // Set up event listeners only
+        setupEventListeners();
+        return;
+    }
+    
     // Load initial data
     loadDashboardData();
     
