@@ -430,8 +430,16 @@
           console.log('🔍 Chart render - datasets[0].data:', this.data.datasets[0]?.data);
           console.log('🔍 Chart render - datasets[0].data.length:', this.data.datasets[0]?.data?.length);
           
-          if (!this.data.datasets[0] || this.data.datasets[0].data.length === 0) {
-            console.log('⚠️ No data detected, showing no data message');
+          // Validate data structure
+          if (!this.data || !this.data.datasets || !Array.isArray(this.data.datasets) || this.data.datasets.length === 0) {
+            console.log('⚠️ Invalid data structure, showing no data message');
+            this.renderNoData();
+            return;
+          }
+          
+          const firstDataset = this.data.datasets[0];
+          if (!firstDataset || !firstDataset.data || !Array.isArray(firstDataset.data) || firstDataset.data.length === 0) {
+            console.log('⚠️ No valid data in first dataset, showing no data message');
             this.renderNoData();
             return;
           }
@@ -703,6 +711,8 @@
         }
         
         console.log('✅ Canvas found:', canvas);
+        console.log('🔍 Canvas dimensions:', canvas.width, 'x', canvas.height);
+        console.log('🔍 Canvas style:', canvas.style.width, 'x', canvas.style.height);
         
         // Initialize the premium engagement chart
         const chartData = {
@@ -724,6 +734,11 @@
         };
         
         console.log('📊 Chart data prepared:', chartData);
+        console.log('🔍 Chart data validation:');
+        console.log('  - labels:', chartData.labels);
+        console.log('  - datasets length:', chartData.datasets.length);
+        console.log('  - dataset 0 data:', chartData.datasets[0].data);
+        console.log('  - dataset 1 data:', chartData.datasets[1].data);
         
         // Initialize the premium chart with error handling
         try {
@@ -737,6 +752,12 @@
             
             // Store chart instance globally for potential updates
             window.engagementChart = chart;
+            
+            // Force a re-render after a short delay
+            setTimeout(() => {
+              console.log('🔄 Forcing chart re-render...');
+              chart.render();
+            }, 500);
         } catch (error) {
             console.error('❌ Error initializing premium engagement chart:', error);
             console.error('Error details:', error.message, error.stack);
@@ -750,6 +771,13 @@
         // DOM is already ready
         setTimeout(initializeChart, 100);
       }
+      
+      // Prevent multiple initializations
+      if (window.chartInitialized) {
+        console.log('🔄 Chart already initialized, skipping...');
+        return;
+      }
+      window.chartInitialized = true;
     </script>
     <!-- Remove main.js to prevent conflicts -->
     <!-- <script type="module" src="js/main.js"></script> -->
